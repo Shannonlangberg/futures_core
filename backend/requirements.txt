@@ -16,3 +16,4 @@ pydub==0.25.1
 speechrecognition==3.10.0
 numpy>=1.26.0
 pandas>=2.0.0
+gunicorn
