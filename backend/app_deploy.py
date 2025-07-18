@@ -64,24 +64,9 @@ try:
     import anthropic
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        # Try different initialization methods
-        try:
-            claude = anthropic.Anthropic(api_key=api_key)
-            logger.info("Claude initialized successfully with Anthropic()")
-        except Exception as e1:
-            logger.warning(f"Anthropic() failed: {e1}, trying Client()")
-            try:
-                claude = anthropic.Client(api_key=api_key)
-                logger.info("Claude initialized successfully with Client()")
-            except Exception as e2:
-                logger.warning(f"Client() also failed: {e2}, trying without proxies")
-                try:
-                    # Try without any extra parameters
-                    claude = anthropic.Client(api_key=api_key)
-                    logger.info("Claude initialized successfully with Client() (no proxies)")
-                except Exception as e3:
-                    logger.warning(f"All Claude initialization methods failed: {e3}")
-                    claude = None
+        # For anthropic 0.18.1, use the correct initialization
+        claude = anthropic.Anthropic(api_key=api_key)
+        logger.info("Claude initialized successfully with Anthropic()")
     else:
         logger.warning("ANTHROPIC_API_KEY not found")
         claude = None
@@ -250,33 +235,104 @@ def query_data_internal(data: Dict[str, Any]) -> Dict[str, Any]:
     else:
         rows = get_demo_data()
     
+    # Process the data to get totals and averages
+    total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in rows)
+    total_new_people = sum(safe_int(row.get('New People', 0)) for row in rows)
+    total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in rows)
+    total_youth = sum(safe_int(row.get('Youth', 0)) for row in rows)
+    total_kids = sum(safe_int(row.get('Kids', 0)) for row in rows)
+    total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in rows)
+    
+    num_entries = len(rows) if rows else 1
+    avg_attendance = total_attendance / num_entries
+    avg_new_people = total_new_people / num_entries
+    avg_new_christians = total_new_christians / num_entries
+    avg_youth = total_youth / num_entries
+    avg_kids = total_kids / num_entries
+    avg_connect_groups = total_connect_groups / num_entries
+    
+    # Generate AI insights if Claude is available
+    insights = ""
+    if claude:
+        try:
+            data_summary = f"""
+Here's what I found for {campus} campus:
+
+Their numbers:
+- {total_attendance:,} total attendance
+- {total_new_people:,} new people
+- {total_new_christians:,} new christians
+- {total_youth:,} youth
+- {total_kids:,} kids
+- {total_connect_groups:,} connect groups
+
+Weekly averages:
+- {avg_attendance:.1f} people per week
+- {avg_new_people:.1f} new people per week
+- {avg_new_christians:.1f} new christians per week
+- {avg_youth:.1f} youth per week
+- {avg_kids:.1f} kids per week
+- {avg_connect_groups:.1f} connect groups per week
+"""
+            
+            # Create intelligent prompt based on question type
+            if any(word in question for word in ['trend', 'trends', 'pattern', 'growth', 'improve', 'attention', 'working']):
+                prompt = f"You are a church analytics expert. Based on this data: {data_summary}\n\nQuestion: {data.get('text', '')}\n\nProvide 2-3 specific insights about trends, patterns, or areas for improvement. Be encouraging and actionable."
+            elif any(word in question for word in ['compare', 'comparison', 'versus', 'vs', 'difference']):
+                prompt = f"You are a church analytics expert. Based on this data: {data_summary}\n\nQuestion: {data.get('text', '')}\n\nProvide 2-3 specific insights about comparisons or differences. Be encouraging and actionable."
+            else:
+                prompt = f"You are a church analytics expert. Based on this data: {data_summary}\n\nQuestion: {data.get('text', '')}\n\nProvide 2-3 specific insights about the data. Be encouraging and actionable."
+            
+            response = claude.messages.create(
+                model="claude-3-haiku-20240307",
+                max_tokens=300,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            insights = response.content[0].text
+        except Exception as e:
+            logger.error(f"Error generating AI insights: {e}")
+            insights = "I'd be happy to analyze your data, but I need to connect to my AI assistant first."
+    
     # Simple response for demo
     if 'attendance' in question:
-        total = sum(safe_int(row.get('Total Attendance', 0)) for row in rows)
+        response_text = f"Total attendance for {campus} is {total_attendance:,} people."
+        if insights:
+            response_text += f"\n\nAI Insights:\n{insights}"
         return {
-            'text': f"Total attendance for {campus} is {total:,} people.",
+            'text': response_text,
             'campus': campus,
-            'status': 'success'
+            'status': 'success',
+            'insights': insights
         }
     elif 'new people' in question or 'visitors' in question:
-        total = sum(safe_int(row.get('New People', 0)) for row in rows)
+        response_text = f"Total new people for {campus} is {total_new_people:,}."
+        if insights:
+            response_text += f"\n\nAI Insights:\n{insights}"
         return {
-            'text': f"Total new people for {campus} is {total:,}.",
+            'text': response_text,
             'campus': campus,
-            'status': 'success'
+            'status': 'success',
+            'insights': insights
         }
     elif 'new christians' in question:
-        total = sum(safe_int(row.get('New Christians', 0)) for row in rows)
+        response_text = f"Total new Christians for {campus} is {total_new_christians:,}."
+        if insights:
+            response_text += f"\n\nAI Insights:\n{insights}"
         return {
-            'text': f"Total new Christians for {campus} is {total:,}.",
+            'text': response_text,
             'campus': campus,
-            'status': 'success'
+            'status': 'success',
+            'insights': insights
         }
     else:
+        response_text = f"I heard you ask about '{data.get('text', '')}' for {campus}. Here's what I found:\n\nTotal Attendance: {total_attendance:,}\nNew People: {total_new_people:,}\nNew Christians: {total_new_christians:,}\nYouth: {total_youth:,}\nKids: {total_kids:,}\nConnect Groups: {total_connect_groups:,}"
+        if insights:
+            response_text += f"\n\nAI Insights:\n{insights}"
         return {
-            'text': f"I heard you ask about '{data.get('text', '')}' for {campus}. This is a demo response from the deployed app.",
+            'text': response_text,
             'campus': campus,
-            'status': 'success'
+            'status': 'success',
+            'insights': insights
         }
 
 # Security middleware
