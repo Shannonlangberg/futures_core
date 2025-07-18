@@ -8,10 +8,10 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Import the main app
-from app import app
+# Create a new Flask app for deployment
+app = Flask(__name__)
 
-# Enable CORS for the imported app
+# Enable CORS
 CORS(app, origins=['*'])  # Configure this properly in production
 
 # Security middleware
@@ -30,6 +30,11 @@ def add_security_headers(response):
 @app.route('/health')
 def health_check():
     return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
+
+# Simple test endpoint
+@app.route('/')
+def home():
+    return jsonify({'message': 'Church Voice Assistant API', 'status': 'running'})
 
 # Error handlers
 @app.errorhandler(404)
