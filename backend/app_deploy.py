@@ -34,14 +34,23 @@ try:
         "https://www.googleapis.com/auth/drive.file",
         "https://www.googleapis.com/auth/drive"
     ]
-    if os.path.exists("credentials.json"):
-        creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+    # Check multiple possible locations for credentials.json
+    credentials_paths = ["credentials.json", "backend/credentials.json", "/app/credentials.json"]
+    credentials_found = None
+    
+    for path in credentials_paths:
+        if os.path.exists(path):
+            credentials_found = path
+            break
+    
+    if credentials_found:
+        creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_found, scope)
         client = gspread.authorize(creds)
         sheet_name = os.getenv("GOOGLE_SHEET_NAME", "Stats")
         sheet = client.open(sheet_name).sheet1
-        logger.info(f"Google Sheets initialized successfully with sheet: {sheet_name}")
+        logger.info(f"Google Sheets initialized successfully with sheet: {sheet_name} using {credentials_found}")
     else:
-        logger.warning("credentials.json not found - using demo data")
+        logger.warning("credentials.json not found in any location - using demo data")
 except Exception as e:
     logger.warning(f"Google Sheets not available: {e}")
 
@@ -50,7 +59,8 @@ try:
     import anthropic
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        claude = anthropic.Client(api_key=api_key)
+        # Use the correct initialization for newer anthropic versions
+        claude = anthropic.Anthropic(api_key=api_key)
         logger.info("Claude initialized successfully")
     else:
         logger.warning("ANTHROPIC_API_KEY not found")
