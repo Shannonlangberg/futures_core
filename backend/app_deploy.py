@@ -39,6 +39,8 @@ try:
     credentials_found = None
     
     logger.info(f"Checking for credentials.json in: {credentials_paths}")
+    logger.info(f"Current working directory: {os.getcwd()}")
+    logger.info(f"Files in current directory: {os.listdir('.')}")
     for path in credentials_paths:
         exists = os.path.exists(path)
         logger.info(f"Path {path}: {'EXISTS' if exists else 'NOT FOUND'}")
@@ -62,11 +64,21 @@ try:
     import anthropic
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        # Use the correct initialization for newer anthropic versions
-        claude = anthropic.Anthropic(api_key=api_key)
-        logger.info("Claude initialized successfully")
+        # Try different initialization methods
+        try:
+            claude = anthropic.Anthropic(api_key=api_key)
+            logger.info("Claude initialized successfully with Anthropic()")
+        except Exception as e1:
+            logger.warning(f"Anthropic() failed: {e1}, trying Client()")
+            try:
+                claude = anthropic.Client(api_key=api_key)
+                logger.info("Claude initialized successfully with Client()")
+            except Exception as e2:
+                logger.warning(f"Client() also failed: {e2}")
+                claude = None
     else:
         logger.warning("ANTHROPIC_API_KEY not found")
+        claude = None
 except Exception as e:
     logger.warning(f"Claude not available: {e}")
     claude = None
