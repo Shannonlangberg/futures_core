@@ -1,84 +1,159 @@
-import os
-import logging
-import json
-import re
-from datetime import datetime, timezone, timedelta
-from typing import Dict, List, Optional, Any
-from functools import wraps
-from flask import Flask, request, jsonify, render_template, send_from_directory
+# === FULL FUNCTIONALITY RESTORED ===
+# This file is now a copy of backend/app.py with all advanced features, endpoints, and logic.
+# (If you want to keep deployment-specific tweaks, add them after this block.)
+
+# --- BEGIN COPY ---
+
+# app.py
+
+print("[DEBUG] Starting import: Flask")
+from flask import Flask, request, jsonify, send_from_directory, render_template
+print("[DEBUG] Imported Flask")
+
+print("[DEBUG] Starting import: Flask-Cors")
 from flask_cors import CORS
+print("[DEBUG] Imported Flask-Cors")
+
+print("[DEBUG] Starting import: datetime")
+from datetime import datetime, timezone, timedelta
+print("[DEBUG] Imported datetime")
+
+print("[DEBUG] Starting import: os")
+import os
+print("[DEBUG] Imported os")
+
+print("[DEBUG] Starting import: re")
+import re
+print("[DEBUG] Imported re")
+
+try:
+    print("[DEBUG] Starting import: gspread")
+    import gspread
+    print("[DEBUG] Imported gspread")
+except Exception as e:
+    print(f"[ERROR] Failed to import gspread: {e}")
+    raise
+
+try:
+    print("[DEBUG] Starting import: anthropic")
+    import anthropic
+    print("[DEBUG] Imported anthropic")
+except Exception as e:
+    print(f"[ERROR] Failed to import anthropic: {e}")
+    raise
+
+try:
+    print("[DEBUG] Starting import: oauth2client.service_account")
+    from oauth2client.service_account import ServiceAccountCredentials
+    print("[DEBUG] Imported oauth2client.service_account")
+except Exception as e:
+    print(f"[ERROR] Failed to import oauth2client.service_account: {e}")
+    raise
+
+print("[DEBUG] Starting import: json")
+import json
+print("[DEBUG] Imported json")
+
+print("[DEBUG] Starting import: typing")
+from typing import Dict, List, Optional, Any
+print("[DEBUG] Imported typing")
+
+print("[DEBUG] Starting import: logging")
+import logging
+print("[DEBUG] Imported logging")
+
+try:
+    print("[DEBUG] Starting import: dotenv")
+    from dotenv import load_dotenv
+    print("[DEBUG] Imported dotenv")
+except Exception as e:
+    print(f"[ERROR] Failed to import dotenv: {e}")
+    raise
+
+try:
+    print("[DEBUG] Starting import: num2words")
+    from num2words import num2words
+    print("[DEBUG] Imported num2words")
+except ImportError:
+    print("[WARNING] num2words not installed, using fallback")
+    def num2words(n):
+        return str(n)
+
+# Load environment variables from .env file
+print("[DEBUG] Loading environment variables from .env")
+load_dotenv()
+print("[DEBUG] Loaded environment variables from .env")
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Create Flask app
-app = Flask(__name__)
+print("[DEBUG] Starting Google Sheets Auth scope definition")
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+]
+print("[DEBUG] Finished Google Sheets Auth scope definition")
 
-# Enable CORS
-CORS(app, origins=['*'])
-
-# Initialize external services with graceful fallbacks
-sheet = None
-claude = None
-elevenlabs_api_key = None
-elevenlabs_voice_id = "21m00Tcm4TlvDq8ikWAM"
-
-# Try to load Google Sheets
+print("[DEBUG] Starting Google Sheets client initialization")
+# Initialize Google Sheets client
 try:
-    import gspread
-    from oauth2client.service_account import ServiceAccountCredentials
-    scope = [
-        "https://spreadsheets.google.com/feeds",
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive.file",
-        "https://www.googleapis.com/auth/drive"
-    ]
-    # Check multiple possible locations for credentials.json
-    credentials_paths = ["credentials.json", "backend/credentials.json", "/app/credentials.json"]
-    credentials_found = None
-    
-    logger.info(f"Checking for credentials.json in: {credentials_paths}")
-    logger.info(f"Current working directory: {os.getcwd()}")
-    logger.info(f"Files in current directory: {os.listdir('.')}")
-    for path in credentials_paths:
-        exists = os.path.exists(path)
-        logger.info(f"Path {path}: {'EXISTS' if exists else 'NOT FOUND'}")
-        if exists:
-            credentials_found = path
-            break
-    
-    if credentials_found:
-        creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_found, scope)
+    if os.path.exists("credentials.json"):
+        creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
         client = gspread.authorize(creds)
-        sheet_name = os.getenv("GOOGLE_SHEET_NAME", "Stats")
-        sheet = client.open(sheet_name).sheet1
-        logger.info(f"Google Sheets initialized successfully with sheet: {sheet_name} using {credentials_found}")
+        sheet = client.open(os.getenv("GOOGLE_SHEET_NAME", "Stats")).sheet1
+        logger.info("Google Sheets initialized successfully")
     else:
-        logger.warning("credentials.json not found in any location - using demo data")
+        logger.warning("credentials.json not found - Google Sheets functionality disabled")
+        sheet = None
 except Exception as e:
-    logger.warning(f"Google Sheets not available: {e}")
+    logger.error(f"Failed to initialize Google Sheets: {e}")
+    sheet = None
+print("[DEBUG] Finished Google Sheets client initialization")
 
-# Try to load Claude
+print("[DEBUG] Starting Claude setup")
+# Claude setup
 try:
-    import anthropic
+    from anthropic import Client
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        # For anthropic 0.18.1, use the correct initialization
-        claude = anthropic.Anthropic(api_key=api_key)
-        logger.info("Claude initialized successfully with Anthropic()")
+        claude = Client(api_key=api_key)
+        logger.info("Claude initialized successfully (Client)")
+        print("[DEBUG] Claude initialized successfully (Client)")
     else:
-        logger.warning("ANTHROPIC_API_KEY not found")
+        logger.warning("ANTHROPIC_API_KEY not found in environment variables")
+        print("[WARNING] ANTHROPIC_API_KEY not found in environment variables")
         claude = None
 except Exception as e:
-    logger.warning(f"Claude not available: {e}")
+    logger.error(f"Failed to initialize Claude: {e}")
+    print(f"[ERROR] Failed to initialize Claude: {e}")
     claude = None
+print("[DEBUG] Finished Claude setup")
 
-# Try to load ElevenLabs
-elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
+print("[DEBUG] Starting ElevenLabs setup")
+# ElevenLabs setup
+try:
+    import requests
+    elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
+    elevenlabs_voice_id = os.getenv("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")  # Default voice ID
+    if elevenlabs_api_key:
+        logger.info("ElevenLabs API key found")
+        print("[DEBUG] ElevenLabs API key found")
+    else:
+        logger.warning("ELEVENLABS_API_KEY not found - will use browser TTS")
+        print("[WARNING] ELEVENLABS_API_KEY not found - will use browser TTS")
+except Exception as e:
+    logger.error(f"Failed to initialize ElevenLabs: {e}")
+    print(f"[ERROR] Failed to initialize ElevenLabs: {e}")
+    elevenlabs_api_key = None
+print("[DEBUG] Finished ElevenLabs setup")
 
-# Memory storage
+print("[DEBUG] Starting memory storage setup")
+# Memory storage for conversational history
 conversation_memory_file = "data/conversation_memory.json"
+print("[DEBUG] Finished memory storage setup")
 
 # Utility functions
 def safe_int(val: Any) -> int:
