@@ -235,15 +235,18 @@ def query_data_internal(data: Dict[str, Any]) -> Dict[str, Any]:
     else:
         rows = get_demo_data()
     
-    # Process the data to get totals and averages
-    total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in rows)
-    total_new_people = sum(safe_int(row.get('New People', 0)) for row in rows)
-    total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in rows)
-    total_youth = sum(safe_int(row.get('Youth', 0)) for row in rows)
-    total_kids = sum(safe_int(row.get('Kids', 0)) for row in rows)
-    total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in rows)
+    # Filter by campus
+    campus_rows = [row for row in rows if normalize_campus(row.get('Campus', '')) == normalize_campus(campus)]
     
-    num_entries = len(rows) if rows else 1
+    # Process the filtered data to get totals and averages
+    total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in campus_rows)
+    total_new_people = sum(safe_int(row.get('New People', 0)) for row in campus_rows)
+    total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in campus_rows)
+    total_youth = sum(safe_int(row.get('Youth', 0)) for row in campus_rows)
+    total_kids = sum(safe_int(row.get('Kids', 0)) for row in campus_rows)
+    total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in campus_rows)
+    
+    num_entries = len(campus_rows) if campus_rows else 1
     avg_attendance = total_attendance / num_entries
     avg_new_people = total_new_people / num_entries
     avg_new_christians = total_new_christians / num_entries
@@ -400,38 +403,77 @@ def session_info():
 
 @app.route('/api/stats')
 def get_stats():
-    """Get stats from Google Sheets or demo data"""
+    """Get stats from Google Sheets or demo data, filtered by campus"""
+    campus = request.args.get('campus', 'Futures Church')
+    
     if sheet:
         try:
             rows = sheet.get_all_records()
-            # Process real data
-            total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in rows)
-            total_new_people = sum(safe_int(row.get('New People', 0)) for row in rows)
-            total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in rows)
-            total_youth = sum(safe_int(row.get('Youth', 0)) for row in rows)
-            total_kids = sum(safe_int(row.get('Kids', 0)) for row in rows)
-            total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in rows)
+            # Filter by campus
+            campus_rows = [row for row in rows if normalize_campus(row.get('Campus', '')) == normalize_campus(campus)]
             
+            if not campus_rows:
+                # If no data for this campus, return zeros
+                return jsonify({
+                    'attendance': {'total': 0, 'average': 0},
+                    'new_people': {'total': 0, 'average': 0},
+                    'new_christians': {'total': 0, 'average': 0},
+                    'youth': {'total': 0, 'average': 0},
+                    'kids': {'total': 0, 'average': 0},
+                    'connect_groups': {'total': 0, 'average': 0}
+                })
+            
+            # Process filtered data
+            total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in campus_rows)
+            total_new_people = sum(safe_int(row.get('New People', 0)) for row in campus_rows)
+            total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in campus_rows)
+            total_youth = sum(safe_int(row.get('Youth', 0)) for row in campus_rows)
+            total_kids = sum(safe_int(row.get('Kids', 0)) for row in campus_rows)
+            total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in campus_rows)
+            
+            num_entries = len(campus_rows)
             return jsonify({
-                'attendance': {'total': total_attendance, 'average': total_attendance / max(len(rows), 1)},
-                'new_people': {'total': total_new_people, 'average': total_new_people / max(len(rows), 1)},
-                'new_christians': {'total': total_new_christians, 'average': total_new_christians / max(len(rows), 1)},
-                'youth': {'total': total_youth, 'average': total_youth / max(len(rows), 1)},
-                'kids': {'total': total_kids, 'average': total_kids / max(len(rows), 1)},
-                'connect_groups': {'total': total_connect_groups, 'average': total_connect_groups / max(len(rows), 1)}
+                'attendance': {'total': total_attendance, 'average': total_attendance / max(num_entries, 1)},
+                'new_people': {'total': total_new_people, 'average': total_new_people / max(num_entries, 1)},
+                'new_christians': {'total': total_new_christians, 'average': total_new_christians / max(num_entries, 1)},
+                'youth': {'total': total_youth, 'average': total_youth / max(num_entries, 1)},
+                'kids': {'total': total_kids, 'average': total_kids / max(num_entries, 1)},
+                'connect_groups': {'total': total_connect_groups, 'average': total_connect_groups / max(num_entries, 1)}
             })
         except Exception as e:
             logger.error(f"Error getting stats from sheet: {e}")
     
-    # Return demo stats
-    return jsonify({
-        'attendance': {'total': 1250, 'average': 125.5},
-        'new_people': {'total': 45, 'average': 4.5},
-        'new_christians': {'total': 12, 'average': 1.2},
-        'youth': {'total': 180, 'average': 18.0},
-        'kids': {'total': 95, 'average': 9.5},
-        'connect_groups': {'total': 8, 'average': 0.8}
-    })
+    # Return demo stats (filtered by campus for demo)
+    demo_data = get_demo_data()
+    campus_demo_data = [row for row in demo_data if normalize_campus(row.get('Campus', '')) == normalize_campus(campus)]
+    
+    if campus_demo_data:
+        total_attendance = sum(safe_int(row.get('Total Attendance', 0)) for row in campus_demo_data)
+        total_new_people = sum(safe_int(row.get('New People', 0)) for row in campus_demo_data)
+        total_new_christians = sum(safe_int(row.get('New Christians', 0)) for row in campus_demo_data)
+        total_youth = sum(safe_int(row.get('Youth', 0)) for row in campus_demo_data)
+        total_kids = sum(safe_int(row.get('Kids', 0)) for row in campus_demo_data)
+        total_connect_groups = sum(safe_int(row.get('Connect Groups', 0)) for row in campus_demo_data)
+        
+        num_entries = len(campus_demo_data)
+        return jsonify({
+            'attendance': {'total': total_attendance, 'average': total_attendance / max(num_entries, 1)},
+            'new_people': {'total': total_new_people, 'average': total_new_people / max(num_entries, 1)},
+            'new_christians': {'total': total_new_christians, 'average': total_new_christians / max(num_entries, 1)},
+            'youth': {'total': total_youth, 'average': total_youth / max(num_entries, 1)},
+            'kids': {'total': total_kids, 'average': total_kids / max(num_entries, 1)},
+            'connect_groups': {'total': total_connect_groups, 'average': total_connect_groups / max(num_entries, 1)}
+        })
+    else:
+        # Return zeros if no data for this campus
+        return jsonify({
+            'attendance': {'total': 0, 'average': 0},
+            'new_people': {'total': 0, 'average': 0},
+            'new_christians': {'total': 0, 'average': 0},
+            'youth': {'total': 0, 'average': 0},
+            'kids': {'total': 0, 'average': 0},
+            'connect_groups': {'total': 0, 'average': 0}
+        })
 
 @app.route('/api/process_voice', methods=['POST'])
 def process_voice():
