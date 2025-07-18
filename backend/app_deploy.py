@@ -157,7 +157,7 @@ print("[DEBUG] Finished ElevenLabs setup")
 
 print("[DEBUG] Starting memory storage setup")
 # Memory storage for conversational history
-conversation_memory_file = "/tmp/data/conversation_memory.json"
+conversation_memory_file = "data/conversation_memory.json"
 print("[DEBUG] Finished memory storage setup")
 
 # Utility functions
@@ -644,6 +644,5 @@ def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))
-    print(f"App running on: http://localhost:{port}")
-    app.run(debug=False, host="0.0.0.0", port=port) 
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=False) 
