@@ -1,0 +1,1351 @@
+{
+  "conversations": {},
+  "session_stats": {
+    "South": [
+      {
+        "campus": "South"
+      },
+      {
+        "campus": "South",
+        "new_people": 20
+      },
+      {
+        "campus": "South",
+        "total_attendance": 178,
+        "new_people": 6,
+        "new_christians": 2,
+        "youth_attendance": 25,
+        "kids_total": 31,
+        "connect_groups": 5
+      },
+      {
+        "campus": "South",
+        "total_attendance": 181,
+        "new_people": 5,
+        "new_christians": 2,
+        "youth_attendance": 24,
+        "kids_total": 27,
+        "connect_groups": 4
+      },
+      {
+        "campus": "South",
+        "total_attendance": 215,
+        "new_people": 9,
+        "connect_groups": 12,
+        "new_christians": 4,
+        "kids_total": 30
+      }
+    ],
+    "Paradise": [
+      {
+        "campus": "Paradise"
+      },
+      {
+        "campus": "Paradise",
+        "total_attendance": 100
+      },
+      {
+        "campus": "Paradise",
+        "total_attendance": 100,
+        "new_people": 20
+      },
+      {
+        "campus": "Paradise",
+        "total_attendance": 201,
+        "new_people": 10,
+        "new_christians": 3,
+        "youth_attendance": 27,
+        "kids_total": 35,
+        "connect_groups": 6
+      },
+      {
+        "campus": "Paradise",
+        "total_attendance": 245,
+        "new_people": 5,
+        "connect_groups": 14
+      },
+      {
+        "campus": "Paradise",
+        "total_attendance": 215,
+        "new_people": 6,
+        "connect_groups": 12,
+        "new_christians": 2,
+        "kids_total": 30
+      }
+    ],
+    "Copper Coast": [
+      {
+        "campus": "Copper Coast",
+        "total_attendance": 178,
+        "new_people": 7,
+        "new_christians": 3,
+        "youth_attendance": 22,
+        "kids_total": 29,
+        "connect_groups": 6
+      },
+      {
+        "campus": "Copper Coast",
+        "total_attendance": 2,
+        "new_people": 5,
+        "connect_groups": 8
+      },
+      {
+        "campus": "Copper Coast",
+        "total_attendance": 178,
+        "new_people": 5,
+        "connect_groups": 8,
+        "youth_attendance": 37
+      },
+      {
+        "campus": "Copper Coast",
+        "total_attendance": 178,
+        "youth_attendance": 37,
+        "connect_groups": 8,
+        "new_people": 2.694915254237288
+      }
+    ],
+    "Mount Barker": [
+      {
+        "campus": "Mount Barker",
+        "total_attendance": 187,
+        "new_people": 6,
+        "new_christians": 2,
+        "youth_attendance": 24,
+        "kids_total": 30,
+        "connect_groups": 5
+      }
+    ],
+    "Adelaide City": [
+      {
+        "campus": "Adelaide City",
+        "total_attendance": 162,
+        "new_people": 5,
+        "new_christians": 3,
+        "youth_attendance": 24,
+        "kids_total": 27,
+        "connect_groups": 4
+      },
+      {
+        "campus": "Adelaide City"
+      },
+      {
+        "campus": "Adelaide City",
+        "total_attendance": 162,
+        "new_people": 19.444444444444443
+      }
+    ],
+    "Victor Harbour": [
+      {
+        "campus": "Victor Harbour",
+        "total_attendance": 181,
+        "new_people": 5,
+        "new_christians": 2,
+        "youth_attendance": 24,
+        "kids_total": 27,
+        "connect_groups": 4
+      },
+      {
+        "campus": "Victor Harbour",
+        "total_attendance": 215,
+        "new_people": 6,
+        "connect_groups": 7,
+        "new_christians": 3,
+        "kids_total": 30
+      },
+      {
+        "campus": "Victor Harbour",
+        "total_attendance": 141,
+        "new_people": 6,
+        "connect_groups": 7,
+        "new_christians": 3,
+        "kids_total": 21
+      }
+    ]
+  },
+  "last_updated": "2025-07-12T06:59:46.242956",
+  "None": [
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:25:32.396091",
+      "Raw_Text": "lets log for south"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:35:17.334638",
+      "Raw_Text": "We had 150 people today at the main campus, 25 new visitors, and 3 salvations.",
+      "Total Attendance": "150",
+      "New People": "25",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:35:54.063262",
+      "Raw_Text": "we had 200 at south today, 5 nc, 6 np"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:38:04.758674",
+      "Raw_Text": "south had 300 peopletoday, 6 nc",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:44:26.286135",
+      "Raw_Text": "South campus had 187 people today, 14 new visitors, 6 salvations, 38 youth, 52 kids, 9 connect groups, $8,750 in tithe, and 22 volunteers.",
+      "Total Attendance": "187",
+      "New People": "14",
+      "New Christians": "6",
+      "Youth Attendance": "38",
+      "Kids Total": "52",
+      "Connect Groups": "9",
+      "Tithe Amount": "8,750",
+      "Volunteers": "22"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T20:44:37.106508",
+      "Raw_Text": "South campus had 187 people today, 14 new visitors, 6 salvations, 38 youth, 52 kids, 9 connect groups, $8,750 in tithe, and 22 volunteers.",
+      "Total Attendance": "187",
+      "New People": "14",
+      "New Christians": "6",
+      "Youth Attendance": "38",
+      "Kids Total": "52",
+      "Connect Groups": "9",
+      "Tithe Amount": "8,750",
+      "Volunteers": "22"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:19:09.258855+00:00",
+      "Raw_Text": "south had 200, 10 np, 5 nc, 5 connect, 6 in kids and 10 youth",
+      "Youth Attendance": "10",
+      "Connect Groups": "5"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:22:23.294655+00:00",
+      "Raw_Text": "200 np at south and 500 in total, 6 nc"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:24:46.058619+00:00",
+      "Raw_Text": "south had 300 people in today, 20 np, and 5 nc",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:26:24.491186+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations\"",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:26:35.069766+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations\"",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:26:50.141032+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations\"",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:29:17.028387+00:00",
+      "Raw_Text": "south had 300 people",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:29:27.401397+00:00",
+      "Raw_Text": "south had 300 people",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:30:57.161610+00:00",
+      "Raw_Text": "south had 300 people today",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:31:13.201523+00:00",
+      "Raw_Text": "south had 400 poeple"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:32:16.342156+00:00",
+      "Raw_Text": "south had 400 people",
+      "Total Attendance": "400"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:41:39.363922+00:00",
+      "Raw_Text": "south had 300 people",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:41:54.403187+00:00",
+      "Raw_Text": "south had 400 people, 20 nc",
+      "Total Attendance": "400"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:42:12.688189+00:00",
+      "Raw_Text": "salisbusry had 300 people",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:45:36.845466+00:00",
+      "Raw_Text": "south had 200 people",
+      "Total Attendance": "200"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:46:04.685408+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:48:33.355460+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:50:34.877643+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-12T11:50:47.856008+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-15T00:49:01.061708+00:00",
+      "Raw_Text": "Can I log stats?"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-15T00:49:14.638525+00:00",
+      "Raw_Text": "Can I log stats?"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-15T00:51:25.376172+00:00",
+      "Raw_Text": "Can I log stats?"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-15T01:05:43.854463+00:00",
+      "Raw_Text": "can i log stats"
+    },
+    {
+      "Campus": "None",
+      "Timestamp": "2025-07-15T01:16:35.910387+00:00",
+      "Raw_Text": "Can I log stats"
+    }
+  ],
+  "south": [
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:25:26.516372+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations, 25 youth, 35 kids, 12 connect groups",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3",
+      "Youth Attendance": "25",
+      "Kids Total": "35",
+      "Connect Groups": "12"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:25:30.325651+00:00",
+      "Raw_Text": "South campus attendance was 132 people, 5 new visitors, 2 salvations, 22 youth group, 28 kids ministry, 10 connect groups, $8,450 in tithe",
+      "Total Attendance": "132",
+      "New People": "5",
+      "New Christians": "2",
+      "Youth Attendance": "22",
+      "Kids Total": "28",
+      "Connect Groups": "10",
+      "Tithe Amount": "8,450"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:25:33.572576+00:00",
+      "Raw_Text": "South campus had 128 people, 6 new visitors, 1 salvation, 20 youth, 30 kids, 11 connect groups, 45 volunteers",
+      "Total Attendance": "128",
+      "New People": "6",
+      "Youth Attendance": "20",
+      "Kids Total": "30",
+      "Connect Groups": "11",
+      "Volunteers": "45"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:25:36.770768+00:00",
+      "Raw_Text": "South campus 115 people, 3 new visitors",
+      "Total Attendance": "115",
+      "New People": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:25:40.524530+00:00",
+      "Raw_Text": "South campus youth ministry had 28 students, total attendance 140 people, 7 new visitors, 2 salvations",
+      "Total Attendance": "140",
+      "New People": "7",
+      "New Christians": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:28:14.362098+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations, 25 youth, 35 kids, 12 connect groups",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3",
+      "Youth Attendance": "25",
+      "Kids Total": "35",
+      "Connect Groups": "12"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:28:17.590594+00:00",
+      "Raw_Text": "South campus attendance was 132 people, 5 new visitors, 2 salvations, 22 youth group, 28 kids ministry, 10 connect groups, $8,450 in tithe",
+      "Total Attendance": "132",
+      "New People": "5",
+      "New Christians": "2",
+      "Youth Attendance": "22",
+      "Kids Total": "28",
+      "Connect Groups": "10",
+      "Tithe Amount": "8,450"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:28:20.994824+00:00",
+      "Raw_Text": "South campus had 128 people, 6 new visitors, 1 salvation, 20 youth, 30 kids, 11 connect groups, 45 volunteers",
+      "Total Attendance": "128",
+      "New People": "6",
+      "Youth Attendance": "20",
+      "Kids Total": "30",
+      "Connect Groups": "11",
+      "Volunteers": "45"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:28:24.051510+00:00",
+      "Raw_Text": "South campus 115 people, 3 new visitors",
+      "Total Attendance": "115",
+      "New People": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:28:27.478375+00:00",
+      "Raw_Text": "South campus youth ministry had 28 students, total attendance 140 people, 7 new visitors, 2 salvations",
+      "Total Attendance": "140",
+      "New People": "7",
+      "New Christians": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:51:53.025627+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:51:55.506863+00:00",
+      "Raw_Text": "south campus attendance was 132 people",
+      "Total Attendance": "132"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T11:51:57.935058+00:00",
+      "Raw_Text": "South had 128 people, 6 new visitors",
+      "Total Attendance": "128",
+      "New People": "6"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:00:37.453502+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:00:39.637430+00:00",
+      "Raw_Text": "South campus had 145 people today, 8 new visitors, 3 salvations",
+      "Total Attendance": "145",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:00:41.644702+00:00",
+      "Raw_Text": "south campus attendance was 132 people",
+      "Total Attendance": "132"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:00:43.771636+00:00",
+      "Raw_Text": "South had 128 people, 6 new visitors",
+      "Total Attendance": "128",
+      "New People": "6"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:08:25.304883+00:00",
+      "Raw_Text": "south had 999"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:11:09.225000+00:00",
+      "Raw_Text": "south had 200 people",
+      "Total Attendance": "200"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:21:04.308444+00:00",
+      "Raw_Text": "south had 490 people and 40 np, 20 nc",
+      "Total Attendance": "490",
+      "New People": "40",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:25:01.291602+00:00",
+      "Raw_Text": "south had 300 people, 40 np and 10 nc",
+      "Total Attendance": "300",
+      "New People": "40",
+      "New Christians": "10"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:27:18.608775+00:00",
+      "Raw_Text": "south had 300 people",
+      "Total Attendance": "300"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:29:59.684459+00:00",
+      "Raw_Text": "south had 4000 people and 10nc",
+      "Total Attendance": "4000"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:33:10.972146+00:00",
+      "Raw_Text": "south had 400 people and 2 nc",
+      "Total Attendance": "400",
+      "New Christians": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:46:04.453985+00:00",
+      "Raw_Text": "What's the average youth attendance at south campus?\""
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:46:15.956993+00:00",
+      "Raw_Text": "What's the average youth attendance at south campus?\""
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:49:07.741678+00:00",
+      "Raw_Text": "whats south youth average this year"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:52:42.381248+00:00",
+      "Raw_Text": "whats south avreage attendance this year"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:53:59.441459+00:00",
+      "Raw_Text": "What is the average youth attendance at south campus?"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T12:54:11.614942+00:00",
+      "Raw_Text": "What is the average youth attendance at south campus?"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T18:28:33.930454+00:00",
+      "Raw_Text": "how can we log South"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T18:28:46.959873+00:00",
+      "Raw_Text": "hey can we log stats for South"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T18:30:51.655584+00:00",
+      "Raw_Text": "hey can we log stats for South"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T18:46:02.910740+00:00",
+      "Raw_Text": "Knights for Southampton"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T19:08:49.698446+00:00",
+      "Raw_Text": "hey can you log stats for South"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-12T19:09:09.236124+00:00",
+      "Raw_Text": "there are 26 new Christians 5 at youth six kids and three connect",
+      "Total Attendance": "26",
+      "New People": "26",
+      "New Christians": "26"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:21:45.876018+00:00",
+      "Raw_Text": "can we log for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:21:54.768852+00:00",
+      "Raw_Text": "can we log for South"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:22:30.005867+00:00",
+      "Raw_Text": "500 people, 20 np 6 nc",
+      "Total Attendance": "500",
+      "New People": "20",
+      "New Christians": "6"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:28:00.262269+00:00",
+      "Raw_Text": "South campus had 150 people, 8 new visitors, 3 salvations",
+      "Total Attendance": "150",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:34:22.237331+00:00",
+      "Raw_Text": "South campus had 150 people, 8 new visitors, 3 salvations",
+      "Total Attendance": "150",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:36:06.522610+00:00",
+      "Raw_Text": "how many people did south get lsat week"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:38:28.069812+00:00",
+      "Raw_Text": "South campus had 150 people, 8 new visitors, 3 salvations",
+      "Total Attendance": "150",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:42:27.337836+00:00",
+      "Raw_Text": "South campus had 200 people, 10 new visitors",
+      "Total Attendance": "200",
+      "New People": "10"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T00:47:58.469602+00:00",
+      "Raw_Text": "South campus had 150 people, 8 new visitors, 3 salvations",
+      "Total Attendance": "150",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T01:18:51.933523+00:00",
+      "Raw_Text": "south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T01:20:51.196384+00:00",
+      "Raw_Text": "lets log for south \n\\"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T01:21:21.678606+00:00",
+      "Raw_Text": "4 kids 300 people, 2 nc and 1 connect",
+      "Total Attendance": "300",
+      "New Christians": "2",
+      "Kids Total": "4",
+      "Connect Groups": "1"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T01:43:58.820293+00:00",
+      "Raw_Text": "How does South attendance compare between 2024 and 2023?"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T01:44:07.616771+00:00",
+      "Raw_Text": "How does South attendance compare between 2024 and 2023?"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:12:37.637347+00:00",
+      "Raw_Text": "can i get an anual report for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:30:56.718042+00:00",
+      "Raw_Text": "I couldn't find that information"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:31:01.962622+00:00",
+      "Raw_Text": "thanks for logging those stats"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:33:51.759186+00:00",
+      "Raw_Text": "I couldn't find that information"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:37:38.994284+00:00",
+      "Raw_Text": "I couldn't find that information"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T02:37:44.268450+00:00",
+      "Raw_Text": "thanks for logging those stats"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:02:30.330268+00:00",
+      "Raw_Text": "can i log stats for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:02:59.186526+00:00",
+      "Raw_Text": "200 attendance, 20 np, 15 nc, 5 kids, 2 connects and 75 youth",
+      "Total Attendance": "200",
+      "New People": "20",
+      "New Christians": "15",
+      "Youth Attendance": "75",
+      "Kids Total": "5",
+      "Connect Groups": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:04:56.063025+00:00",
+      "Raw_Text": "can i get an annual reivew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:05:24.172573+00:00",
+      "Raw_Text": "can i get an annual revioew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:05:43.843077+00:00",
+      "Raw_Text": "can i get an annual revioew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:06:17.426186+00:00",
+      "Raw_Text": "can i get an annual revioew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:07:33.626122+00:00",
+      "Raw_Text": "can i log 20 nc for south",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:11:02.472611+00:00",
+      "Raw_Text": "can i log for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:11:17.943410+00:00",
+      "Raw_Text": "200 poeople, 20 nc, 6 np",
+      "New People": "6",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:11:33.162024+00:00",
+      "Raw_Text": "can i get an annual revioew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:11:52.120872+00:00",
+      "Raw_Text": "can i get an annual recvoew for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T09:17:05.197273+00:00",
+      "Raw_Text": "can i log 500 people for south and 20 nc",
+      "Total Attendance": "500",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-15T10:10:51.713703+00:00",
+      "Raw_Text": "give me an annual revue for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:03:37.696358+00:00",
+      "Raw_Text": "can i log stats for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:04:16.903695+00:00",
+      "Raw_Text": "500 people, 4 np, 5 nc, 6 kids",
+      "Total Attendance": "500",
+      "New People": "4",
+      "New Christians": "5",
+      "Kids Total": "6"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:07:10.742656+00:00",
+      "Raw_Text": "south had 200 people tyhis week, 20 nc and 6 np",
+      "Total Attendance": "200",
+      "New People": "6",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:13:08.619672+00:00",
+      "Raw_Text": "can i log stats for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:13:30.831800+00:00",
+      "Raw_Text": "200 people, 5 np 4 nc 4 youth 3 kids and 2 connects",
+      "Total Attendance": "200",
+      "New People": "5",
+      "New Christians": "4",
+      "Youth Attendance": "4",
+      "Kids Total": "3",
+      "Connect Groups": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:16:41.034502+00:00",
+      "Raw_Text": "south had 200 people, 5 nc 6 np 8 kids 5 youth and 2 connects",
+      "Total Attendance": "200",
+      "New People": "6",
+      "New Christians": "5",
+      "Youth Attendance": "5",
+      "Kids Total": "8",
+      "Connect Groups": "2"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:17:56.476155+00:00",
+      "Raw_Text": "log 200 people for south and 20 nc",
+      "Total Attendance": "200",
+      "New Christians": "20"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:19:19.688332+00:00",
+      "Raw_Text": "south had 200 people today and 50 youth",
+      "Total Attendance": "200",
+      "Youth Attendance": "50"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:21:05.033246+00:00",
+      "Raw_Text": "south had 400 people today and 4 nc",
+      "Total Attendance": "400",
+      "New Christians": "4"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T00:50:53.659083+00:00",
+      "Raw_Text": "lets log 100 people for south, 5 np 3 nc 6 kids and 5 youth and 10 connect groups",
+      "Total Attendance": "100",
+      "New People": "5",
+      "New Christians": "3",
+      "Youth Attendance": "5",
+      "Kids Total": "6",
+      "Connect Groups": "10"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T03:00:25.562709+00:00",
+      "Raw_Text": "can i log for south, 200 people, 6 nc 8 np 5 connects 5 youth and 12 kids",
+      "Total Attendance": "200",
+      "New People": "8",
+      "New Christians": "6",
+      "Youth Attendance": "5",
+      "Kids Total": "12",
+      "Connect Groups": "5"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T03:21:07.123136+00:00",
+      "Raw_Text": "hoe msny np did south have last year"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T04:19:07.046187+00:00",
+      "Raw_Text": "can i log stats for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T04:19:25.827661+00:00",
+      "Raw_Text": "Can I log for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T04:44:36.026424+00:00",
+      "Raw_Text": "hoiw man np did south have this year"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T05:08:23.757567+00:00",
+      "Raw_Text": "np at south this year please"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T06:39:27.162512+00:00",
+      "Raw_Text": "Q1 2023 and Q1 2024 for South campus"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T12:56:09.883470+00:00",
+      "Raw_Text": "switch to south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-16T12:56:40.024070+00:00",
+      "Raw_Text": "lets log for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-17T04:56:03.005280+00:00",
+      "Raw_Text": "can i log for south. 200 people, 40 np 23 nc 13 kids 11 youth and 7 connect",
+      "Total Attendance": "200",
+      "New People": "40",
+      "New Christians": "23",
+      "Youth Attendance": "11",
+      "Kids Total": "13",
+      "Connect Groups": "7"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-17T04:57:41.385607+00:00",
+      "Raw_Text": "South campus had 200 people today",
+      "Total Attendance": "200"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-17T04:59:21.405789+00:00",
+      "Raw_Text": "South campus had 200 people today",
+      "Total Attendance": "200"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-17T05:02:36.953035+00:00",
+      "Raw_Text": "can i log stats for south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-18T01:02:58.893524+00:00",
+      "Raw_Text": "at south maybe it needs a campus"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-18T03:46:55.174766+00:00",
+      "Raw_Text": "can I get a south"
+    }
+  ],
+  "paradise": [
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:53:06.804808+00:00",
+      "Raw_Text": "south had 400 people",
+      "Total Attendance": "400"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:56:07.618086+00:00",
+      "Raw_Text": "south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:56:27.559004+00:00",
+      "Raw_Text": "Paradise had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects",
+      "Total Attendance": "400",
+      "New People": "7",
+      "New Christians": "5",
+      "Youth Attendance": "20",
+      "Kids Total": "5",
+      "Connect Groups": "3"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:58:05.795833+00:00",
+      "Raw_Text": "clare had 400 people",
+      "Total Attendance": "400"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:58:39.854283+00:00",
+      "Raw_Text": "copper coast had 403 people",
+      "Total Attendance": "403"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:59:41.769430+00:00",
+      "Raw_Text": "copper coast had 403 people",
+      "Total Attendance": "403"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T11:59:57.633388+00:00",
+      "Raw_Text": "copper coast had 403 people",
+      "Total Attendance": "403"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T12:06:51.434491+00:00",
+      "Raw_Text": "south had 406 people",
+      "Total Attendance": "406"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T12:07:00.294288+00:00",
+      "Raw_Text": "south had 4399"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:28:23.224253+00:00",
+      "Raw_Text": "Alexander"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:30:38.346583+00:00",
+      "Raw_Text": "hey can you hear me"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:33:51.710104+00:00",
+      "Raw_Text": "hey there can we lost yourself"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:44:14.728747+00:00",
+      "Raw_Text": "Play link can you hear me"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:44:27.626700+00:00",
+      "Raw_Text": "hey Google stats"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:45:47.464408+00:00",
+      "Raw_Text": "hey can we log those stats"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:48:52.703471+00:00",
+      "Raw_Text": "a-link Wheels stats"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T18:51:24.572803+00:00",
+      "Raw_Text": "hey can we log stats for selfie"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T19:12:36.305186+00:00",
+      "Raw_Text": "make a wheel log stats"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T19:13:03.072135+00:00",
+      "Raw_Text": "who is campus please"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-12T19:13:13.590571+00:00",
+      "Raw_Text": "Willow stats for selfie"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-15T00:28:38.936360+00:00",
+      "Raw_Text": "hey can I log stats for"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-15T00:31:57.444125+00:00",
+      "Raw_Text": "can I log stats with"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-15T00:33:46.152423+00:00",
+      "Raw_Text": "how many new people did salibury have last year in total"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-15T00:42:37.356376+00:00",
+      "Raw_Text": "Can I log stats?"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-15T08:59:25.344137+00:00",
+      "Raw_Text": "can i get a annual revoiew for paradise"
+    }
+  ],
+  "copper_coast": [
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-12T12:01:17.633518+00:00",
+      "Raw_Text": "copper coast had 403 people",
+      "Total Attendance": "403"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-12T12:01:19.821938+00:00",
+      "Raw_Text": "Copper Coast had 150 people, 5 new visitors",
+      "Total Attendance": "150",
+      "New People": "5"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-12T12:01:22.150129+00:00",
+      "Raw_Text": "copper coast campus had 200 people",
+      "Total Attendance": "200"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-12T12:01:24.369838+00:00",
+      "Raw_Text": "Copper Coast attendance was 180 people",
+      "Total Attendance": "180"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-12T12:01:50.778496+00:00",
+      "Raw_Text": "copper coast had 403 people",
+      "Total Attendance": "403"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-15T09:04:05.367595+00:00",
+      "Raw_Text": "can ilog stats for copper coast \n200 peeople, 35 kids, 10 you, 5 nc 4 np",
+      "New People": "4",
+      "New Christians": "5",
+      "Kids Total": "35"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-16T01:59:14.242227+00:00",
+      "Raw_Text": "lets log for copper"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-16T01:59:44.838997+00:00",
+      "Raw_Text": "300 people, 6 nc 5 np 33 kids, 4 connect anbd 9 youth",
+      "Total Attendance": "300",
+      "New People": "5",
+      "New Christians": "6",
+      "Youth Attendance": "9",
+      "Kids Total": "33",
+      "Connect Groups": "4"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-16T03:23:03.899992+00:00",
+      "Raw_Text": "can i log stats for copper coast"
+    }
+  ],
+  "clare_valley": [
+    {
+      "Campus": "clare_valley",
+      "Timestamp": "2025-07-12T12:08:41.495897+00:00",
+      "Raw_Text": "clare valley had 543"
+    },
+    {
+      "Campus": "clare_valley",
+      "Timestamp": "2025-07-17T05:07:17.276345+00:00",
+      "Raw_Text": "can i log got clare"
+    },
+    {
+      "Campus": "clare_valley",
+      "Timestamp": "2025-07-17T05:07:39.911374+00:00",
+      "Raw_Text": "100 people, 20 np 10 nc 7 kids, 4 youth and 3 connect",
+      "Total Attendance": "100",
+      "New People": "20",
+      "New Christians": "10",
+      "Youth Attendance": "4",
+      "Kids Total": "7",
+      "Connect Groups": "3"
+    }
+  ],
+  "salisbury": [
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-14T13:21:04.662462+00:00",
+      "Raw_Text": "how many people did salisbury have last week in kids"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:38:37.145394+00:00",
+      "Raw_Text": "Salisbury campus had 120 people, 5 new visitors",
+      "Total Attendance": "120",
+      "New People": "5"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:52:04.548780+00:00",
+      "Raw_Text": "Salisbury campus had 150 people, 8 new visitors, 3 salvations",
+      "Total Attendance": "150",
+      "New People": "8",
+      "New Christians": "3"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:52:24.282515+00:00",
+      "Raw_Text": "how many new people did salisbury have last month"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:53:47.758899+00:00",
+      "Raw_Text": "How many new people has Salisbury campus had this year?"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:59:02.315178+00:00",
+      "Raw_Text": "can i log stats today"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T00:59:17.206281+00:00",
+      "Raw_Text": "can i log stats"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T01:03:05.153331+00:00",
+      "Raw_Text": "Can I log stats for Salisbury campus?\" (should detect Salisbury)"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T01:03:28.776776+00:00",
+      "Raw_Text": "300 people 20th new Christians 5 Youth two kit and one connect",
+      "Total Attendance": "300",
+      "Youth Attendance": "5"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T01:03:51.694881+00:00",
+      "Raw_Text": "can i log stats"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-15T01:19:55.395309+00:00",
+      "Raw_Text": "Salisbury campus 150 people 5 new visitors",
+      "Total Attendance": "150",
+      "New People": "5"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-16T05:42:55.172886+00:00",
+      "Raw_Text": "q1 2025 for salisbury"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-16T06:35:45.447381+00:00",
+      "Raw_Text": "Q1 2024 for Salisbury"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-16T06:36:04.917165+00:00",
+      "Raw_Text": "can i get Q1 2024 for Salisbury"
+    }
+  ],
+  "South": [
+    {
+      "Campus": "South",
+      "Timestamp": "2025-07-16T04:19:55.787528+00:00",
+      "Raw_Text": "200 people, 30 np, 20nc, 5 kids, 5 connects, 3 youth",
+      "Total Attendance": "200",
+      "New People": "30",
+      "Youth Attendance": "3",
+      "Kids Total": "5",
+      "Connect Groups": "5"
+    },
+    {
+      "Campus": "South",
+      "Timestamp": "2025-07-16T04:20:18.450588+00:00",
+      "Raw_Text": "amd 4 nc",
+      "New Christians": "4"
+    },
+    {
+      "Campus": "South",
+      "Timestamp": "2025-07-16T12:56:54.308829+00:00",
+      "Raw_Text": "200 people 30 nc",
+      "Total Attendance": "200",
+      "New Christians": "30"
+    }
+  ],
+  "Salisbury": [
+    {
+      "Campus": "Salisbury",
+      "Timestamp": "2025-07-16T05:43:27.513410+00:00",
+      "Raw_Text": "can i get q1 2025 salsibury"
+    }
+  ]
+}

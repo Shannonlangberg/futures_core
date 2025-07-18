@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Campus Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; }
+        .result { margin: 10px 0; padding: 10px; background: #f0f0f0; }
+        select { padding: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Simple Campus Test</h1>
+    
+    <div class="test-section">
+        <h3>Campus Dropdown Test</h3>
+        <select id="campusDropdown">
+            <option value="Paradise">Paradise</option>
+            <option value="Adelaide City">Adelaide City</option>
+            <option value="Salisbury">Salisbury</option>
+            <option value="South">South</option>
+            <option value="Clare Valley">Clare Valley</option>
+            <option value="Mount Barker">Mount Barker</option>
+            <option value="Victor Harbour">Victor Harbour</option>
+            <option value="Copper Coast">Copper Coast</option>
+        </select>
+        <button onclick="testCampusUpdate()">Test Campus Update</button>
+        <div id="campus-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>API Test</h3>
+        <button onclick="testAPI()">Test API Call</button>
+        <div id="api-result" class="result"></div>
+    </div>
+
+    <script>
+        let currentCampus = null;
+        
+        // Initialize campus from dropdown
+        const campusDropdown = document.getElementById('campusDropdown');
+        if (campusDropdown) {
+            currentCampus = campusDropdown.value.toLowerCase();
+            console.log(`Initialized currentCampus to: ${currentCampus}`);
+        }
+        
+        function testCampusUpdate() {
+            const resultDiv = document.getElementById('campus-result');
+            resultDiv.innerHTML = 'Testing campus update...';
+            
+            // Simulate the updateCampus function
+            const campus = 'south';
+            console.log(`updateCampus called with: ${campus}`);
+            currentCampus = campus;
+
+            // Update the campus dropdown
+            const campusDropdown = document.getElementById('campusDropdown');
+            console.log(`Found campusDropdown element: ${campusDropdown ? 'yes' : 'no'}`);
+            
+            if (campusDropdown) {
+                // Map backend campus names to dropdown values
+                const campusMapping = {
+                    'south': 'South',
+                    'north': 'North', 
+                    'east': 'East',
+                    'west': 'West',
+                    'main': 'Paradise',
+                    'online': 'Online'
+                };
+                
+                const dropdownValue = campusMapping[campus] || campus;
+                console.log(`Mapping campus '${campus}' to dropdown value '${dropdownValue}'`);
+                campusDropdown.value = dropdownValue;
+                console.log(`Updated campus dropdown to: ${dropdownValue}`);
+                
+                resultDiv.innerHTML = `
+                    <h4>✅ Campus Update Test:</h4>
+                    <p><strong>Input campus:</strong> ${campus}</p>
+                    <p><strong>Mapped to:</strong> ${dropdownValue}</p>
+                    <p><strong>Dropdown value:</strong> ${campusDropdown.value}</p>
+                    <p><strong>Current campus:</strong> ${currentCampus}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p style="color: red;">❌ campusDropdown element not found!</p>';
+            }
+        }
+        
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = 'Testing API...';
+            
+            try {
+                const response = await fetch('/api/process_voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: 'south had 400 people, 5 nc, 7 np, 20 yout, 5 kids and 3 connects',
+                        campus: ''
+                    })
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h4>API Response:</h4>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    <p><strong>Campus received:</strong> ${data.campus}</p>
+                    <p><strong>Stats count:</strong> ${Object.keys(data.stats || {}).length}</p>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html> 

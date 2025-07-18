@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Futures LINK - Sci-Fi Dashboard</title>
+  <link rel="icon" href="/Futures1white.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0a0e1a 100%);
+      min-height: 100vh;
+      height: 100vh;
+      font-family: 'Inter', 'Orbitron', Arial, sans-serif;
+      color: #e2e8f0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0,212,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,126,94,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(127,95,255,0.10) 0%, transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgPulse {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    .dashboard-container {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0a0e1a 100%);
+    }
+
+    .dashboard-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(0,212,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,126,94,0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: rgba(10, 18, 30, 0.95);
+      border-bottom: 2px solid rgba(0,212,255,0.3);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,212,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      background: url('/Futures1white.png') no-repeat center/contain;
+      filter: drop-shadow(0 0 12px #00d4ff);
+      animation: logoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      0% { filter: drop-shadow(0 0 8px #00d4ff); }
+      100% { filter: drop-shadow(0 0 20px #00d4ff); }
+    }
+
+    .title {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px #00d4ff;
+    }
+
+    .title .accent {
+      color: #00d4ff;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #00d4ff;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #00d4ff;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      padding: 15px;
+      gap: 20px;
+      align-items: stretch;
+      justify-content: center;
+      min-height: 0;
+      overflow: hidden;
+      height: calc(100vh - 120px); /* Fill remaining height after top bar and bottom nav */
+    }
+
+    /* Left Panel - Stats */
+    .stats-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 200px;
+      max-width: 250px;
+      height: 100%;
+      overflow-y: auto;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1rem;
+      color: #00d4ff;
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 10px #00d4ff;
+      flex-shrink: 0;
+    }
+
+    .stat-card {
+      background: rgba(10, 18, 30, 0.8);
+      border: 2px solid rgba(0,212,255,0.3);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,212,255,0.1);
+      flex-shrink: 0;
+      flex: 1;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 8px 25px rgba(0,212,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .stat-label {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 0.75rem;
+      color: #00d4ff;
+      margin-bottom: 4px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .stat-number {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff7e5e;
+      text-shadow: 0 0 10px rgba(255,126,94,0.5);
+    }
+
+    /* Center - Orb */
+    .orb-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      max-width: 400px;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .orb-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .orb-container:hover {
+      transform: scale(1.05);
+    }
+
+    .orb-container:active {
+      transform: scale(0.95);
+    }
+
+    #tsparticles-orb {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, rgba(0,0,0,0.3) 70%);
+      box-shadow: 
+        0 0 60px rgba(0,212,255,0.3),
+        0 0 0 2px rgba(0,212,255,0.2),
+        inset 0 0 30px rgba(0,212,255,0.1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .orb-status {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .status-text {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 0.9rem;
+      color: #00d4ff;
+      margin-bottom: 5px;
+      text-shadow: 0 0 8px #00d4ff;
+    }
+
+    .listening-text {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.2rem;
+      color: #ff7e5e;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(255,126,94,0.6);
+      animation: textPulse 2s ease-in-out infinite alternate;
+    }
+
+    .transcript-display {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(10, 18, 30, 0.8);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+    }
+
+    .transcript-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 0.7rem;
+      color: #00d4ff;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .transcript-text {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      line-height: 1.3;
+      word-wrap: break-word;
+    }
+
+    @keyframes textPulse {
+      0% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+
+    /* Right Panel - Info (Symmetrical to Stats) */
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 200px;
+      max-width: 250px;
+      height: 100%;
+      overflow-y: auto;
+      justify-content: space-between;
+    }
+
+    .info-card {
+      background: rgba(10, 18, 30, 0.8);
+      border: 2px solid rgba(0,212,255,0.3);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,212,255,0.1);
+      flex-shrink: 0;
+      flex: 1;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .info-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 8px 25px rgba(0,212,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .info-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 0.75rem;
+      color: #00d4ff;
+      margin-bottom: 4px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .info-content {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff7e5e;
+      text-shadow: 0 0 10px rgba(255,126,94,0.5);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 18, 30, 0.95);
+      border: 2px solid rgba(0,212,255,0.3);
+      border-radius: 20px;
+      padding: 10px 20px;
+      display: flex;
+      gap: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0,212,255,0.2);
+      z-index: 100;
+    }
+
+    .nav-item {
+      color: #00d4ff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-item:hover {
+      background: rgba(0,212,255,0.2);
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    /* Input Modal */
+    .input-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10,18,30,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .input-content {
+      background: rgba(10,18,30,0.98);
+      border: 2px solid #00d4ff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .input-title {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.5rem;
+      color: #00d4ff;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00d4ff;
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(10,18,30,0.8);
+      border: 2px solid rgba(0,212,255,0.3);
+      border-radius: 12px;
+      padding: 15px;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: #00d4ff;
+      box-shadow: 0 0 20px rgba(0,212,255,0.3);
+    }
+
+    .input-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .input-btn {
+      background: rgba(0,212,255,0.2);
+      border: 2px solid #00d4ff;
+      border-radius: 10px;
+      padding: 12px 24px;
+      color: #00d4ff;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .input-btn:hover {
+      background: rgba(0,212,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .input-btn.cancel {
+      border-color: #ff7e5e;
+      color: #ff7e5e;
+    }
+
+    .input-btn.cancel:hover {
+      background: rgba(255,126,94,0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .main-content {
+        gap: 15px;
+        padding: 10px;
+      }
+      
+      .stats-panel, .info-panel {
+        min-width: 180px;
+        max-width: 200px;
+      }
+      
+      .orb-container {
+        width: 240px;
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .main-content {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px;
+        overflow-y: auto;
+      }
+      
+      .stats-panel, .info-panel {
+        min-width: auto;
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        max-height: 200px;
+      }
+      
+      .orb-container {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .orb-section {
+        max-width: none;
+        height: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        padding: 10px 15px;
+      }
+      
+      .title {
+        font-size: 1.2rem;
+      }
+      
+      .main-content {
+        padding: 8px;
+      }
+      
+      .orb-container {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .bottom-nav {
+        padding: 8px 15px;
+        gap: 15px;
+      }
+      
+      .nav-item {
+        font-size: 0.9rem;
+        width: 28px;
+        height: 28px;
+      }
+      
+      .stat-card, .info-card {
+        padding: 10px;
+      }
+      
+      .stat-number, .info-content {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-panel, .info-panel {
+        max-width: 100%;
+        max-height: 150px;
+      }
+      
+      .orb-container {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .stat-card, .info-card {
+        padding: 8px;
+      }
+      
+      .stat-number, .info-content {
+        font-size: 1rem;
+      }
+      
+      .title {
+        font-size: 1rem;
+      }
+      
+      .logo {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-height: 600px) {
+      .top-bar {
+        padding: 8px 15px;
+      }
+      
+      .main-content {
+        padding: 8px;
+        gap: 10px;
+      }
+      
+      .orb-container {
+        width: 160px;
+        height: 160px;
+      }
+      
+      .stats-panel, .info-panel {
+        gap: 8px;
+      }
+      
+      .stat-card, .info-card {
+        padding: 8px;
+      }
+      
+      .stat-number, .info-content {
+        font-size: 1rem;
+      }
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10,18,30,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(10,18,30,0.98);
+      border: 2px solid #00d4ff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #ff7e5e;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,126,94,0.2);
+      color: #fff;
+    }
+
+    /* Scrollbar styling */
+    .stats-panel::-webkit-scrollbar,
+    .info-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .stats-panel::-webkit-scrollbar-track,
+    .info-panel::-webkit-scrollbar-track {
+      background: rgba(0,212,255,0.1);
+      border-radius: 2px;
+    }
+
+    .stats-panel::-webkit-scrollbar-thumb,
+    .info-panel::-webkit-scrollbar-thumb {
+      background: rgba(0,212,255,0.3);
+      border-radius: 2px;
+    }
+
+    .stats-panel::-webkit-scrollbar-thumb:hover,
+    .info-panel::-webkit-scrollbar-thumb:hover {
+      background: rgba(0,212,255,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="logo-section">
+        <div class="logo"></div>
+        <div class="title">Futures <span class="accent">LINK</span></div>
+      </div>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>System Online</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Left Panel - Stats -->
+      <div class="stats-panel">
+        <div class="panel-title">Live Statistics</div>
+        <div class="stat-card">
+          <div class="stat-label">Total Attendance</div>
+          <div class="stat-number" id="stat-attendance">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">New People</div>
+          <div class="stat-number" id="stat-new-people">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">New Christians</div>
+          <div class="stat-number" id="stat-new-christians">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Youth Attendance</div>
+          <div class="stat-number" id="stat-youth">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Kids Total</div>
+          <div class="stat-number" id="stat-kids">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Connect Groups</div>
+          <div class="stat-number" id="stat-connect">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Volunteers</div>
+          <div class="stat-number" id="stat-volunteers">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Tithe Amount</div>
+          <div class="stat-number" id="stat-tithe">—</div>
+        </div>
+      </div>
+
+      <!-- Center - Orb -->
+      <div class="orb-section">
+        <div class="orb-container" onclick="handleOrbClick()" ondblclick="handleOrbDoubleClick()">
+          <div id="tsparticles-orb"></div>
+        </div>
+        <div class="orb-status">
+          <div class="status-text">Voice Assistant</div>
+          <div class="listening-text" id="listening-text">Ready</div>
+          <div class="transcript-display" id="transcript-display" style="display: none;">
+            <div class="transcript-title">Heard:</div>
+            <div class="transcript-text" id="transcript-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel - Info (Symmetrical) -->
+      <div class="info-panel">
+        <div class="panel-title">System Information</div>
+        <div class="info-card">
+          <div class="info-title">System Status</div>
+          <div class="info-content">Online</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Voice Recognition</div>
+          <div class="info-content">Active</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Data Sync</div>
+          <div class="info-content">Enabled</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Current Date</div>
+          <div class="info-content" id="current-date">—</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Campus Select</div>
+          <div class="info-content">
+            <select id="campus-select" style="
+              background: rgba(10,18,30,0.8);
+              border: 1px solid rgba(0,212,255,0.3);
+              border-radius: 6px;
+              color: #00d4ff;
+              font-family: 'Inter', Arial, sans-serif;
+              font-size: 0.9rem;
+              padding: 4px 8px;
+              width: 100%;
+              outline: none;
+              cursor: pointer;
+            " onchange="updateCampus(this.value); if(this.value) loadStatsForCampus(this.value);">
+              <option value="">Select Campus</option>
+              <option value="paradise">Paradise</option>
+              <option value="south">South</option>
+              <option value="north">North</option>
+              <option value="east">East</option>
+              <option value="west">West</option>
+              <option value="adelaide_city">Adelaide City</option>
+              <option value="salisbury">Salisbury</option>
+              <option value="clare_valley">Clare Valley</option>
+              <option value="mount_barker">Mount Barker</option>
+              <option value="victor_harbour">Victor Harbour</option>
+              <option value="copper_coast">Copper Coast</option>
+            </select>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Connection</div>
+          <div class="info-content">Stable</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Last Updated</div>
+          <div class="info-content" id="last-updated">—</div>
+        </div>
+        <div class="info-card">
+          <div class="info-title">Data Source</div>
+          <div class="info-content">Google Sheets</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item" title="Home">🏠</div>
+      <div class="nav-item" title="Search">🔍</div>
+      <div class="nav-item" title="Stats">📊</div>
+      <div class="nav-item" title="Settings">⚙️</div>
+    </div>
+  </div>
+
+  <!-- Input Modal -->
+  <div class="input-modal" id="inputModal">
+    <div class="input-content">
+      <div class="input-title">Enter Your Query</div>
+      <input type="text" class="input-field" id="queryInput" placeholder="Type your question or command..." autocomplete="off">
+      <div class="input-buttons">
+        <button class="input-btn" onclick="submitQuery()">Submit</button>
+        <button class="input-btn cancel" onclick="closeInputModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize tsparticles orb
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing tsparticles...');
+      
+      if (!window.tsParticles) {
+        console.error('tsParticles not loaded!');
+        return;
+      }
+      
+      console.log('tsParticles loaded, configuring orb...');
+      
+      window.tsParticles.load('tsparticles-orb', {
+        fullScreen: { enable: false },
+        background: { color: 'transparent' },
+        particles: {
+          number: { 
+            value: 60,
+            density: { enable: true, value_area: 600 }
+          },
+          color: { 
+            value: ["#00d4ff", "#7f5fff", "#ff7ee0", "#00fff0", "#ff7e5e"]
+          },
+          shape: { 
+            type: "circle",
+            stroke: { width: 0, color: "#000000" }
+          },
+          opacity: { 
+            value: 0.8,
+            random: { enable: true, minimumValue: 0.3 },
+            animation: { enable: true, speed: 1, minimumValue: 0.1 }
+          },
+          size: { 
+            value: 3,
+            random: { enable: true, minimumValue: 1 },
+            animation: { enable: true, speed: 2, minimumValue: 0.5 }
+          },
+          move: { 
+            enable: true,
+            speed: 1.2,
+            direction: "none",
+            random: true,
+            straight: false,
+            outModes: { default: "bounce" },
+            attract: { enable: true, rotateX: 1200, rotateY: 1200 }
+          },
+          shadow: { 
+            enable: true, 
+            color: "#00d4ff", 
+            blur: 12,
+            offset: { x: 0, y: 0 }
+          }
+        },
+        interactivity: {
+          detectOn: "canvas",
+          events: {
+            onHover: { enable: true, mode: "repulse" },
+            onClick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            repulse: { distance: 80, duration: 0.4 },
+            push: { particles_nb: 3 }
+          }
+        },
+        detectRetina: true
+      });
+      
+      console.log('Orb initialized successfully!');
+      
+      // Initialize current date
+      updateCurrentDate();
+    });
+
+    // Orb click handler
+    function handleOrbClick() {
+      console.log('Orb clicked!');
+      updateListeningText('Listening...');
+      
+      // Try to use speech recognition if available
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        startVoiceRecognition();
+      } else {
+        // Fallback to text input
+        showInputModal();
+      }
+    }
+
+    // Orb double-click handler for text input
+    function handleOrbDoubleClick() {
+      console.log('Orb double-clicked!');
+      showInputModal();
+    }
+
+    // Voice recognition
+    function startVoiceRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+      
+      recognition.onstart = function() {
+        updateListeningText('Listening...');
+        console.log('Voice recognition started');
+      };
+      
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        console.log('Voice input:', transcript);
+        updateListeningText('Processing...');
+        showTranscript(transcript);
+        processInput(transcript);
+      };
+      
+      recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+        updateListeningText('Error');
+        setTimeout(() => updateListeningText('Ready'), 2000);
+      };
+      
+      recognition.onend = function() {
+        console.log('Voice recognition ended');
+        setTimeout(() => updateListeningText('Ready'), 1000);
+      };
+      
+      recognition.start();
+    }
+
+    // Show input modal
+    function showInputModal() {
+      document.getElementById('inputModal').style.display = 'flex';
+      document.getElementById('queryInput').focus();
+    }
+
+    // Close input modal
+    function closeInputModal() {
+      document.getElementById('inputModal').style.display = 'none';
+      document.getElementById('queryInput').value = '';
+      updateListeningText('Ready');
+    }
+
+    // Submit query
+    function submitQuery() {
+      const input = document.getElementById('queryInput').value.trim();
+      if (input) {
+        closeInputModal();
+        processInput(input);
+      }
+    }
+
+    // Process input (voice or text)
+    function processInput(input) {
+      console.log('Processing input:', input);
+      updateListeningText('Processing...');
+      showTranscript(input);
+      
+      // Get selected campus
+      const campusSelect = document.getElementById('campus-select');
+      const selectedCampus = campusSelect ? campusSelect.value : '';
+      
+      // Send to backend
+      fetch('/api/process_voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: input,
+          campus: selectedCampus 
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Backend response:', data);
+        console.log('Report data:', data.report);
+        console.log('Report type:', typeof data.report);
+        console.log('Report is array:', Array.isArray(data.report));
+        
+        // Update campus from response if provided
+        if (data.campus) {
+          updateCampusFromResponse(data.campus);
+        }
+        
+        // Update stats if provided
+        if (data.stats) {
+          updateStats(data.stats);
+        }
+        
+        // Update current date
+        updateCurrentDate();
+        
+        // Play audio response if available
+        if (data.audio_url) {
+          console.log('🎵 Playing audio response:', data.audio_url);
+          playAudioResponse(data.audio_url, data.text);
+        } else if (data.text && 'speechSynthesis' in window) {
+          // Fallback to browser TTS if no audio URL
+          console.log('🔄 Using browser TTS for response');
+          speakText(data.text);
+        }
+        
+        // Show modal with results if it's a query
+        if (data.report || data.analysis) {
+          console.log('Showing modal with data:', data);
+          showModal(createQueryModal(data));
+        }
+        
+        // Only update listening text if no campus was set
+        if (!data.campus) {
+          updateListeningText('Ready');
+        }
+      })
+      .catch(error => {
+        console.error('Error processing input:', error);
+        updateListeningText('Error');
+        setTimeout(() => updateListeningText('Ready'), 2000);
+      });
+    }
+
+    // Handle Enter key in input field
+    document.getElementById('queryInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        submitQuery();
+      }
+    });
+
+    // Modal functions
+    function showModal(content) {
+      document.getElementById('modal-body').innerHTML = content;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeInputModal();
+      }
+    });
+
+    // Create query modal content
+    function createQueryModal(data) {
+      console.log('Creating modal with data:', data);
+      let html = '';
+      
+      if (data.comparison === true && Array.isArray(data.reports) && data.reports.length === 2 && data.percent_changes) {
+        const years = data.years;
+        const reports = data.reports;
+        const percentChanges = data.percent_changes;
+        
+        html += `<h3 style="color: #00d4ff; margin-bottom: 20px;">Comparison Results</h3>`;
+        html += `<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">`;
+        html += `<thead><tr><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Stat</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">${years[0]}</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">${years[1]}</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Change</th></tr></thead><tbody>`;
+        
+        Object.keys(percentChanges).forEach(stat => {
+          const val1 = reports[0].report.find(r => r.stat === stat)?.total || 0;
+          const val2 = reports[1].report.find(r => r.stat === stat)?.total || 0;
+          const pct = percentChanges[stat];
+          
+          let pctClass = '';
+          if (pct > 0.01) pctClass = 'color: #22c55e;';
+          else if (pct < -0.01) pctClass = 'color: #ef4444;';
+          else pctClass = 'color: #f59e0b;';
+          
+          html += `<tr><td style="padding: 10px; border: 1px solid #00d4ff;">${stat.replace('_', ' ').toUpperCase()}</td><td style="padding: 10px; border: 1px solid #00d4ff;">${val1}</td><td style="padding: 10px; border: 1px solid #00d4ff;">${val2}</td><td style="padding: 10px; border: 1px solid #00d4ff; ${pctClass}">${pct.toFixed(1)}%</td></tr>`;
+        });
+        
+        html += '</tbody></table>';
+      } else if (data.report && Array.isArray(data.report)) {
+        console.log('Processing annual review report with', data.report.length, 'items');
+        html += `<h3 style="color: #00d4ff; margin-bottom: 20px;">Annual Review Report</h3>`;
+        html += `<p style="color: #e2e8f0; margin-bottom: 20px;">${data.text || 'Report generated successfully.'}</p>`;
+        
+        // Group stats by year for better organization
+        const groupedByYear = {};
+        data.report.forEach(row => {
+          console.log('Processing row:', row);
+          if (!groupedByYear[row.year]) {
+            groupedByYear[row.year] = [];
+          }
+          groupedByYear[row.year].push(row);
+        });
+        
+        console.log('Grouped by year:', groupedByYear);
+        
+        // Create table for each year
+        Object.keys(groupedByYear).sort((a, b) => b - a).forEach(year => {
+          const yearStats = groupedByYear[year];
+          console.log('Creating table for year', year, 'with', yearStats.length, 'stats');
+          html += `<h4 style="color: #00d4ff; margin: 20px 0 10px 0;">${year}</h4>`;
+          html += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">`;
+          html += `<thead><tr><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Stat</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Total</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Average</th><th style="padding: 10px; border: 1px solid #00d4ff; color: #00d4ff;">Entries</th></tr></thead><tbody>`;
+          
+          yearStats.forEach(stat => {
+            html += `<tr><td style="padding: 10px; border: 1px solid #00d4ff;">${stat.label}</td><td style="padding: 10px; border: 1px solid #00d4ff;">${stat.total}</td><td style="padding: 10px; border: 1px solid #00d4ff;">${stat.average}</td><td style="padding: 10px; border: 1px solid #00d4ff;">${stat.count}</td></tr>`;
+          });
+          
+          html += '</tbody></table>';
+        });
+      } else if (data.report) {
+        html += `<h3 style="color: #00d4ff; margin-bottom: 20px;">Report Results</h3>`;
+        html += `<p style="color: #e2e8f0; margin-bottom: 20px;">${data.text || 'Report generated successfully.'}</p>`;
+      } else {
+        html += `<h3 style="color: #00d4ff; margin-bottom: 20px;">Query Results</h3>`;
+        html += `<p style="color: #e2e8f0;">${data.text || data.answer || 'Query processed successfully.'}</p>`;
+      }
+      
+      console.log('Generated HTML length:', html.length);
+      console.log('Generated HTML preview:', html.substring(0, 200));
+      return html;
+    }
+
+    // Update listening text
+    function updateListeningText(text) {
+      document.getElementById('listening-text').textContent = text;
+    }
+
+    // Show transcript
+    function showTranscript(text) {
+      const transcriptDisplay = document.getElementById('transcript-display');
+      const transcriptText = document.getElementById('transcript-text');
+      
+      transcriptText.textContent = text;
+      transcriptDisplay.style.display = 'block';
+      
+      // Hide transcript after 5 seconds
+      setTimeout(() => {
+        transcriptDisplay.style.display = 'none';
+      }, 5000);
+    }
+
+    // Play audio response
+    function playAudioResponse(audioUrl, responseText = null) {
+      console.log('🎵 Starting audio playback:', audioUrl);
+      
+      // Create audio element if it doesn't exist
+      let audioElement = document.getElementById('response-audio');
+      if (!audioElement) {
+        audioElement = document.createElement('audio');
+        audioElement.id = 'response-audio';
+        audioElement.style.display = 'none';
+        document.body.appendChild(audioElement);
+      }
+      
+      // Set up audio event listeners
+      audioElement.onloadstart = () => console.log('🎵 Audio loading started');
+      audioElement.oncanplay = () => console.log('🎵 Audio ready to play');
+      audioElement.onplay = () => console.log('🎵 Audio started playing');
+      audioElement.onended = () => console.log('🎵 Audio finished');
+      audioElement.onerror = (e) => {
+        console.error('❌ Audio error:', e);
+        // Fallback to browser TTS
+        fallbackToBrowserTTS(responseText);
+      };
+      
+      // Set source and play
+      audioElement.src = audioUrl;
+      audioElement.volume = 0.8;
+      
+      const playPromise = audioElement.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('✅ Audio playback started successfully');
+          })
+          .catch(error => {
+            console.error('❌ Audio playback failed:', error);
+            // Fallback to browser TTS
+            fallbackToBrowserTTS(responseText);
+          });
+      }
+    }
+
+    // Fallback to browser TTS
+    function fallbackToBrowserTTS(responseText = null) {
+      if ('speechSynthesis' in window) {
+        console.log('🔄 Falling back to browser TTS');
+        const text = responseText || 'Response received';
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        utterance.volume = 0.8;
+        speechSynthesis.speak(utterance);
+      } else {
+        console.log('⚠️ No audio playback available');
+      }
+    }
+
+    // Speak text using browser TTS
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        console.log('🗣️ Speaking text:', text);
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        utterance.volume = 0.8;
+        speechSynthesis.speak(utterance);
+      } else {
+        console.log('⚠️ Browser TTS not available');
+      }
+    }
+
+    // Update stats
+    function updateStats(stats) {
+      if (stats.total_attendance !== undefined) {
+        document.getElementById('stat-attendance').textContent = stats.total_attendance;
+      }
+      if (stats.new_people !== undefined) {
+        document.getElementById('stat-new-people').textContent = stats.new_people;
+      }
+      if (stats.new_christians !== undefined) {
+        document.getElementById('stat-new-christians').textContent = stats.new_christians;
+      }
+      if (stats.youth_attendance !== undefined) {
+        document.getElementById('stat-youth').textContent = stats.youth_attendance;
+      }
+      if (stats.kids_total !== undefined) {
+        document.getElementById('stat-kids').textContent = stats.kids_total;
+      }
+      if (stats.connect_groups !== undefined) {
+        document.getElementById('stat-connect').textContent = stats.connect_groups;
+      }
+      if (stats.volunteers !== undefined) {
+        document.getElementById('stat-volunteers').textContent = stats.volunteers;
+      }
+      if (stats.tithe_amount !== undefined) {
+        document.getElementById('stat-tithe').textContent = stats.tithe_amount;
+      }
+    }
+
+    // Update current date
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      };
+      const dateString = now.toLocaleDateString('en-US', options);
+      document.getElementById('current-date').textContent = dateString;
+    }
+
+    // Update campus selection
+    function updateCampus(campus) {
+      console.log('Campus selected:', campus);
+      if (campus) {
+        updateListeningText(`Campus: ${campus}`);
+        // You can add additional campus-specific logic here
+      } else {
+        updateListeningText('Ready');
+      }
+    }
+
+    // Update campus from backend response
+    function updateCampusFromResponse(campus) {
+      console.log('Updating campus from response:', campus);
+      
+      // Update the dropdown
+      const campusSelect = document.getElementById('campus-select');
+      if (campusSelect && campus) {
+        // Convert campus name to dropdown value format
+        // Backend returns "South", "Paradise", etc. - convert to "south", "paradise"
+        const campusValue = campus.toLowerCase().replace(/ /g, '_');
+        campusSelect.value = campusValue;
+        console.log('Updated dropdown to:', campusValue);
+        
+        // Load stats for the selected campus
+        loadStatsForCampus(campusValue);
+      }
+      
+      // Update the listening text to show campus
+      if (campus) {
+        updateListeningText(`Campus: ${campus}`);
+      }
+    }
+
+    // Load stats for a specific campus
+    function loadStatsForCampus(campus) {
+      console.log('Loading stats for campus:', campus);
+      
+      fetch(`/api/stats?campus=${encodeURIComponent(campus)}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Stats loaded:', data);
+          if (data.stats) {
+            updateStats(data.stats);
+            // Update last updated timestamp
+            const now = new Date();
+            document.getElementById('last-updated').textContent = now.toLocaleTimeString();
+          }
+        })
+        .catch(error => {
+          console.error('Error loading stats:', error);
+        });
+    }
+
+    // Make functions globally available
+    window.showModal = showModal;
+    window.updateListeningText = updateListeningText;
+    window.updateStats = updateStats;
+    window.updateCurrentDate = updateCurrentDate;
+    window.showTranscript = showTranscript;
+    window.updateCampus = updateCampus;
+    window.updateCampusFromResponse = updateCampusFromResponse;
+    window.playAudioResponse = playAudioResponse;
+    window.speakText = speakText;
+    window.loadStatsForCampus = loadStatsForCampus;
+
+    console.log('Dashboard initialized successfully!');
+  </script>
+</body>
+</html> 

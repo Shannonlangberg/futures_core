@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; }
+        .result { margin: 10px 0; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Frontend Debug Test</h1>
+    
+    <div class="test-section">
+        <h3>Test API Response</h3>
+        <button onclick="testAPI()">Test API Call</button>
+        <div id="api-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Stats Update</h3>
+        <button onclick="testStatsUpdate()">Test Stats Display</button>
+        <div id="stats-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Mock Response Test</h3>
+        <button onclick="testMockResponse()">Test Mock Data</button>
+        <div id="mock-result" class="result"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = 'Testing API...';
+            
+            try {
+                const response = await fetch('/api/process_voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: 'South campus had 145 people today, 8 new visitors, 3 salvations',
+                        campus: 'south'
+                    })
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h4>API Response:</h4>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    <p><strong>Stats object:</strong> ${data.stats ? 'Present' : 'Missing'}</p>
+                    <p><strong>Campus:</strong> ${data.campus}</p>
+                    <p><strong>Text:</strong> ${data.text}</p>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        function testStatsUpdate() {
+            const resultDiv = document.getElementById('stats-result');
+            resultDiv.innerHTML = 'Testing stats update...';
+            
+            // Mock the updateStatsDisplay function
+            const mockStats = {
+                'total_attendance': '145',
+                'new_people': '8',
+                'new_christians': '3',
+                'youth_attendance': '25',
+                'kids_total': '35',
+                'connect_groups': '12'
+            };
+            
+            resultDiv.innerHTML = `
+                <h4>Mock Stats:</h4>
+                <pre>${JSON.stringify(mockStats, null, 2)}</pre>
+                <p>This simulates what the backend should return.</p>
+            `;
+        }
+        
+        function testMockResponse() {
+            const resultDiv = document.getElementById('mock-result');
+            resultDiv.innerHTML = 'Testing mock response...';
+            
+            // Simulate the exact response format from backend
+            const mockResponse = {
+                text: "Wonderful news from the South Campus!",
+                campus: "south",
+                stats: {
+                    'total_attendance': '145',
+                    'new_people': '8',
+                    'new_christians': '3',
+                    'youth_attendance': '25',
+                    'kids_total': '35',
+                    'connect_groups': '12'
+                },
+                missing_stats: [],
+                suggestions: []
+            };
+            
+            resultDiv.innerHTML = `
+                <h4>Mock Response:</h4>
+                <pre>${JSON.stringify(mockResponse, null, 2)}</pre>
+                <p><strong>Stats keys:</strong> ${Object.keys(mockResponse.stats).join(', ')}</p>
+                <p><strong>Stats count:</strong> ${Object.keys(mockResponse.stats).length}</p>
+            `;
+        }
+    </script>
+</body>
+</html> 

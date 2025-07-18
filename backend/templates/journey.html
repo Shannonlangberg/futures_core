@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futures passport</title>
+    <link rel="icon" href="/Futures1white.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Orbitron', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0a0e1a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            color: #e2e8f0;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0,212,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,126,94,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(127,95,255,0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: bgPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(10, 18, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 24px;
+            box-shadow: 
+                0 8px 32px rgba(0,212,255,0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, rgba(0,212,255,0.3) 0%, rgba(127,95,255,0.3) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0,212,255,0.3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 0 15px #00d4ff;
+            letter-spacing: 1px;
+        }
+        
+        .header .welcome {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #e2e8f0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: url('/Futures1white.png') no-repeat center/contain;
+            filter: drop-shadow(0 0 12px #00d4ff);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 8px #00d4ff); }
+            100% { filter: drop-shadow(0 0 20px #00d4ff); }
+        }
+        
+        .accent {
+            color: #00d4ff;
+        }
+        
+        .title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px #00d4ff;
+        }
+        
+        .content {
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .journey-progress {
+            background: rgba(10, 18, 30, 0.8);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid rgba(0,212,255,0.8);
+            box-shadow: 0 8px 32px rgba(0,212,255,0.1);
+        }
+        
+        .journey-title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+        
+        .progress-visual {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        
+        .stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 40px;
+            min-width: 100px;
+        }
+        
+        .stage-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            position: relative;
+            border: 2px solid rgba(0,212,255,0.3);
+        }
+        
+        .stage-circle.completed {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-color: #27ae60;
+            box-shadow: 0 0 20px rgba(39, 174, 96, 0.5);
+        }
+        
+        .stage-circle.current {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border-color: #f39c12;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
+        }
+        
+        .stage-circle.locked {
+            background: rgba(189, 195, 199, 0.3);
+            border-color: rgba(189, 195, 199, 0.5);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(243, 156, 18, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(243, 156, 18, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(243, 156, 18, 0.5); }
+        }
+        
+        .stage-label {
+            font-size: 0.9em;
+            text-align: center;
+            color: rgba(226, 232, 240, 0.7);
+            font-weight: 500;
+        }
+        
+        .current-stage {
+            background: rgba(255, 243, 205, 0.1);
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
+        }
+        
+        .current-stage h3 {
+            color: rgba(243, 156, 18, 0.9);
+            margin-bottom: 5px;
+        }
+        
+        .current-stage p {
+            color: rgba(243, 156, 18, 0.7);
+            font-size: 0.95em;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(10, 18, 30, 0.8);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0,212,255,0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 8px 25px rgba(0,212,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .card h3 {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', Arial, sans-serif;
+        }
+        
+        .card h3 .emoji {
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+        
+        .achievements-list {
+            list-style: none;
+        }
+        
+        .achievements-list li {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .achievements-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .achievement-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
+        }
+        
+        .achievement-text {
+            flex: 1;
+        }
+        
+        .achievement-title {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .achievement-date {
+            font-size: 0.85em;
+            color: rgba(226, 232, 240, 0.6);
+        }
+        
+        .next-steps-list {
+            list-style: none;
+        }
+        
+        .next-steps-list li {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(0,212,255,0.1);
+            border-radius: 10px;
+            border-left: 4px solid #00d4ff;
+            transition: all 0.3s ease;
+        }
+
+        .next-steps-list li:hover {
+            background: rgba(0,212,255,0.15);
+            transform: translateX(5px);
+        }
+        
+        .step-icon {
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+        
+        .step-text {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            font-size: 0.9em;
+            color: rgba(226, 232, 240, 0.6);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,212,255,0.1);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0,212,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00d4ff;
+            display: block;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: rgba(226, 232, 240, 0.6);
+            margin-top: 5px;
+        }
+        
+        .daily-checkin {
+            background: linear-gradient(135deg, rgba(0,212,255,0.3) 0%, rgba(127,95,255,0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0,212,255,0.3);
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0,212,255,0.1);
+        }
+        
+        .daily-checkin h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-family: 'Orbitron', Arial, sans-serif;
+        }
+        
+        .checkin-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(0,212,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0,212,255,0.5);
+            color: #00d4ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        
+        .btn:hover {
+            background: rgba(0,212,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,212,255,0.3);
+        }
+        
+        .btn.primary {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.8) 0%, rgba(46, 204, 113, 0.8) 100%);
+            border: 2px solid rgba(39, 174, 96, 0.5);
+            color: white;
+        }
+        
+        .btn.primary:hover {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.9) 0%, rgba(46, 204, 113, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+            backdrop-filter: blur(8px);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #27ae60);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,212,255,0.5);
+        }
+        
+        .streak-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+        }
+        
+        .streak-indicator .fire {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 18, 30, 0.95);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0,212,255,0.2);
+            z-index: 100;
+        }
+
+        .nav-item {
+            color: #00d4ff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 6px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-item:hover {
+            background: rgba(0,212,255,0.2);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .stat-item {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 1.5em;
+            }
+            
+            .progress-visual {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .stage {
+                margin-right: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .checkin-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 200px;
+                margin-bottom: 10px;
+            }
+            
+            .bottom-nav {
+                padding: 8px 15px;
+                gap: 15px;
+            }
+            
+            .nav-item {
+                font-size: 0.9rem;
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .stat-item {
+                padding: 12px;
+            }
+            
+            .stat-number {
+                font-size: 1.3em;
+            }
+            
+            .stage {
+                margin-right: 15px;
+                min-width: 80px;
+            }
+            
+            .stage-circle {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .stage-label {
+                font-size: 0.8em;
+            }
+            
+            .bottom-nav {
+                padding: 6px 12px;
+                gap: 12px;
+            }
+            
+            .nav-item {
+                font-size: 0.8rem;
+                width: 26px;
+                height: 26px;
+            }
+            
+            /* Touch-friendly improvements */
+            .btn {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            .checkin-buttons .btn {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .header {
+                padding: 15px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .journey-progress {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .daily-checkin {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div class="title">Futures <span class="accent">PASSPORT</span></div>
+            </div>
+            <div class="welcome">Good morning, Shannon! Ready to grow today?</div>
+        </div>
+        
+        <div class="content">
+            <!-- Daily Check-in Section -->
+            <div class="daily-checkin">
+                <h3>📖 Today's Spiritual Growth</h3>
+                <p style="margin-bottom: 20px;">Psalm 48-50 • Estimated reading time: 12 minutes</p>
+                <div class="checkin-buttons">
+                    <button class="btn primary">Start Reading</button>
+                    <button class="btn">Already Done ✓</button>
+                    <button class="btn">Skip Today</button>
+                </div>
+                <div class="streak-indicator">
+                    <span class="fire">🔥</span>
+                    12 day streak!
+                </div>
+            </div>
+            
+            <!-- Journey Progress Section -->
+            <div class="journey-progress">
+                <div class="journey-title">🎯 Your Discipleship Journey</div>
+                
+                <div class="progress-visual">
+                    <div class="stage">
+                        <div class="stage-circle completed">✓</div>
+                        <div class="stage-label">Foundation</div>
+                    </div>
+                    <div class="stage">
+                        <div class="stage-circle completed">✓</div>
+                        <div class="stage-label">Growing</div>
+                    </div>
+                    <div class="stage">
+                        <div class="stage-circle current">75%</div>
+                        <div class="stage-label">Serving</div>
+                    </div>
+                    <div class="stage">
+                        <div class="stage-circle locked">🔒</div>
+                        <div class="stage-label">Leading</div>
+                    </div>
+                    <div class="stage">
+                        <div class="stage-circle locked">🔒</div>
+                        <div class="stage-label">Multiplying</div>
+                    </div>
+                </div>
+                
+                <div class="current-stage">
+                    <h3>Currently: Growing in Faith (Stage 2)</h3>
+                    <p>You're making excellent progress! 75% complete with this stage.</p>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="grid">
+                <!-- Recent Achievements -->
+                <div class="card">
+                    <h3><span class="emoji">🏆</span> Recent Achievements</h3>
+                    <ul class="achievements-list">
+                        <li>
+                            <div class="achievement-icon">🎓</div>
+                            <div class="achievement-text">
+                                <div class="achievement-title">Course Completionist</div>
+                                <div class="achievement-date">Completed "Faith Foundations" • Jan 15</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="achievement-icon">🔥</div>
+                            <div class="achievement-text">
+                                <div class="achievement-title">Consistency Champion</div>
+                                <div class="achievement-date">12 days of spiritual disciplines • Jan 20</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="achievement-icon">🤝</div>
+                            <div class="achievement-text">
+                                <div class="achievement-title">Community Builder</div>
+                                <div class="achievement-date">Connected 3 new members • Jan 10</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Next Steps -->
+                <div class="card">
+                    <h3><span class="emoji">🎯</span> Recommended Next Steps</h3>
+                    <ul class="next-steps-list">
+                        <li>
+                            <div class="step-icon">📚</div>
+                            <div class="step-text">
+                                <div class="step-title">"Discipleship Essentials" Course</div>
+                                <div class="step-description">Next session starts Feb 12 • 8 weeks</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-icon">👥</div>
+                            <div class="step-text">
+                                <div class="step-title">Small Group Leader Training</div>
+                                <div class="step-description">You'd be great at this! • 6 week program</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-icon">☕</div>
+                            <div class="step-text">
+                                <div class="step-title">Coffee with Pastor John</div>
+                                <div class="step-description">Scheduled for Friday 10AM • Discuss leadership</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="card">
+                <h3><span class="emoji">📊</span> My Growth Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">87%</span>
+                        <div class="stat-label">Service Attendance</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">28</span>
+                        <div class="stat-label">Volunteer Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">73%</span>
+                        <div class="stat-label">Bible Plan Progress</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">16</span>
+                        <div class="stat-label">Small Group Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15</span>
+                        <div class="stat-label">People Encouraged</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <div class="stat-label">Courses Completed</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upcoming Activities -->
+            <div class="card">
+                <h3><span class="emoji">📅</span> This Week's Opportunities</h3>
+                <ul class="next-steps-list">
+                    <li>
+                        <div class="step-icon">👨‍👩‍👧‍👦</div>
+                        <div class="step-text">
+                            <div class="step-title">Young Families Small Group</div>
+                            <div class="step-description">Tonight 7PM • Discussing "Faith in Daily Life"</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-icon">👶</div>
+                        <div class="step-text">
+                            <div class="step-title">Kids Ministry Volunteer</div>
+                            <div class="step-description">Sunday 9AM • Helping with ages 5-7</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-icon">🎉</div>
+                        <div class="step-text">
+                            <div class="step-title">New Member Welcome Event</div>
+                            <div class="step-description">Saturday 6PM • Help welcome new families</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item" title="Home" onclick="window.location.href='/'">🏠</div>
+      <div class="nav-item" title="Heart" onclick="window.location.href='/heartbeat'">❤️</div>
+      <div class="nav-item" title="Journey" onclick="window.location.href='/journey'">👤</div>
+      <div class="nav-item" title="Settings">⚙️</div>
+    </div>
+</body>
+</html> 

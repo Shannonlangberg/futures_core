@@ -1,0 +1,252 @@
+[
+  {
+    "Timestamp": "2025-07-11T16:27:17.186567",
+    "Campus": "Copper Coast",
+    "total_attendance": 178,
+    "new_people": 2.694915254237288,
+    "new_christians": "",
+    "youth_attendance": 37,
+    "kids_total": "",
+    "connect_groups": 8
+  },
+  {
+    "Timestamp": "2025-07-11T16:25:16.999169",
+    "Campus": "Copper Coast",
+    "total_attendance": 178,
+    "new_people": 5,
+    "new_christians": "",
+    "youth_attendance": 37,
+    "kids_total": "",
+    "connect_groups": 8
+  },
+  {
+    "Timestamp": "2025-07-11T16:24:26.459120",
+    "Campus": "Copper Coast",
+    "total_attendance": 2,
+    "new_people": 5,
+    "new_christians": "",
+    "youth_attendance": "",
+    "kids_total": "",
+    "connect_groups": 8
+  },
+  {
+    "Timestamp": "2025-07-11T16:21:54.245293",
+    "Campus": "Victor Harbour",
+    "total_attendance": 141,
+    "new_people": 6,
+    "new_christians": 3,
+    "youth_attendance": "",
+    "kids_total": 21,
+    "connect_groups": 7
+  },
+  {
+    "Timestamp": "2025-07-11T16:20:34.394510",
+    "Campus": "Victor Harbour",
+    "total_attendance": 215,
+    "new_people": 6,
+    "new_christians": 3,
+    "youth_attendance": "",
+    "kids_total": 30,
+    "connect_groups": 7
+  },
+  {
+    "Timestamp": "2025-07-11T16:20:17.285371",
+    "Campus": "Paradise",
+    "total_attendance": 215,
+    "new_people": 6,
+    "new_christians": 2,
+    "youth_attendance": "",
+    "kids_total": 30,
+    "connect_groups": 12
+  },
+  {
+    "Timestamp": "2025-07-11T16:19:15.193375",
+    "Campus": "South",
+    "total_attendance": 215,
+    "new_people": 9,
+    "new_christians": 4,
+    "youth_attendance": "",
+    "kids_total": 30,
+    "connect_groups": 12
+  },
+  {
+    "Timestamp": "2025-07-11T16:18:54.332711",
+    "Campus": "Paradise",
+    "total_attendance": 245,
+    "new_people": 5,
+    "new_christians": "",
+    "youth_attendance": "",
+    "kids_total": "",
+    "connect_groups": 14
+  },
+  {
+    "Timestamp": "2025-07-11T16:16:43.024370",
+    "Campus": "Adelaide City",
+    "total_attendance": 162,
+    "new_people": 19.444444444444443,
+    "new_christians": "",
+    "youth_attendance": "",
+    "kids_total": "",
+    "connect_groups": ""
+  },
+  {
+    "Timestamp": "2025-07-11T15:48:16.489456",
+    "Campus": "South",
+    "total_attendance": 181,
+    "new_people": 5,
+    "new_christians": 2,
+    "youth_attendance": 24,
+    "kids_total": 27,
+    "connect_groups": 4
+  },
+  {
+    "Timestamp": "2025-07-11T15:46:45.045955",
+    "Campus": "Victor Harbour",
+    "total_attendance": 181,
+    "new_people": 5,
+    "new_christians": 2,
+    "youth_attendance": 24,
+    "kids_total": 27,
+    "connect_groups": 4
+  },
+  {
+    "Timestamp": "2025-07-11T15:46:32.629651",
+    "Campus": "Adelaide City",
+    "total_attendance": 162,
+    "new_people": 5,
+    "new_christians": 3,
+    "youth_attendance": 24,
+    "kids_total": 27,
+    "connect_groups": 4
+  },
+  {
+    "Timestamp": "2025-07-11T15:45:02.236726",
+    "Campus": "Mount Barker",
+    "total_attendance": 187,
+    "new_people": 6,
+    "new_christians": 2,
+    "youth_attendance": 24,
+    "kids_total": 30,
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:42:52.132543",
+    "Campus": "Paradise",
+    "total_attendance": 201,
+    "new_people": 10,
+    "new_christians": 3,
+    "youth_attendance": 27,
+    "kids_total": 35,
+    "connect_groups": 6
+  },
+  {
+    "Timestamp": "2025-07-11T15:39:21.959951",
+    "Campus": "South",
+    "total_attendance": 178,
+    "new_people": 6,
+    "new_christians": 2,
+    "youth_attendance": 25,
+    "kids_total": 31,
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:38:56.892373",
+    "Campus": "Copper Coast",
+    "total_attendance": 178,
+    "new_people": 7,
+    "new_christians": 3,
+    "youth_attendance": 22,
+    "kids_total": 29,
+    "connect_groups": 6
+  },
+  {
+    "Timestamp": "2025-07-11T15:37:17.441365",
+    "Campus": "Copper Coast",
+    "total_attendance": 174,
+    "new_people": 9,
+    "new_christians": 4,
+    "youth_attendance": 26,
+    "kids_total": 31,
+    "connect_groups": 7
+  },
+  {
+    "Timestamp": "2025-07-11T15:34:46.695003",
+    "Campus": "Copper Coast",
+    "total_attendance": 174,
+    "new_people": 9,
+    "new_christians": 4,
+    "youth_attendance": 26,
+    "kids_total": 31,
+    "connect_groups": 7
+  },
+  {
+    "Timestamp": "2025-07-11T15:34:22.756433",
+    "Campus": "South",
+    "total_attendance": 132,
+    "new_people": 5,
+    "new_christians": 3,
+    "youth_attendance": 21,
+    "kids_total": 28,
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:33:12.944109",
+    "Campus": "South",
+    "total_attendance": 200,
+    "new_people": 4,
+    "new_christians": 6,
+    "youth_attendance": 40,
+    "kids_total": "",
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:32:52.567295",
+    "Campus": "Copper Coast",
+    "total_attendance": 200,
+    "new_people": 4,
+    "new_christians": 6,
+    "youth_attendance": 40,
+    "kids_total": "",
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:32:25.032839",
+    "Campus": "Copper Coast",
+    "total_attendance": 200,
+    "new_people": 4,
+    "new_christians": 6,
+    "youth_attendance": 40,
+    "kids_total": "",
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:31:18.769961",
+    "Campus": "South",
+    "total_attendance": 200,
+    "new_people": 4,
+    "new_christians": 6,
+    "youth_attendance": 40,
+    "kids_total": "",
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:29:26.493936",
+    "Campus": "South",
+    "total_attendance": "",
+    "new_people": 100,
+    "new_christians": 30,
+    "youth_attendance": 40,
+    "kids_total": "",
+    "connect_groups": 5
+  },
+  {
+    "Timestamp": "2025-07-11T15:28:57.660550",
+    "Campus": "South",
+    "total_attendance": "",
+    "new_people": 100,
+    "new_christians": 30,
+    "youth_attendance": "",
+    "kids_total": "",
+    "connect_groups": 5
+  }
+]
