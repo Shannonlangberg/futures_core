@@ -74,8 +74,14 @@ try:
                 claude = anthropic.Client(api_key=api_key)
                 logger.info("Claude initialized successfully with Client()")
             except Exception as e2:
-                logger.warning(f"Client() also failed: {e2}")
-                claude = None
+                logger.warning(f"Client() also failed: {e2}, trying without proxies")
+                try:
+                    # Try without any extra parameters
+                    claude = anthropic.Client(api_key=api_key)
+                    logger.info("Claude initialized successfully with Client() (no proxies)")
+                except Exception as e3:
+                    logger.warning(f"All Claude initialization methods failed: {e3}")
+                    claude = None
     else:
         logger.warning("ANTHROPIC_API_KEY not found")
         claude = None

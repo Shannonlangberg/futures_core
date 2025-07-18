@@ -54,7 +54,7 @@ Thumbs.db
 logs/
 
 # API Keys and Credentials
-credentials.json
+# credentials.json  # Temporarily removed for deployment
 service-account-key.json
 *.key
 *.pem
