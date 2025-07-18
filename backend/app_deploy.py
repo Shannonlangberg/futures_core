@@ -37,8 +37,9 @@ try:
     if os.path.exists("credentials.json"):
         creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
         client = gspread.authorize(creds)
-        sheet = client.open("Stats").sheet1
-        logger.info("Google Sheets initialized successfully")
+        sheet_name = os.getenv("GOOGLE_SHEET_NAME", "Stats")
+        sheet = client.open(sheet_name).sheet1
+        logger.info(f"Google Sheets initialized successfully with sheet: {sheet_name}")
     else:
         logger.warning("credentials.json not found - using demo data")
 except Exception as e:
