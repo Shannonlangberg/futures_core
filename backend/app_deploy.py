@@ -38,8 +38,11 @@ try:
     credentials_paths = ["credentials.json", "backend/credentials.json", "/app/credentials.json"]
     credentials_found = None
     
+    logger.info(f"Checking for credentials.json in: {credentials_paths}")
     for path in credentials_paths:
-        if os.path.exists(path):
+        exists = os.path.exists(path)
+        logger.info(f"Path {path}: {'EXISTS' if exists else 'NOT FOUND'}")
+        if exists:
             credentials_found = path
             break
     
@@ -66,6 +69,7 @@ try:
         logger.warning("ANTHROPIC_API_KEY not found")
 except Exception as e:
     logger.warning(f"Claude not available: {e}")
+    claude = None
 
 # Try to load ElevenLabs
 elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
