@@ -146,7 +146,7 @@ print("[DEBUG] Finished ElevenLabs setup")
 
 print("[DEBUG] Starting memory storage setup")
 # Memory storage for conversational history
-conversation_memory_file = "/tmp/data/conversation_memory.json"
+conversation_memory_file = "data/conversation_memory.json"
 print("[DEBUG] Finished memory storage setup")
 
 # Restore missing memory functions
@@ -542,15 +542,15 @@ def generate_audio_with_elevenlabs(text: str, filename: Optional[str] = None) ->
         }
         response = requests.post(url, json=data, headers=headers)
         if response.status_code == 200:
-            os.makedirs("/tmp/temp_audio", exist_ok=True)
+            os.makedirs("temp_audio", exist_ok=True)
             if filename:
                 audio_filename = filename
             else:
-                audio_filename = f"/tmp/temp_audio/response_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp3"
+                audio_filename = f"temp_audio/response_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp3"
             with open(audio_filename, "wb") as f:
                 f.write(response.content)
             logger.info(f"Generated audio file: {audio_filename}")
-            return f"/{audio_filename}" if filename else f"/tmp/temp_audio/{os.path.basename(audio_filename)}"
+            return f"/{audio_filename}" if filename else f"/temp_audio/{os.path.basename(audio_filename)}"
         else:
             logger.error(f"ElevenLabs API error: {response.status_code} - {response.text}")
             return None
@@ -807,6 +807,7 @@ def query_data_internal(data: Dict[str, Any]) -> Dict[str, Any]:
                 "popup": True
             }
     # ... rest of the function unchanged ...
+    return {"error": "Unknown error in query_data_internal"}
 
 def generate_ai_insights(question: str, campus: str, analysis_data: dict, filtered_rows: list) -> str:
     """Generate intelligent AI insights using Claude based on the data and question"""
@@ -1902,7 +1903,7 @@ def serve_static(filename):
 @app.route('/temp_audio/<path:filename>')
 def serve_audio(filename):
     """Serve generated audio files"""
-    return send_from_directory('tmp/temp_audio', filename)
+    return send_from_directory('temp_audio', filename)
 
 @app.route('/query')
 def serve_query():
@@ -2143,7 +2144,8 @@ def process_voice():
         # Call the query endpoint internally
         query_data = {"question": text}
         query_response = query_data_internal(query_data)
-        
+        if not query_response:
+            return jsonify({"error": "No response from query_data_internal"}), 500
         # Format response for frontend
         if "error" in query_response:
             response_text = query_response["error"]
@@ -3002,6 +3004,7 @@ def query_data_internal(data: Dict[str, Any]) -> Dict[str, Any]:
                 "popup": True
             }
     # ... rest of the function unchanged ...
+    return {"error": "Unknown error in query_data_internal"}
 
 @app.route('/heartbeat')
 def heartbeat():
@@ -3012,6 +3015,6 @@ def journey():
     return render_template('journey.html')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))
-    print(f"App running on: http://localhost:{port}")
-    app.run(debug=False, host="0.0.0.0", port=port)
+    print("Starting app.py")
+    print("App running on: http://localhost:5001")
+    app.run(debug=False, port=5001)
