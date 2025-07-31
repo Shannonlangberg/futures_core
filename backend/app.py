@@ -3889,10 +3889,10 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    """Logout and redirect to login page"""
+    """Logout and redirect to React frontend"""
     logout_user()
-    flash('You have been logged out successfully.', 'info')
-    return redirect(url_for('login'))
+    # Redirect to the React frontend instead of the backend login
+    return redirect('/')
 
 def get_dashboard_data(campus, date_filter='last_7_days', custom_start_date='', custom_end_date=''):
     """Get dashboard data with date filtering"""
@@ -4805,6 +4805,12 @@ def session_info():
             "full_name": None,
             "timestamp": datetime.now(timezone.utc).isoformat()
         })
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """API endpoint for logout"""
+    logout_user()
+    return jsonify({"success": True, "message": "Logged out successfully"})
 
 @app.route('/api/stats')
 @login_required
