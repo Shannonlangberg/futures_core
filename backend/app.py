@@ -134,12 +134,19 @@ print("[DEBUG] Finished Google Sheets client initialization")
 print("[DEBUG] Starting Claude setup")
 # Claude setup
 try:
-    from anthropic import Client
+    # Try to import anthropic in different ways
+    try:
+        from anthropic import Client
+    except ImportError:
+        # Try alternative import
+        import anthropic
+        Client = anthropic.Client
+    
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
         # Clear any proxy-related environment variables that might interfere
         original_proxy_vars = {}
-        for var in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']:
+        for var in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE']:
             if var in os.environ:
                 original_proxy_vars[var] = os.environ[var]
                 del os.environ[var]
