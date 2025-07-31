@@ -6829,4 +6829,4 @@ def journey():
 if __name__ == '__main__':
     print("Starting app.py")
     print("App running on: http://localhost:5002")
-    app.run(debug=False, port=5002)# Force Railway restart
+    app.run(debug=False, port=5002)
