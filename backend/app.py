@@ -365,9 +365,13 @@ class User(UserMixin):
         
     def check_password(self, password):
         """Check if the provided password is correct"""
-        # For now, use simple comparison with default password
-        # In production, this would use proper password hashing
-        return password == "futures2025"
+        # Check if user has a password hash
+        if hasattr(self, 'password_hash') and self.password_hash:
+            # Use werkzeug's check_password_hash for secure comparison
+            return check_password_hash(self.password_hash, password)
+        else:
+            # Fallback to simple comparison for backward compatibility
+            return password == "futures2025"
         
     def has_permission(self, permission_type, campus=None):
         """Check if user has specific permission"""
