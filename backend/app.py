@@ -4830,7 +4830,7 @@ def debug_static():
     except Exception as e:
         return jsonify({"error": f"Debug error: {str(e)}"}), 500
 
-@app.route('/debug/users')
+@app.route('/api/debug/users')
 def debug_users():
     """Debug endpoint to check users database"""
     try:
