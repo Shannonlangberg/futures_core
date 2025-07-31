@@ -161,16 +161,24 @@ print("[DEBUG] Starting Claude setup")
 try:
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        # Clear any proxy-related environment variables that might cause issues
-        proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']
-        for var in proxy_vars:
-            if var in os.environ:
-                del os.environ[var]
-        
+        # Clear proxy environment variables that might interfere
+        # Railway often injects these, causing issues with some clients
+        original_http_proxy = os.environ.pop('HTTP_PROXY', None)
+        original_https_proxy = os.environ.pop('HTTPS_PROXY', None)
+        original_no_proxy = os.environ.pop('NO_PROXY', None)
+    
         from anthropic import Client
         claude = Client(api_key=api_key)
         logger.info("Claude initialized successfully")
         print("[DEBUG] Claude initialized successfully")
+    
+        # Restore proxy environment variables if they existed
+        if original_http_proxy is not None:
+            os.environ['HTTP_PROXY'] = original_http_proxy
+        if original_https_proxy is not None:
+            os.environ['HTTPS_PROXY'] = original_https_proxy
+        if original_no_proxy is not None:
+            os.environ['NO_PROXY'] = original_no_proxy
     else:
         logger.warning("ANTHROPIC_API_KEY not found in environment variables")
         print("[WARNING] ANTHROPIC_API_KEY not found in environment variables")
