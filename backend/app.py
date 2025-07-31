@@ -4799,10 +4799,10 @@ def serve_index():
     except Exception as e:
         return jsonify({"error": f"Error serving index: {str(e)}"}), 500
 
-@app.route('/<path:filename>')
+@app.route('/assets/<path:filename>')
 def serve_static(filename):
     if app.static_folder:
-        return send_from_directory(app.static_folder, filename)
+        return send_from_directory(os.path.join(app.static_folder, 'assets'), filename)
     return jsonify({"error": "Static folder not configured"}), 404
 
 @app.route('/<path:path>')
