@@ -118,16 +118,35 @@ print("[DEBUG] Finished Google Sheets Auth scope definition")
 print("[DEBUG] Starting Google Sheets client initialization")
 # Initialize Google Sheets client
 try:
-    if os.path.exists("credentials.json"):
+    # First try to load from environment variable (for Railway)
+    credentials_json = os.getenv("GOOGLE_SHEETS_CREDENTIALS")
+    if credentials_json:
+        try:
+            import json
+            creds_dict = json.loads(credentials_json)
+            creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+            client = gspread.authorize(creds)
+            sheet = client.open("Stats").sheet1
+            logger.info("Google Sheets initialized successfully from environment variable")
+            print("[DEBUG] Google Sheets initialized from environment variable")
+        except Exception as e:
+            logger.error(f"Failed to initialize Google Sheets from environment variable: {e}")
+            print(f"[ERROR] Failed to initialize Google Sheets from environment variable: {e}")
+            sheet = None
+    # Fallback to file (for local development)
+    elif os.path.exists("credentials.json"):
         creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
         client = gspread.authorize(creds)
         sheet = client.open("Stats").sheet1
-        logger.info("Google Sheets initialized successfully")
+        logger.info("Google Sheets initialized successfully from file")
+        print("[DEBUG] Google Sheets initialized from file")
     else:
-        logger.warning("credentials.json not found - Google Sheets functionality disabled")
+        logger.warning("No Google Sheets credentials found - Google Sheets functionality disabled")
+        print("[WARNING] No Google Sheets credentials found")
         sheet = None
 except Exception as e:
     logger.error(f"Failed to initialize Google Sheets: {e}")
+    print(f"[ERROR] Failed to initialize Google Sheets: {e}")
     sheet = None
 print("[DEBUG] Finished Google Sheets client initialization")
 
