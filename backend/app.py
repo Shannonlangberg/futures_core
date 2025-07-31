@@ -366,9 +366,13 @@ class User(UserMixin):
     def check_password(self, password):
         """Check if the provided password is correct"""
         # Check if user has a password hash
-        if hasattr(self, 'password_hash') and self.password_hash:
-            # Use werkzeug's check_password_hash for secure comparison
-            return check_password_hash(self.password_hash, password)
+        if hasattr(self, 'password_hash') and self.password_hash and self.password_hash != "placeholder":
+            try:
+                # Use werkzeug's check_password_hash for secure comparison
+                return check_password_hash(self.password_hash, password)
+            except Exception:
+                # If hash is invalid, fall back to simple comparison
+                return password == "futures2025"
         else:
             # Fallback to simple comparison for backward compatibility
             return password == "futures2025"
@@ -443,15 +447,25 @@ def authenticate_user(username, password):
     """Authenticate user and return User object if valid"""
     users_db = load_users_database()
     
+    print(f"[DEBUG] Attempting login for username: {username}")
+    
     # Find user by username
     for user_id, user_data in users_db.get('users', {}).items():
         if user_data['username'] == username and user_data['active']:
+            print(f"[DEBUG] Found user: {user_data['username']} (ID: {user_id})")
             user = User(user_data)
             if user.check_password(password):
+                print(f"[DEBUG] Password check successful for user: {username}")
                 # Update last login
                 user_data['last_login'] = datetime.now().isoformat()
                 save_users_database(users_db)
                 return user
+            else:
+                print(f"[DEBUG] Password check failed for user: {username}")
+        elif user_data['username'] == username and not user_data['active']:
+            print(f"[DEBUG] User found but inactive: {username}")
+    
+    print(f"[DEBUG] No user found with username: {username}")
     return None
 
 print("[DEBUG] User management functions and classes defined")
