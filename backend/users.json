@@ -1,0 +1,147 @@
+{
+  "users": {
+    "admin": {
+      "id": "admin",
+      "username": "admin",
+      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "email": "admin@futures.church",
+      "full_name": "Shannon Langberg",
+      "role": "admin",
+      "campus": "all_campuses",
+      "active": true,
+      "created_date": "2025-07-23",
+      "last_login": "2025-07-31T20:12:01.459919"
+    },
+    "ps_ashley": {
+      "id": "ps_ashley",
+      "username": "Ashley Evans ",
+      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "email": "ashley@futures.church",
+      "full_name": "Ashley Evans ",
+      "role": "senior_leader",
+      "campus": "all_campuses",
+      "active": true,
+      "created_date": "2025-07-23",
+      "last_login": null
+    },
+    "ps_josh": {
+      "id": "ps_josh",
+      "username": "Josh Greenwood",
+      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "email": "josh@futures.church",
+      "full_name": "Josh greenwood",
+      "role": "senior_leader",
+      "campus": "all_campuses",
+      "active": true,
+      "created_date": "2025-07-23",
+      "last_login": null
+    },
+    "pastor_demo": {
+      "id": "pastor_demo",
+      "username": "pastor",
+      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "email": "pastor@futures.church",
+      "full_name": "Demo Pastor",
+      "role": "pastor",
+      "campus": "south",
+      "active": true,
+      "created_date": "2025-07-23",
+      "last_login": "2025-07-25T14:26:42.392923"
+    },
+    "finance": {
+      "id": "finance",
+      "username": "Finance",
+      "password_hash": "placeholder",
+      "email": "",
+      "full_name": "Fin",
+      "role": "finance",
+      "campus": "all_campuses",
+      "active": true,
+      "created_date": "2025-07-23",
+      "last_login": "2025-07-27T08:13:21.514824"
+    },
+    "10": {
+      "id": "10",
+      "username": "Shannon Langberg",
+      "email": "shannon.langberg@futures.church",
+      "full_name": "Shannon Langberg",
+      "password_hash": "scrypt:32768:8:1$dXGzzX69ochpZDSf$98ba94cf101cec1bd41acd9a644f4ff10059da34dbd94710b7d85bdde8c490c8fe2e6db62b90d77db9f5f4bf4066b1d3321fa62e30149057c95fe6ede5af1276",
+      "role": "admin",
+      "campus": "all_campuses",
+      "active": true,
+      "created_date": "2025-07-25",
+      "last_login": "2025-07-27T12:18:11.187693"
+    }
+  },
+  "roles": {
+    "admin": {
+      "name": "Administrator",
+      "permissions": {
+        "log_stats": "all",
+        "recall_stats": "all",
+        "dashboard_access": "all",
+        "query_access": "all",
+        "manage_users": true,
+        "system_settings": true,
+        "cross_location_comparison": true
+      },
+      "description": "Full system access"
+    },
+    "senior_leader": {
+      "name": "Senior Leader",
+      "permissions": {
+        "log_stats": "all",
+        "recall_stats": "all",
+        "dashboard_access": "all",
+        "query_access": "all",
+        "manage_users": false,
+        "system_settings": false,
+        "cross_location_comparison": true
+      },
+      "description": "All campuses data access"
+    },
+    "campus_pastor": {
+      "name": "Campus Pastor",
+      "permissions": {
+        "log_stats": "all",
+        "recall_stats": "assigned_campus",
+        "dashboard_access": "assigned_campus",
+        "query_access": "assigned_campus",
+        "manage_users": false,
+        "system_settings": false
+      },
+      "description": "Assigned campus data access only"
+    },
+    "pastor": {
+      "name": "Pastor",
+      "permissions": {
+        "log_stats": "all",
+        "recall_stats": "none",
+        "dashboard_access": "none",
+        "query_access": "none",
+        "manage_users": false,
+        "system_settings": false
+      },
+      "description": "Can only log stats, no dashboard or query access"
+    },
+    "finance": {
+      "name": "Finance Team",
+      "permissions": {
+        "log_stats": "all",
+        "recall_stats": "all",
+        "dashboard_access": "none",
+        "query_access": "none",
+        "finance_access": true,
+        "manage_users": false,
+        "system_settings": false
+      },
+      "description": "Finance team with tithe access only"
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-07-23",
+    "default_password": "futures2025",
+    "password_note": "All users have default password 'futures2025' - should be changed on first login"
+  }
+}

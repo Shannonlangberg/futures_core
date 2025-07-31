@@ -1,0 +1,201 @@
+{
+  "campuses": {
+    "paradise": {
+      "id": "paradise",
+      "name": "Paradise Campus",
+      "display_name": "Paradise",
+      "slug": "paradise",
+      "active": true,
+      "address": "Paradise, SA",
+      "pastor": "Ps Tony",
+      "detection_patterns": [
+        "paradise"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "adelaide_city": {
+      "id": "adelaide_city",
+      "name": "Adelaide City Campus",
+      "display_name": "Adelaide City",
+      "slug": "adelaide_city",
+      "active": true,
+      "address": "Adelaide City, SA",
+      "pastor": "Ps Simon",
+      "detection_patterns": [
+        "adelaide city",
+        "city",
+        "cbd"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "salisbury": {
+      "id": "salisbury",
+      "name": "Salisbury Campus",
+      "display_name": "Salisbury",
+      "slug": "salisbury",
+      "active": true,
+      "address": "Salisbury, SA",
+      "pastor": "Ps Janine",
+      "detection_patterns": [
+        "salisbury"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "south": {
+      "id": "south",
+      "name": "South Campus",
+      "display_name": "South",
+      "slug": "south",
+      "active": true,
+      "address": "South Adelaide, SA",
+      "pastor": "Ps Doran",
+      "detection_patterns": [
+        "south campus",
+        "southside",
+        "south"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "mount_barker": {
+      "id": "mount_barker",
+      "name": "Mount Barker Campus",
+      "display_name": "Mount Barker",
+      "slug": "mount_barker",
+      "active": true,
+      "address": "Mount Barker, SA",
+      "pastor": "Ps David",
+      "detection_patterns": [
+        "mount barker",
+        "mt barker",
+        "barker",
+        "hills"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "clare_valley": {
+      "id": "clare_valley",
+      "name": "Clare Valley Campus",
+      "display_name": "Clare Valley",
+      "slug": "clare_valley",
+      "active": true,
+      "address": "Clare Valley, SA",
+      "pastor": "Ps Graham",
+      "detection_patterns": [
+        "clare valley",
+        "clare"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "victor_harbour": {
+      "id": "victor_harbour",
+      "name": "Victor Harbour Campus",
+      "display_name": "Victor Harbour",
+      "slug": "victor_harbour",
+      "active": true,
+      "address": "Victor Harbour, SA",
+      "pastor": "Ps Stu",
+      "detection_patterns": [
+        "victor harbour",
+        "victor harbor",
+        "victor"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "copper_coast": {
+      "id": "copper_coast",
+      "name": "Copper Coast Campus",
+      "display_name": "Copper Coast",
+      "slug": "copper_coast",
+      "active": true,
+      "address": "Copper Coast, SA",
+      "pastor": "Ps Shannon",
+      "detection_patterns": [
+        "copper coast",
+        "kadina",
+        "CC"
+      ],
+      "created_date": "2025-07-23",
+      "notes": null
+    },
+    "north": {
+      "id": "north",
+      "name": "North Campus",
+      "display_name": "North",
+      "slug": "north",
+      "active": false,
+      "address": "North Adelaide, SA",
+      "pastor": "",
+      "detection_patterns": [
+        "north campus",
+        "northside",
+        "north"
+      ],
+      "created_date": "2025-07-23",
+      "notes": "Campus under development"
+    },
+    "east": {
+      "id": "east",
+      "name": "East Campus",
+      "display_name": "East",
+      "slug": "east",
+      "active": false,
+      "address": "East Adelaide, SA",
+      "pastor": "",
+      "detection_patterns": [
+        "east campus",
+        "eastside",
+        "east"
+      ],
+      "created_date": "2025-07-23",
+      "notes": "Campus under development"
+    },
+    "west": {
+      "id": "west",
+      "name": "West Campus",
+      "display_name": "West",
+      "slug": "west",
+      "active": false,
+      "address": "West Adelaide, SA",
+      "pastor": "",
+      "detection_patterns": [
+        "west campus",
+        "westside",
+        "west"
+      ],
+      "created_date": "2025-07-23",
+      "notes": "Campus under development"
+    },
+    "all_campuses": {
+      "id": "all_campuses",
+      "name": "All Campuses",
+      "display_name": "All Campuses",
+      "slug": "all_campuses",
+      "active": true,
+      "address": "Church-wide",
+      "pastor": "Senior Leadership",
+      "detection_patterns": [
+        "all campuses",
+        "futures church",
+        "church wide",
+        "across all",
+        "overall"
+      ],
+      "created_date": "2025-07-23",
+      "special": true
+    }
+  },
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-07-23",
+    "last_updated": "2025-07-25",
+    "total_campuses": 12,
+    "active_campuses": 9
+  }
+}
