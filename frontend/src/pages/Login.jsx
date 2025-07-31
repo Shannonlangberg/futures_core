@@ -32,7 +32,7 @@ const Login = () => {
 
       if (response.ok && data.success) {
         // Redirect to dashboard on successful login
-        window.location.href = '/dashboard';
+        navigate('/dashboard');
       } else {
         setError(data.error || 'Invalid username or password');
       }
