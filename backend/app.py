@@ -3865,13 +3865,21 @@ def get_dashboard_data(campus, date_filter='last_30_days', custom_start_date='',
         logger.error(f"Dashboard data error: {e}")
         return {"error": str(e)}
 
-# Authentication routes
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    """Login page and authentication handler"""
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        password = request.form.get('password', '').strip()
+# Authentication routes - DISABLED for React frontend
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     """Login page and authentication handler - DISABLED for React frontend"""
+#     # This route is disabled because we're using React frontend
+#     # The login page is now handled by the React app
+#     pass
+
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    """API login endpoint for React frontend"""
+    try:
+        data = request.get_json()
+        username = data.get('username', '').strip()
+        password = data.get('password', '').strip()
         
         if not username or not password:
             return jsonify({"error": "Please enter both username and password."}), 400
@@ -3882,9 +3890,8 @@ def login():
             return jsonify({"success": True, "redirect": "/dashboard"})
         else:
             return jsonify({"error": "Invalid username or password."}), 401
-    
-    # GET request - serve login page
-    return render_template('login.html')
+    except Exception as e:
+        return jsonify({"error": f"Login error: {str(e)}"}), 500
 
 @app.route('/logout')
 @login_required
