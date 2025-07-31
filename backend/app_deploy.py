@@ -1,6 +1,11 @@
 # app_deploy.py - Production deployment version
 import os
+import sys
 from dotenv import load_dotenv
+
+# Add the backend directory to Python path
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, backend_dir)
 
 # Load environment variables
 load_dotenv()
