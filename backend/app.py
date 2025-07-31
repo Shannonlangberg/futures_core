@@ -3881,10 +3881,8 @@ def login():
         else:
             return jsonify({"error": "Invalid username or password."}), 401
     
-    # GET request - redirect to React frontend
-    if current_user.is_authenticated:
-        return redirect('/dashboard')
-    return redirect('/')
+    # GET request - serve login page
+    return render_template('login.html')
 
 @app.route('/logout')
 @login_required
@@ -4739,15 +4737,7 @@ def campus_delete(campus_id):
 
 @app.route('/')
 def serve_index():
-    """Main application page - require authentication and handle role-based redirects"""
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-    
-    # Redirect finance users to their specialized interface
-    if current_user.role == 'finance':
-        return redirect(url_for('finance_dashboard'))
-    
-    # All other users get the regular landing page
+    """Main application page - serve the React app"""
     return render_template('index.html')
 
 @app.route('/<path:filename>')
