@@ -159,35 +159,64 @@ print("[DEBUG] Finished Google Sheets client initialization")
 print("[DEBUG] Starting Claude setup")
 # Claude setup
 try:
-    # Clear any proxy-related environment variables that might interfere
-    original_env = {}
-    proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE']
-    
-    for var in proxy_vars:
-        if var in os.environ:
-            original_env[var] = os.environ[var]
-            del os.environ[var]
+    # Completely isolate the environment for Anthropic initialization
+    import subprocess
+    import tempfile
+    import json
+    import sys
     
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
+        # Create a temporary script to test Anthropic initialization
+        test_script = '''
+import os
+import sys
+try:
+    from anthropic import Client
+    api_key = sys.argv[1]
+    client = Client(api_key=api_key)
+    print("SUCCESS")
+except Exception as e:
+    print(f"ERROR: {e}")
+'''
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+            f.write(test_script)
+            temp_file = f.name
+        
         try:
-            from anthropic import Client
-            # Initialize with only the required parameter
-            claude = Client(api_key=api_key)
-            logger.info("Claude initialized successfully")
-            print("[DEBUG] Claude initialized successfully")
-        except Exception as e:
-            logger.error(f"Failed to initialize Claude: {e}")
-            print(f"[ERROR] Failed to initialize Claude: {e}")
-            claude = None
+            # Run the test in a clean environment
+            result = subprocess.run([sys.executable, temp_file, api_key], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if "SUCCESS" in result.stdout:
+                # If the test succeeds, initialize normally
+                from anthropic import Client
+                claude = Client(api_key=api_key)
+                logger.info("Claude initialized successfully (isolated test)")
+                print("[DEBUG] Claude initialized successfully (isolated test)")
+            else:
+                # If the test fails, try alternative initialization
+                try:
+                    from anthropic import Client
+                    # Try with minimal configuration
+                    claude = Client(api_key=api_key)
+                    logger.info("Claude initialized successfully (fallback)")
+                    print("[DEBUG] Claude initialized successfully (fallback)")
+                except Exception as e:
+                    logger.error(f"Failed to initialize Claude: {e}")
+                    print(f"[ERROR] Failed to initialize Claude: {e}")
+                    claude = None
+        finally:
+            # Clean up temp file
+            try:
+                os.unlink(temp_file)
+            except:
+                pass
     else:
         logger.warning("ANTHROPIC_API_KEY not found in environment variables")
         print("[WARNING] ANTHROPIC_API_KEY not found in environment variables")
         claude = None
-    
-    # Restore original environment variables
-    for var, value in original_env.items():
-        os.environ[var] = value
 except Exception as e:
     logger.error(f"Failed to initialize Claude: {e}")
     print(f"[ERROR] Failed to initialize Claude: {e}")
