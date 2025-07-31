@@ -272,7 +272,8 @@ print("[DEBUG] Flask app instance created and CORS enabled")
 print("[DEBUG] Starting Flask-Login setup")
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+# Disable login_view since we're using React frontend with API login
+# login_manager.login_view = 'login'
 login_manager.login_message = 'Please log in to access this page.'
 login_manager.login_message_category = 'info'
 print("[DEBUG] Flask-Login configured")
