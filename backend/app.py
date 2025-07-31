@@ -4785,6 +4785,15 @@ def health_check():
         "timestamp": datetime.now(timezone.utc).isoformat()
     })
 
+@app.route('/health')
+def simple_health():
+    """Simple health check that doesn't require authentication"""
+    return jsonify({
+        "status": "ok",
+        "message": "Church Voice Assistant is running",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    })
+
 @app.route('/api/session')
 def session_info():
     if current_user.is_authenticated:
