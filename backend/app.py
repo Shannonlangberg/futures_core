@@ -138,6 +138,7 @@ try:
     import subprocess
     import tempfile
     import json
+    import sys
     
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
