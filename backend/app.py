@@ -145,10 +145,34 @@ try:
                 del os.environ[var]
         
         try:
-            # Initialize without any additional parameters to avoid compatibility issues
-            claude = Client(api_key=api_key)
-            logger.info("Claude initialized successfully (Client)")
-            print("[DEBUG] Claude initialized successfully (Client)")
+            # Try to initialize with minimal parameters
+            try:
+                claude = Client(api_key=api_key)
+                logger.info("Claude initialized successfully (Client)")
+                print("[DEBUG] Claude initialized successfully (Client)")
+            except TypeError as e:
+                if "proxies" in str(e):
+                    # If proxies error, try without any additional parameters
+                    import inspect
+                    sig = inspect.signature(Client.__init__)
+                    if 'api_key' in sig.parameters:
+                        claude = Client(api_key=api_key)
+                    else:
+                        claude = Client(api_key)
+                    logger.info("Claude initialized successfully (fallback)")
+                    print("[DEBUG] Claude initialized successfully (fallback)")
+                else:
+                    raise e
+            except Exception as e:
+                # Last resort: try with just the API key as positional argument
+                try:
+                    claude = Client(api_key)
+                    logger.info("Claude initialized successfully (positional)")
+                    print("[DEBUG] Claude initialized successfully (positional)")
+                except Exception as e2:
+                    logger.error(f"All Claude initialization attempts failed: {e2}")
+                    print(f"[ERROR] All Claude initialization attempts failed: {e2}")
+                    claude = None
         finally:
             # Restore original proxy variables
             for var, value in original_proxy_vars.items():
