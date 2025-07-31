@@ -209,7 +209,7 @@ const Query = () => {
     console.log('playAudio called with URL:', url); // Debug log
     if (audioRef.current) {
       // Ensure the audio URL is properly constructed for the backend
-      const fullUrl = url.startsWith('http') ? url : `http://localhost:5002${url}`;
+      const fullUrl = url.startsWith('http') ? url : url;
       console.log('Full audio URL:', fullUrl); // Debug log
       audioRef.current.src = fullUrl;
       audioRef.current.play().catch(error => {
