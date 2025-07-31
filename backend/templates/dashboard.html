@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Analytics Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: 1px solid #60a5fa;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #60a5fa;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .dashboard-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .campus-selector, .date-filter {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            min-width: 140px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .clickable-card {
+            cursor: pointer;
+        }
+
+        .clickable-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.3);
+            border-color: #60a5fa;
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .expand-icon {
+            background: #60a5fa;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            background: rgba(156, 163, 175, 0.1);
+            color: #9ca3af;
+        }
+
+        /* Charts Section - FIXED SIZING */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            height: 400px; /* Fixed height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+            flex-shrink: 0; /* Don't shrink title */
+        }
+
+        .chart-wrapper {
+            position: relative;
+            flex: 1; /* Take remaining space */
+            min-height: 0; /* Important for flex child */
+        }
+
+        .chart-wrapper canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Senior Leadership Features */
+        .senior-features {
+            margin-top: 40px;
+            padding: 24px;
+            background: rgba(255, 193, 7, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+        }
+
+        .senior-features h2 {
+            color: #ffc107;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .campus-comparison, .insights-section {
+            margin-bottom: 24px;
+        }
+
+        .campus-comparison h3, .insights-section h3 {
+            color: #60a5fa;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .comparison-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .comparison-card h4 {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .comparison-value {
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Breakdown Modal */
+        .breakdown-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .breakdown-modal-content {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-header h3 {
+            margin: 0;
+            color: #60a5fa;
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .breakdown-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Campus Performance Table */
+        .campus-performance {
+            margin-bottom: 24px;
+        }
+
+        .campus-table {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: rgba(255, 255, 255, 0.1);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #60a5fa;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+
+        .table-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .campus-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .metric-value {
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .growth-positive {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .growth-negative {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .growth-neutral {
+            color: #9ca3af;
+        }
+
+        /* Leadership Charts */
+        .leadership-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .insight-text {
+            color: #ffffff;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .header-left {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .dashboard-controls {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .chart-container {
+                height: 300px; /* Smaller on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <a href="/" class="back-btn">← Back to Home</a>
+                <h1 class="dashboard-title">Church Analytics Dashboard</h1>
+            </div>
+            <div class="dashboard-controls">
+                <select class="campus-selector" id="campusFilter" onchange="updateCampus(this.value)">
+                    <option value="all_campuses">All Campuses</option>
+                    <option value="paradise">Paradise</option>
+                    <option value="south">South</option>
+                    <option value="adelaide_city">Adelaide City</option>
+                    <option value="salisbury">Salisbury</option>
+                    <option value="clare_valley">Clare Valley</option>
+                    <option value="mount_barker">Mount Barker</option>
+                    <option value="victor_harbour">Victor Harbour</option>
+                    <option value="copper_coast">Copper Coast</option>
+                </select>
+                
+                <select class="date-filter" id="dateFilter" onchange="updateDateFilter(this.value)">
+                    <option value="last_7_days">Last 7 Days</option>
+                    <option value="last_30_days">Last 30 Days</option>
+                    <option value="last_90_days">Last 90 Days</option>
+                    <option value="this_year">This Year</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        {% if dashboard_data.error %}
+        <div class="error">
+            {{ dashboard_data.error }}
+        </div>
+        {% endif %}
+
+        <!-- Interactive Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Attendance</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_attendance | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_attendance | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card clickable-card" onclick="showBreakdown('new_people')" title="Click for breakdown">
+                <div class="stat-card-header">
+                    <span class="stat-label">New People</span>
+                    <span class="expand-icon">+</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_new_people | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_new_people | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card clickable-card" onclick="showBreakdown('new_christians')" title="Click for breakdown">
+                <div class="stat-card-header">
+                    <span class="stat-label">New Christians</span>
+                    <span class="expand-icon">+</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_new_christians | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_new_christians | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card clickable-card" onclick="showBreakdown('youth')" title="Click for breakdown">
+                <div class="stat-card-header">
+                    <span class="stat-label">Youth</span>
+                    <span class="expand-icon">+</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_youth | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_youth | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card clickable-card" onclick="showBreakdown('kids')" title="Click for breakdown">
+                <div class="stat-card-header">
+                    <span class="stat-label">Kids</span>
+                    <span class="expand-icon">+</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_kids | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_kids | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Connect Groups</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_connect_groups | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_connect_groups | default(0)) }}
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Tithe Amount</span>
+                </div>
+                <div class="stat-value">${{ "{:,}".format(dashboard_data.stats.total_tithe | default(0) | int) }}</div>
+                <div class="stat-change">
+                    Weekly Total
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Dream Team</span>
+                </div>
+                <div class="stat-value">{{ dashboard_data.stats.total_dream_team | default(0) | int }}</div>
+                <div class="stat-change">
+                    Avg: {{ "%.1f" | format(dashboard_data.stats.avg_dream_team | default(0)) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Role-based Leadership Features -->
+        <!-- Leadership features removed - will be rebuilt from scratch -->
+
+        <!-- Fixed Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 class="chart-title">Attendance Trends</h3>
+                <div class="chart-wrapper">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 class="chart-title">Weekly Breakdown</h3>
+                <div class="chart-wrapper">
+                    <canvas id="breakdownChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakdown Modal -->
+    <div id="breakdownModal" class="breakdown-modal" style="display: none;">
+        <div class="breakdown-modal-content">
+            <div class="breakdown-header">
+                <h3 id="breakdownTitle">Breakdown</h3>
+                <button class="close-btn" onclick="hideBreakdownModal()">×</button>
+            </div>
+            <div id="breakdownContent" class="breakdown-content">
+                <!-- Breakdown stats will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart instances to prevent memory leaks
+        let attendanceChart = null;
+        let breakdownChart = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            
+            // Set current campus and date filter from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const campus = urlParams.get('campus') || 'all_campuses';
+            const dateFilter = urlParams.get('date_filter') || 'last_7_days';
+            
+            if (document.getElementById('campusFilter')) {
+                document.getElementById('campusFilter').value = campus;
+            }
+            if (document.getElementById('dateFilter')) {
+                document.getElementById('dateFilter').value = dateFilter;
+            }
+        });
+
+        // Leadership data loading removed - will be rebuilt from scratch
+
+        function displayCampusTable(campusData, accessLevel) {
+            const container = document.getElementById('campus-table-container');
+            if (!container) return;
+            
+            let tableHTML = `
+                <div class="campus-table">
+                    <div class="table-header">
+                        <div>Campus</div>
+                        <div>Attendance</div>
+                        <div>New People</div>
+                        <div>New Christians</div>
+                        <div>Growth %</div>
+                        <div>Conversion %</div>
+                    </div>
+            `;
+            
+            campusData.forEach(campus => {
+                const growthClass = campus.attendance_growth > 0 ? 'growth-positive' : 
+                                  campus.attendance_growth < 0 ? 'growth-negative' : 'growth-neutral';
+                
+                tableHTML += `
+                    <div class="table-row">
+                        <div class="campus-name">${campus.display_name}</div>
+                        <div class="metric-value">${campus.attendance}</div>
+                        <div class="metric-value">${campus.new_people}</div>
+                        <div class="metric-value">${campus.new_christians}</div>
+                        <div class="metric-value ${growthClass}">${campus.attendance_growth > 0 ? '+' : ''}${campus.attendance_growth}%</div>
+                        <div class="metric-value">${campus.conversion_rate}%</div>
+                    </div>
+                `;
+            });
+            
+            tableHTML += '</div>';
+            container.innerHTML = tableHTML;
+        }
+
+        function initializeLeadershipCharts(campusData) {
+            // Campus Comparison Chart
+            const comparisonCtx = document.getElementById('campusComparisonChart');
+            if (comparisonCtx) {
+                const labels = campusData.map(campus => campus.display_name);
+                const attendanceData = campusData.map(campus => campus.attendance);
+                
+                new Chart(comparisonCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Average Attendance',
+                            data: attendanceData,
+                            backgroundColor: '#60a5fa',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 10 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 10 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Growth Chart
+            const growthCtx = document.getElementById('growthChart');
+            if (growthCtx) {
+                const growthData = campusData.map(campus => campus.attendance_growth);
+                const colors = growthData.map(growth => growth > 0 ? '#22c55e' : growth < 0 ? '#ef4444' : '#9ca3af');
+                
+                new Chart(growthCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Growth Rate (%)',
+                            data: growthData,
+                            backgroundColor: colors,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 10 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 10 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initializeCharts() {
+            // Destroy existing charts if they exist
+            if (attendanceChart) {
+                attendanceChart.destroy();
+                attendanceChart = null;
+            }
+            if (breakdownChart) {
+                breakdownChart.destroy();
+                breakdownChart = null;
+            }
+
+            // Attendance Chart with proper sizing
+            const attendanceCtx = document.getElementById('attendanceChart');
+            if (attendanceCtx) {
+                const attendanceData = {{ dashboard_data.chart_data.attendance_labels | default(['Week 1', 'Week 2', 'Week 3', 'Week 4']) | tojson }};
+                const attendanceValues = {{ dashboard_data.chart_data.attendance_values | default([150, 180, 165, 200]) | tojson }};
+
+                attendanceChart = new Chart(attendanceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: attendanceData,
+                        datasets: [{
+                            label: 'Attendance',
+                            data: attendanceValues,
+                            borderColor: '#60a5fa',
+                            backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    font: { size: 12 }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 11 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.6)',
+                                    font: { size: 11 }
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Breakdown Chart with proper sizing
+            const breakdownCtx = document.getElementById('breakdownChart');
+            if (breakdownCtx) {
+                const breakdownLabels = ['Attendance', 'New People', 'New Christians', 'Youth', 'Kids'];
+                const breakdownValues = [
+                    {{ dashboard_data.stats.total_attendance | default(0) }},
+                    {{ dashboard_data.stats.total_new_people | default(0) }},
+                    {{ dashboard_data.stats.total_new_christians | default(0) }},
+                    {{ dashboard_data.stats.total_youth | default(0) }},
+                    {{ dashboard_data.stats.total_kids | default(0) }}
+                ];
+
+                breakdownChart = new Chart(breakdownCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: breakdownLabels,
+                        datasets: [{
+                            data: breakdownValues,
+                            backgroundColor: [
+                                '#60a5fa',
+                                '#34d399',
+                                '#fbbf24',
+                                '#f87171',
+                                '#a78bfa'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    padding: 15,
+                                    font: { size: 11 }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateCampus(campus) {
+            const url = new URL(window.location);
+            if (campus && campus !== 'all_campuses') {
+                url.searchParams.set('campus', campus);
+            } else {
+                url.searchParams.delete('campus');
+            }
+            window.location.href = url.toString();
+        }
+
+        function updateDateFilter(dateFilter) {
+            const url = new URL(window.location);
+            url.searchParams.set('date_filter', dateFilter);
+            window.location.href = url.toString();
+        }
+
+        // Breakdown Modal Functions
+        function showBreakdown(statType) {
+            const breakdowns = {
+                'new_people': {
+                    title: 'New People Breakdown',
+                    stats: [
+                        { label: 'First Time Visitors', value: {{ dashboard_data.stats.first_time_visitors | default(0) }} },
+                        { label: 'Returning Visitors', value: {{ dashboard_data.stats.visitors | default(0) }} }
+                    ]
+                },
+                'new_christians': {
+                    title: 'New Christians Breakdown',
+                    stats: [
+                        { label: 'First Time Christians', value: {{ dashboard_data.stats.first_time_christians | default(0) }} },
+                        { label: 'Rededications', value: {{ dashboard_data.stats.rededications | default(0) }} }
+                    ]
+                },
+                'youth': {
+                    title: 'Youth Breakdown',
+                    stats: [
+                        { label: 'Youth Attendance', value: {{ dashboard_data.stats.youth_attendance | default(0) }} },
+                        { label: 'New Youth', value: {{ dashboard_data.stats.youth_new_people | default(0) }} },
+                        { label: 'Youth Salvations', value: {{ dashboard_data.stats.youth_salvations | default(0) }} }
+                    ]
+                },
+                'kids': {
+                    title: 'Kids Breakdown',
+                    stats: [
+                        { label: 'Kids Attendance', value: {{ dashboard_data.stats.kids_attendance | default(0) }} },
+                        { label: 'New Kids', value: {{ dashboard_data.stats.new_kids | default(0) }} },
+                        { label: 'Kids Leaders', value: {{ dashboard_data.stats.kids_leaders | default(0) }} },
+                        { label: 'Kids Salvations', value: {{ dashboard_data.stats.new_kids_salvations | default(0) }} }
+                    ]
+                }
+            };
+
+            const breakdown = breakdowns[statType];
+            if (!breakdown) return;
+
+            showBreakdownModal(breakdown);
+        }
+
+        function showBreakdownModal(breakdown) {
+            const modal = document.getElementById('breakdownModal');
+            const title = document.getElementById('breakdownTitle');
+            const content = document.getElementById('breakdownContent');
+
+            title.textContent = breakdown.title;
+            
+            let html = '<div class="breakdown-grid">';
+            breakdown.stats.forEach(stat => {
+                html += `
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">${stat.label}</div>
+                        <div class="breakdown-value">${stat.value}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            content.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        function hideBreakdownModal() {
+            const modal = document.getElementById('breakdownModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('breakdownModal');
+            if (e.target === modal) {
+                hideBreakdownModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideBreakdownModal();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (attendanceChart) {
+                attendanceChart.resize();
+            }
+            if (breakdownChart) {
+                breakdownChart.resize();
+            }
+        });
+    </script>
+</body>
+</html> 

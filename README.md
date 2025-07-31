@@ -1,242 +1,254 @@
-# 🔥 Futures Core - Voice Assistant
+# 🚀 Church Voice Assistant
 
-A comprehensive church management system with AI-powered voice interaction, designed to streamline church operations and provide intelligent insights.
+A modern, AI-powered voice assistant for church statistics and data management. Built with React, Flask, and Three.js for an immersive user experience.
 
-## 🚀 Core Features
+## ✨ Features
 
-### Core Link - Voice-Driven Logging & Interaction Hub
-- **Voice Interface Layer**: Real-time transcription with speaker diarization
-- **Stat Parser Engine**: Intelligent interpretation of spoken input into structured data
-- **Multi-Campus Router**: Smart campus detection and routing
-- **Dynamic Prompter**: AI-generated follow-up questions for missing data
-- **Memory Threading**: Conversational history across time periods
-- **Smart Nudges**: Automatic reminders for incomplete stats
+- **🎤 Voice Recognition**: Natural language processing for church statistics
+- **📊 Data Visualization**: Interactive dashboards and reports
+- **🎨 Particle Effects**: Beautiful Three.js particle animations
+- **🔐 User Management**: Role-based access control
+- **📱 Responsive Design**: Works on desktop, tablet, and mobile
+- **🔒 Secure**: Environment-based configuration and API key management
 
-### Enhanced AI Integration
-- **Natural Language Understanding**: Advanced pattern recognition for church statistics
-- **Memory Chaining**: Context-aware responses based on historical data
-- **Auto-filling**: Predictive stat completion
-- **Context-aware Flows**: Intelligent conversation management
+## 🛠️ Tech Stack
 
-## 🛠️ Setup Instructions
+### Frontend
+- **React 18** with Vite
+- **Three.js** for 3D particle effects
+- **Tailwind CSS** for styling
+- **React Router** for navigation
+
+### Backend
+- **Flask** with Python 3.11
+- **Anthropic Claude** for AI processing
+- **Google Sheets API** for data storage
+- **Flask-Login** for authentication
+- **Gunicorn** for production deployment
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.8+
-- Google Cloud Platform account
-- Anthropic API key
-- Google Sheets API credentials
+- Node.js 18+ and npm
+- Python 3.11+
+- Git
 
-### 1. Environment Setup
-
+### 1. Clone the Repository
 ```bash
-# Clone the repository
 git clone <your-repo-url>
 cd church-voice-assistant
+```
 
-# Create virtual environment
+### 2. Set Up Environment Variables
+Create a `.env` file in the root directory:
+```bash
+# Flask Configuration
+SECRET_KEY=your-super-secret-key-here
+FLASK_ENV=development
+
+# API Keys (Get these from the respective services)
+ANTHROPIC_API_KEY=your-anthropic-api-key
+GOOGLE_SHEETS_CREDENTIALS={"type": "service_account", ...}
+
+# Security Settings
+CORS_ORIGINS=http://localhost:3000,http://localhost:5002
+LOG_LEVEL=INFO
+```
+
+### 3. Build and Run Locally
+
+#### Option A: Automated Setup (Recommended)
+```bash
+# Build everything and set up local development
+./build.sh
+
+# Start local development
+./deploy.sh local
+```
+
+#### Option B: Manual Setup
+```bash
+# Backend Setup
+cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-cd backend
 pip install -r requirements.txt
+python app.py
+
+# Frontend Setup (in a new terminal)
+cd frontend
+npm install
+npm run dev
 ```
 
-### 2. API Keys & Credentials
+### 4. Access the Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5002
 
-Create a `.env` file in the `backend` directory:
+## 🌐 Deployment
+
+### Automated Deployment
+
+The project includes automated deployment scripts for multiple platforms:
 
 ```bash
-# Backend/.env
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-GOOGLE_SHEETS_CREDENTIALS_FILE=credentials.json
+# Show deployment options
+./deploy.sh help
+
+# Deploy to Railway (easiest)
+./deploy.sh railway
+
+# Deploy to Render
+./deploy.sh render
+
+# Deploy to Heroku
+./deploy.sh heroku
+
+# Deploy to DigitalOcean App Platform
+./deploy.sh digitalocean
 ```
 
-### 3. Google Sheets Setup
+### Manual Deployment
 
-1. **Create a Google Cloud Project**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project
-   - Enable Google Sheets API and Google Drive API
+#### Railway (Recommended for Quick Demo)
+1. Sign up at [Railway.app](https://railway.app)
+2. Connect your GitHub repository
+3. Set environment variables in Railway dashboard
+4. Deploy automatically
 
-2. **Create Service Account**:
-   - Go to "APIs & Services" > "Credentials"
-   - Click "Create Credentials" > "Service Account"
-   - Download the JSON key file
-   - Rename it to `credentials.json` and place it in the `backend` directory
+#### Render
+1. Go to [Render.com](https://render.com)
+2. Create new Web Service
+3. Connect your GitHub repository
+4. Set build command: `./build.sh`
+5. Set start command: `gunicorn backend.app_deploy:app --bind 0.0.0.0:$PORT`
+6. Add environment variables
+7. Deploy!
 
-3. **Set up Google Sheet**:
-   - Create a new Google Sheet named "Stats"
-   - Share it with the service account email (found in credentials.json)
-   - The sheet should have these columns:
-     - Timestamp
-     - Campus
-     - Total Attendance
-     - New People
-     - New Christians
-     - Youth Attendance
-     - Kids Total
-     - Connect Groups
-     - Tithe Amount
-     - Volunteers
-     - Encouragement
+### Environment Variables for Production
 
-### 4. Run the Application
+Set these in your hosting platform's dashboard:
 
+**Required:**
+- `SECRET_KEY`: Your Flask secret key
+- `ANTHROPIC_API_KEY`: Your Anthropic API key
+- `GOOGLE_SHEETS_CREDENTIALS`: Your Google service account JSON
+- `CORS_ORIGINS`: Your domain URLs (comma-separated)
+
+**Optional:**
+- `FLASK_ENV`: production
+- `LOG_LEVEL`: INFO
+- `PORT`: 5002
+
+## 🔧 Development Workflow
+
+### Local Development
 ```bash
-# Start the backend server
+# Terminal 1: Backend
 cd backend
 python app.py
 
-# The application will be available at:
-# Frontend: http://localhost:5001
-# API: http://localhost:5001/api/
+# Terminal 2: Frontend
+cd frontend
+npm run dev
 ```
 
-## 🎯 Usage Examples
+### Making Changes
+1. Make your changes in the code
+2. Test locally using the development setup
+3. Build the project: `./build.sh`
+4. Deploy: `./deploy.sh [platform]`
 
-### Voice Input Examples
-
-**Basic Attendance Logging:**
+### Project Structure
 ```
-"Hey, we had 150 people today at the main campus, 25 new visitors, and 3 salvations."
-```
-
-**Detailed Service Report:**
-```
-"North campus this morning: 200 total attendance, 15 new people, 5 salvations, 45 youth, 60 kids, 12 connect groups, and we had $15,000 in tithe."
-```
-
-**Auto-detected Campus:**
-```
-"South campus had 180 people, 20 new visitors, and 4 baptisms today."
-```
-
-### API Endpoints
-
-- `GET /api/health` - System health check
-- `GET /api/stats` - Retrieve recent statistics
-- `POST /api/process_voice` - Process voice input
-- `GET /api/memory/<campus>` - Get conversation history
-- `GET /api/campuses` - List available campuses
-
-## 🔧 Advanced Configuration
-
-### Custom Campus Detection
-
-Edit the `campus_patterns` in `backend/app.py`:
-
-```python
-campus_patterns = {
-    "main": r"(?:main\s+campus|downtown|central)",
-    "north": r"(?:north\s+campus|northside)",
-    # Add your custom campuses here
-}
+church-voice-assistant/
+├── backend/                 # Flask backend
+│   ├── app.py              # Main Flask application
+│   ├── app_deploy.py       # Production deployment entry
+│   └── static/             # Built frontend files
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── pages/         # Page components
+│   │   └── App.jsx        # Main app component
+│   └── package.json
+├── build.sh               # Build script
+├── deploy.sh              # Deployment script
+├── requirements.txt       # Python dependencies
+└── Procfile              # Heroku deployment config
 ```
 
-### Enhanced Stat Patterns
+## 🔑 API Keys Setup
 
-Add custom stat recognition patterns:
+### Anthropic API Key
+1. Sign up at [Anthropic Console](https://console.anthropic.com)
+2. Create an API key
+3. Add to environment variables as `ANTHROPIC_API_KEY`
 
-```python
-patterns = {
-    "total_attendance": r"(\d+)\s+(?:people|attendance|total|adults?)",
-    # Add your custom patterns here
-}
-```
+### Google Sheets Setup
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project
+3. Enable Google Sheets API
+4. Create a service account
+5. Download the JSON credentials
+6. Add to environment variables as `GOOGLE_SHEETS_CREDENTIALS`
+7. Share your Google Sheet with the service account email
 
-## 🧠 AI Features
+## 🎯 Features Overview
 
-### Memory System
-- **Conversation History**: Tracks interactions per campus
-- **Context Awareness**: AI responses consider historical data
-- **Trend Recognition**: Identifies patterns across time periods
+### Voice Assistant
+- Natural language processing for church statistics
+- Voice-to-text conversion
+- AI-powered insights and reports
 
-### Smart Suggestions
-- **Missing Data Detection**: Automatically identifies incomplete reports
-- **Follow-up Questions**: AI-generated prompts for missing information
-- **Predictive Assistance**: Suggests likely values based on patterns
+### Dashboard
+- Real-time statistics visualization
+- Campus comparison tools
+- Interactive charts and graphs
 
-### Multi-Campus Intelligence
-- **Campus Auto-detection**: Identifies campus from voice input
-- **Cross-campus Insights**: Compares performance across locations
-- **Unified Dashboard**: Consolidated view of all campus data
+### User Management
+- Role-based access control
+- Multi-campus support
+- Secure authentication
 
-## 🔮 Future Enhancements
-
-### Planned Core Components
-
-1. **Core Dashboard** - Real-time church health monitoring
-2. **Core Connect** - Follow-up & assimilation flow engine
-3. **Core Pulse** - Real-time engagement tracking
-4. **Core Grow** - Discipleship pathway builder
-
-### Advanced AI Features
-- **Predictive Analytics**: Forecast attendance and giving trends
-- **Burnout Detection**: Identify team member fatigue patterns
-- **Engagement Scoring**: Quantify member participation levels
-- **Automated Reporting**: Generate insights and recommendations
+### Particle Effects
+- Interactive Three.js animations
+- Responsive to user interactions
+- Beautiful visual feedback
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-**Voice Recognition Not Working:**
-- Ensure HTTPS is enabled (required for microphone access)
-- Check browser permissions for microphone access
-- Try refreshing the page
-
-**Google Sheets Connection Error:**
-- Verify `credentials.json` is in the backend directory
-- Check that the service account has access to the sheet
-- Ensure the sheet name is exactly "Stats"
-
-**Claude API Errors:**
-- Verify your Anthropic API key is correct
-- Check your API usage limits
-- Ensure the API key has proper permissions
-
-### Debug Mode
-
-Enable debug logging by setting the log level in `backend/app.py`:
-
-```python
-logging.basicConfig(level=logging.DEBUG)
+**Build Errors:**
+```bash
+# Clean and rebuild
+rm -rf frontend/node_modules
+rm -rf frontend/dist
+cd frontend && npm install
+cd .. && ./build.sh
 ```
 
-## 📊 Data Structure
+**API Key Errors:**
+- Check environment variables are set correctly
+- Verify API keys are valid and have proper permissions
 
-### Conversation Memory Format
+**CORS Errors:**
+- Ensure CORS_ORIGINS includes your domain
+- Check that frontend and backend URLs match
 
-```json
-{
-  "main": [
-    {
-      "Campus": "main",
-      "Timestamp": "2024-01-15T10:30:00",
-      "Total Attendance": "150",
-      "New People": "25",
-      "Raw_Text": "We had 150 people today..."
-    }
-  ]
-}
-```
+**Voice Recognition Issues:**
+- Test microphone permissions in browser
+- Check HTTPS requirement for voice features
 
-### Google Sheets Structure
+### Support
+- Check platform logs for detailed error messages
+- Verify all environment variables are set
+- Test locally before deploying
 
-| Column | Description | Example |
-|--------|-------------|---------|
-| Timestamp | When the entry was logged | 2024-01-15 10:30:00 |
-| Campus | Campus identifier | main |
-| Total Attendance | Number of attendees | 150 |
-| New People | New visitors | 25 |
-| New Christians | Salvations/decisions | 3 |
-| Youth Attendance | Youth ministry count | 45 |
-| Kids Total | Children's ministry | 60 |
-| Connect Groups | Small group count | 12 |
-| Tithe Amount | Giving amount | $15,000 |
-| Volunteers | Team members | 35 |
-| Encouragement | AI-generated response | "Great work!..." |
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🤝 Contributing
 
@@ -246,17 +258,6 @@ logging.basicConfig(level=logging.DEBUG)
 4. Test thoroughly
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the troubleshooting section above
-- Review the API documentation
-
 ---
 
-**🔥 Futures Core** - Transforming church management through intelligent voice interaction and AI-powered insights. 
+**Happy Coding! 🚀** 

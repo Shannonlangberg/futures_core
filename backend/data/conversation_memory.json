@@ -1003,6 +1003,38 @@
       "Campus": "south",
       "Timestamp": "2025-07-18T03:46:55.174766+00:00",
       "Raw_Text": "can I get a south"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-22T04:31:59.852663+00:00",
+      "Raw_Text": "south had 200 people, 20np 10 nc, 50 kids, and 25 youth",
+      "Total Attendance": "200",
+      "New Christians": "10",
+      "Youth Attendance": "25",
+      "Kids Total": "50"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-25T05:02:32.093574+00:00",
+      "Raw_Text": "can i log 300 people for south, 10nc and 5 np",
+      "Total Attendance": "300",
+      "New People": "5"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-26T19:25:48.518968+00:00",
+      "Raw_Text": "test query"
+    },
+    {
+      "Campus": "south",
+      "Timestamp": "2025-07-26T22:56:00.864344+00:00",
+      "Raw_Text": "Can i log 200 people at south 20np, 5nc 6 kids 2 baptisms, 44 youth and 23 youth salvations",
+      "Total Attendance": "200",
+      "First Time Christians": "2",
+      "Youth Attendance": "44",
+      "Youth Salvations": "23",
+      "Baptisms": "2",
+      "Kids Total": "6"
     }
   ],
   "paradise": [
@@ -1148,6 +1180,26 @@
       "Campus": "paradise",
       "Timestamp": "2025-07-15T08:59:25.344137+00:00",
       "Raw_Text": "can i get a annual revoiew for paradise"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-22T08:00:16.161947+00:00",
+      "Raw_Text": "can i get the number of np at paradise last month"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-23T05:55:20.841474+00:00",
+      "Raw_Text": "can i log stats"
+    },
+    {
+      "Campus": "paradise",
+      "Timestamp": "2025-07-23T05:55:43.471249+00:00",
+      "Raw_Text": "we have 410 minutes 20 new people 6 new first-time visitors and we got cards back or info gathered for 12 or 23 new Christians 6 dedications and 12 youth",
+      "First Time Visitors": "20",
+      "First Time Christians": "23",
+      "Youth Attendance": "12",
+      "Child Dedications": "6",
+      "New People": "6"
     }
   ],
   "copper_coast": [
@@ -1210,6 +1262,11 @@
       "Campus": "copper_coast",
       "Timestamp": "2025-07-16T03:23:03.899992+00:00",
       "Raw_Text": "can i log stats for copper coast"
+    },
+    {
+      "Campus": "copper_coast",
+      "Timestamp": "2025-07-23T03:20:30.316473+00:00",
+      "Raw_Text": "can i log for copper coast"
     }
   ],
   "clare_valley": [
@@ -1314,6 +1371,22 @@
       "Campus": "salisbury",
       "Timestamp": "2025-07-16T06:36:04.917165+00:00",
       "Raw_Text": "can i get Q1 2024 for Salisbury"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-25T02:34:22.682272+00:00",
+      "Raw_Text": "150 people at Salisbury campus, 25 first time visitors, 5 salvations",
+      "Total Attendance": "150",
+      "First Time Visitors": "25",
+      "New Christians": "5"
+    },
+    {
+      "Campus": "salisbury",
+      "Timestamp": "2025-07-25T03:47:07.942554+00:00",
+      "Raw_Text": "150 people at Salisbury campus, 25 first time visitors, 5 salvations",
+      "Total Attendance": "150",
+      "First Time Visitors": "25",
+      "New Christians": "5"
     }
   ],
   "South": [
@@ -1346,6 +1419,23 @@
       "Campus": "Salisbury",
       "Timestamp": "2025-07-16T05:43:27.513410+00:00",
       "Raw_Text": "can i get q1 2025 salsibury"
+    }
+  ],
+  "all_campuses": [
+    {
+      "Campus": "all_campuses",
+      "Timestamp": "2025-07-22T04:13:53.635243+00:00",
+      "Raw_Text": "can i log for 30np 10nc 500 people at barker this week",
+      "Total Attendance": "500"
+    }
+  ],
+  "adelaide_city": [
+    {
+      "Campus": "adelaide_city",
+      "Timestamp": "2025-07-23T05:48:36.758540+00:00",
+      "Raw_Text": "hey can i log 200 no for city, 5 nc and 400 total",
+      "Total Attendance": "400",
+      "New Christians": "5"
     }
   ]
 }

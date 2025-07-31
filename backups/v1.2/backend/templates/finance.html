@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard - Tithe Logging</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0a0e1a 100%);
+            min-height: 100vh;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(10, 18, 30, 0.95);
+            border-bottom: 2px solid rgba(0,212,255,0.3);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,212,255,0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: url('{{ url_for("static", filename="Futures1white.png") }}') no-repeat center/contain;
+            filter: drop-shadow(0 0 12px #00d4ff);
+        }
+
+        .title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px #00d4ff;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            margin-top: 2px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.4rem;
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0,212,255,0.5);
+        }
+
+        /* Date Selector */
+        .date-section {
+            background: rgba(10, 18, 30, 0.8);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .date-label {
+            font-size: 1rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .date-input {
+            background: rgba(10, 18, 30, 0.9);
+            border: 2px solid rgba(0,212,255,0.4);
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Inter', Arial, sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 200px;
+        }
+
+        .date-input:focus {
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0,212,255,0.3);
+        }
+
+        /* Campus Cards Grid */
+        .campus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .campus-card {
+            background: rgba(10, 18, 30, 0.8);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,212,255,0.1);
+        }
+
+        .campus-card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 8px 25px rgba(0,212,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .campus-name {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.2rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .tithe-input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d4ff;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .tithe-input {
+            background: rgba(10, 18, 30, 0.9);
+            border: 2px solid rgba(0,212,255,0.4);
+            border-radius: 10px;
+            padding: 12px 20px 12px 35px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Inter', Arial, sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .tithe-input:focus {
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0,212,255,0.3);
+        }
+
+        .existing-amount {
+            font-size: 0.8rem;
+            color: #10b981;
+            margin-top: 8px;
+        }
+
+        /* Submit Section */
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #00d4ff 0%, #0891b2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Inter', Arial, sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,212,255,0.3);
+            min-width: 200px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,212,255,0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Status Messages */
+        .status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .status-info {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+        }
+
+        /* Logout Link */
+        .logout-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            color: #00d4ff;
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .campus-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo"></div>
+            <div>
+                <div class="title">Finance Dashboard</div>
+                <div class="subtitle">Tithe Logging System</div>
+            </div>
+        </div>
+        <div class="user-info">
+            <div class="user-name">{{ user.full_name }}</div>
+            <div class="user-role">{{ user.role|title }} Team</div>
+            <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1 class="section-title">Weekly Tithe Entry</h1>
+
+        <!-- Date Selection -->
+        <div class="date-section">
+            <div class="date-label">Select Service Date</div>
+            <input type="date" 
+                   id="service-date" 
+                   class="date-input" 
+                   value="{{ selected_date }}"
+                   onchange="loadDateData()">
+        </div>
+
+        <!-- Campus Cards -->
+        <div class="campus-grid" id="campus-grid">
+            {% for campus in campuses %}
+            <div class="campus-card">
+                <div class="campus-name">{{ campus.name }}</div>
+                <div class="tithe-input-group">
+                    <span class="currency-symbol">$</span>
+                    <input type="number" 
+                           class="tithe-input" 
+                           id="tithe-{{ campus.id }}"
+                           placeholder="0.00"
+                           step="0.01"
+                           min="0"
+                           value="{% if existing_data.get(campus.id.lower()) %}{{ existing_data[campus.id.lower()]['amount'] }}{% endif %}">
+                </div>
+                {% if existing_data.get(campus.id.lower()) %}
+                <div class="existing-amount">
+                    ✓ Current: ${{ "{:,.2f}".format(existing_data[campus.id.lower()]['amount']) }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Submit Section -->
+        <div class="submit-section">
+            <button class="submit-btn" onclick="submitTitheData()">
+                Submit Tithe Data
+            </button>
+            <div id="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load date-specific data when date changes
+        function loadDateData() {
+            const selectedDate = document.getElementById('service-date').value;
+            if (selectedDate) {
+                window.location.href = `{{ url_for('finance_dashboard') }}?date=${selectedDate}`;
+            }
+        }
+
+        // Submit tithe data for all campuses
+        async function submitTitheData() {
+            const submitBtn = document.querySelector('.submit-btn');
+            const statusDiv = document.getElementById('status-message');
+            const selectedDate = document.getElementById('service-date').value;
+            
+            if (!selectedDate) {
+                showStatus('Please select a service date.', 'error');
+                return;
+            }
+
+            // Collect tithe data from all campus inputs
+            const titheData = {};
+            const campusInputs = document.querySelectorAll('.tithe-input');
+            let hasData = false;
+
+            campusInputs.forEach(input => {
+                const campusId = input.id.replace('tithe-', '');
+                const amount = parseFloat(input.value) || 0;
+                
+                if (amount > 0) {
+                    titheData[campusId] = amount;
+                    hasData = true;
+                }
+            });
+
+            if (!hasData) {
+                showStatus('Please enter at least one tithe amount.', 'error');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            document.body.classList.add('loading');
+
+            try {
+                const response = await fetch('{{ url_for("submit_tithe_data") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date: selectedDate,
+                        tithe_data: titheData
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    // Optionally reload the page to show updated data
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    showStatus(result.error || 'An error occurred', 'error');
+                }
+
+            } catch (error) {
+                console.error('Error submitting tithe data:', error);
+                showStatus('Network error. Please try again.', 'error');
+            } finally {
+                // Reset loading state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Tithe Data';
+                document.body.classList.remove('loading');
+            }
+        }
+
+        // Show status message
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+
+            // Hide after 5 seconds for success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Auto-focus first empty input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.tithe-input');
+            for (let input of inputs) {
+                if (!input.value) {
+                    input.focus();
+                    break;
+                }
+            }
+        });
+
+        // Format currency inputs
+        document.querySelectorAll('.tithe-input').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value) {
+                    const value = parseFloat(this.value);
+                    if (!isNaN(value)) {
+                        this.value = value.toFixed(2);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

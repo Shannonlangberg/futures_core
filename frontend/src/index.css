@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-slate-900 text-white;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply bg-slate-800/50 backdrop-blur-sm border border-slate-700/50;
+  }
+  
+  .glow-effect {
+    @apply shadow-lg shadow-slate-900/20;
+  }
+  
+  .particle-container {
+    @apply relative overflow-hidden;
+  }
+  
+  .interactive-element {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  .voice-button-active {
+    @apply animate-pulse shadow-lg shadow-red-500/25;
+  }
+  
+  .voice-button-idle {
+    @apply shadow-lg shadow-blue-500/25 hover:shadow-blue-400/30;
+  }
+  
+  .input-container {
+    @apply relative overflow-hidden;
+  }
+  
+  .recording-active {
+    @apply animate-pulse shadow-lg shadow-red-500/25;
+  }
+  
+  .input-focus {
+    @apply focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+  }
+  
+  .particle-area {
+    @apply relative overflow-hidden rounded-xl;
+  }
+  
+  .particle-button {
+    @apply transition-all duration-300 hover:scale-105;
+  }
+  
+  .particle-text {
+    @apply text-slate-400 text-lg font-medium;
+  }
+  
+  .clean-layout {
+    @apply max-w-4xl mx-auto space-y-6;
+  }
+  
+  .main-card {
+    @apply bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-8;
+  }
+  
+  .voice-button-large {
+    @apply w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl;
+  }
+} 

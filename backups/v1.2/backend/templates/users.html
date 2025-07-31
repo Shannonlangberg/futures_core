@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - FUTURES LINK</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .user-info {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .actions-left h2 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .actions-left p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .users-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .user-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .user-username {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .role-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .role-admin {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .role-senior-leader {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .role-campus-pastor {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .role-pastor {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .status-active {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .status-inactive {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .flash-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .flash-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+        
+        .flash-success {
+            background: #efe;
+            color: #393;
+            border: 1px solid #cfc;
+        }
+        
+        .flash-info {
+            background: #eef;
+            color: #339;
+            border: 1px solid #ccf;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .last-login {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .actions-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .users-table {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>👥 User Management</h1>
+            <div class="user-info">
+                Logged in as <strong>{{ current_user.full_name }}</strong> ({{ current_user.role }})
+                <br>
+                <small><a href="{{ url_for('logout') }}" style="color: rgba(255,255,255,0.8);">Logout</a></small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Actions Bar -->
+        <div class="actions-bar">
+            <div class="actions-left">
+                <h2>System Users</h2>
+                <p>Manage user accounts, roles, and permissions</p>
+            </div>
+            <div class="actions-right">
+                <a href="{{ url_for('serve_index') }}" class="btn btn-secondary">
+                    ← Back to Dashboard
+                </a>
+                <a href="{{ url_for('user_create') }}" class="btn btn-primary">
+                    ➕ Add New User
+                </a>
+            </div>
+        </div>
+        
+        <!-- Users Table -->
+        <div class="users-table">
+            {% if users %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Campus</th>
+                            <th>Status</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>
+                                <div class="user-details">
+                                    <div class="user-avatar">
+                                        {{ user.full_name[0].upper() }}
+                                    </div>
+                                    <div>
+                                        <div class="user-name">{{ user.full_name }}</div>
+                                        <div class="user-username">@{{ user.username }}</div>
+                                        <div class="user-username">{{ user.email }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="role-badge role-{{ user.role.replace('_', '-') }}">
+                                    {{ user.role_name }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if user.campus == 'all_campuses' %}
+                                    <strong>All Campuses</strong>
+                                {% else %}
+                                    {{ user.campus.title().replace('_', ' ') }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.active %}
+                                    <span class="status-active">✓ Active</span>
+                                {% else %}
+                                    <span class="status-inactive">✗ Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.last_login %}
+                                    <div class="last-login">
+                                        {{ user.last_login.split('T')[0] }}<br>
+                                        <small>{{ user.last_login.split('T')[1][:5] if 'T' in user.last_login else '' }}</small>
+                                    </div>
+                                {% else %}
+                                    <span style="color: #999;">Never</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{{ url_for('user_edit', user_id=user.id) }}" class="btn btn-secondary btn-sm">
+                                        ✏️ Edit
+                                    </a>
+                                    {% if user.id != current_user.id %}
+                                        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}" style="display: inline;" 
+                                              onsubmit="return confirm('Are you sure you want to delete {{ user.full_name }}? This action cannot be undone.')">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                🗑️ Delete
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">👤</div>
+                    <h3>No Users Found</h3>
+                    <p>Start by creating your first user account.</p>
+                    <br>
+                    <a href="{{ url_for('user_create') }}" class="btn btn-primary">
+                        ➕ Add First User
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 

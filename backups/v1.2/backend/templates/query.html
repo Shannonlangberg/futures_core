@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Futures Core Query Tool</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body { background: #0a192f; color: #fff; font-family: 'Inter', sans-serif; }
+    .query-container { max-width: 500px; margin: 60px auto; background: rgba(20,30,60,0.95); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); padding: 32px; }
+    h2 { color: #00d4ff; text-align: center; margin-bottom: 18px; }
+    label { font-weight: 500; color: #0ea5e9; }
+    input, textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #0ea5e9; margin: 10px 0 18px 0; background: #112240; color: #fff; font-size: 1rem; }
+    button { background: #00d4ff; color: #0a192f; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #0ea5e9; }
+    .result { margin-top: 24px; background: #112240; border-radius: 10px; padding: 18px; }
+    .result strong { color: #00d4ff; }
+    .analysis-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
+    .analysis-table th, .analysis-table td { border: 1px solid #233554; padding: 6px 10px; text-align: left; }
+    .analysis-table th { background: #0ea5e9; color: #fff; }
+    .analysis-table td { background: #1a263a; }
+  </style>
+</head>
+<body>
+  <div class="query-container">
+    <h2>Futures Core Data Query</h2>
+    <form id="queryForm">
+      <label for="question">Ask a question about your stats:</label>
+      <input type="text" id="question" name="question" placeholder="e.g. What is the average youth attendance at south campus?" required />
+      <button type="submit">Ask</button>
+    </form>
+    <div class="result" id="result" style="display:none;"></div>
+  </div>
+  <script>
+    const form = document.getElementById('queryForm');
+    const resultDiv = document.getElementById('result');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const question = document.getElementById('question').value.trim();
+      resultDiv.style.display = 'none';
+      resultDiv.innerHTML = '<em>Loading...</em>';
+      try {
+        const res = await fetch('/api/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+        const data = await res.json();
+        if (data.error) {
+          resultDiv.innerHTML = `<span style='color:#ef4444;'>${data.error}</span>`;
+        } else {
+          let html = `<strong>Q:</strong> ${data.question}<br/><strong>A:</strong> ${data.answer}`;
+          if (data.analysis && Object.keys(data.analysis).length > 0) {
+            html += '<h4 style="margin-top:18px; color:#0ea5e9;">Analysis</h4>';
+            html += '<table class="analysis-table">';
+            for (const [key, value] of Object.entries(data.analysis)) {
+              if (typeof value === 'object' && value !== null) {
+                html += `<tr><th colspan="2">${key.charAt(0).toUpperCase() + key.slice(1)}</th></tr>`;
+                for (const [k, v] of Object.entries(value)) {
+                  html += `<tr><td>${k}</td><td>${v}</td></tr>`;
+                }
+              } else {
+                html += `<tr><td>${key}</td><td>${value}</td></tr>`;
+              }
+            }
+            html += '</table>';
+          }
+          resultDiv.innerHTML = html;
+        }
+        resultDiv.style.display = '';
+      } catch (err) {
+        resultDiv.innerHTML = `<span style='color:#ef4444;'>Error: ${err.message}</span>`;
+        resultDiv.style.display = '';
+      }
+    });
+  </script>
+</body>
+</html> 

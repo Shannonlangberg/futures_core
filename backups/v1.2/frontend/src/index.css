@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-slate-900 text-white;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply bg-slate-800/50 backdrop-blur-sm border border-slate-700/50;
+  }
+  
+  .glow-effect {
+    @apply shadow-lg shadow-slate-900/20;
+  }
+} 

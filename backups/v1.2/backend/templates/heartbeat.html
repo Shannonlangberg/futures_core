@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futures Church Pulse</title>
+    <link rel="icon" href="/Futures1white.png" type="image/png" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.8) 0%, rgba(52, 152, 219, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            font-weight: 300;
+        }
+        
+        .header .date {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: url('/Futures1white.png') no-repeat center/contain;
+            filter: drop-shadow(0 0 12px #00d4ff);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { filter: drop-shadow(0 0 8px #00d4ff); }
+            100% { filter: drop-shadow(0 0 20px #00d4ff); }
+        }
+        
+        .accent {
+            color: #00d4ff;
+        }
+        
+        .title {
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px #00d4ff;
+        }
+        
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .overview-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .overview-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-left: 4px solid rgba(52, 152, 219, 0.8);
+        }
+        
+        .overview-card.critical {
+            border-left-color: rgba(231, 76, 60, 0.8);
+        }
+        
+        .overview-card.warning {
+            border-left-color: rgba(243, 156, 18, 0.8);
+        }
+        
+        .overview-card.good {
+            border-left-color: rgba(39, 174, 96, 0.8);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .card-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .card-trend {
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-trend.positive {
+            color: #27ae60;
+        }
+        
+        .card-trend.negative {
+            color: #e74c3c;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .card h3 {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card h3 .emoji {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .alerts-list {
+            list-style: none;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border-left: 4px solid rgba(231, 76, 60, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        
+        .alert-item.critical {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            border-left-color: rgba(231, 76, 60, 0.8);
+        }
+        
+        .alert-item.warning {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            border-left-color: rgba(243, 156, 18, 0.8);
+        }
+        
+        .alert-item.opportunity {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid rgba(39, 174, 96, 0.2);
+            border-left-color: rgba(39, 174, 96, 0.8);
+        }
+        
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .alert-icon.critical {
+            background: #e74c3c;
+        }
+        
+        .alert-icon.warning {
+            background: #f39c12;
+        }
+        
+        .alert-icon.opportunity {
+            background: #27ae60;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+        
+        .alert-description {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .alert-action {
+            margin-left: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn.primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn.primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn.secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+        
+        .btn.secondary:hover {
+            background: #d5dbdb;
+        }
+        
+        .pipeline-visual {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        
+        .pipeline-stage {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .stage-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stage-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        .stage-change {
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .stage-change.positive {
+            color: #27ae60;
+        }
+        
+        .stage-change.negative {
+            color: #e74c3c;
+        }
+        
+        .members-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .member-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .member-item.warning {
+            border-left-color: #f39c12;
+        }
+        
+        .member-item.opportunity {
+            border-left-color: #27ae60;
+        }
+        
+        .member-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #bdc3c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .member-info {
+            flex: 1;
+        }
+        
+        .member-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+        
+        .member-status {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+        
+        .member-score {
+            text-align: right;
+            margin-left: 15px;
+        }
+        
+        .health-score {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .health-score.critical {
+            color: #e74c3c;
+        }
+        
+        .health-score.warning {
+            color: #f39c12;
+        }
+        
+        .health-score.good {
+            color: #27ae60;
+        }
+        
+        .score-label {
+            font-size: 0.75em;
+            color: #7f8c8d;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .insight-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .celebration-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #eafaf1;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .celebration-icon {
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+        
+        .celebration-text {
+            flex: 1;
+        }
+        
+        .celebration-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+        
+        .celebration-date {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+        
+        .tab-container {
+            margin-bottom: 25px;
+        }
+        
+        .tab-nav {
+            display: flex;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: rgba(52, 152, 219, 0.9);
+            border-bottom-color: rgba(52, 152, 219, 0.8);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 18, 30, 0.95);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0,212,255,0.2);
+            z-index: 100;
+        }
+
+        .nav-item {
+            color: #00d4ff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 6px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-item:hover {
+            background: rgba(0,212,255,0.2);
+            color: #fff;
+            transform: scale(1.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+            
+            .overview-cards {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .insights-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .dashboard {
+                padding: 15px;
+            }
+            
+            .overview-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .overview-card {
+                padding: 20px;
+            }
+            
+            .card-value {
+                font-size: 2rem;
+            }
+            
+            .main-grid {
+                gap: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .insight-card {
+                padding: 20px;
+            }
+            
+            .bottom-nav {
+                padding: 8px 15px;
+                gap: 15px;
+            }
+            
+            .nav-item {
+                font-size: 0.9rem;
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 10px 15px;
+            }
+            
+            .title {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .dashboard {
+                padding: 10px;
+            }
+            
+            .overview-cards {
+                gap: 10px;
+            }
+            
+            .overview-card {
+                padding: 15px;
+            }
+            
+            .card-value {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .insight-card {
+                padding: 15px;
+            }
+            
+            .bottom-nav {
+                padding: 6px 12px;
+                gap: 12px;
+            }
+            
+            .nav-item {
+                font-size: 0.8rem;
+                width: 26px;
+                height: 26px;
+            }
+            
+            /* Touch-friendly improvements */
+            .btn {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            .tab-btn {
+                min-height: 44px;
+                padding: 15px 20px;
+            }
+            
+            .alert-action .btn {
+                min-height: 44px;
+                padding: 10px 16px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .header {
+                padding: 10px 20px;
+            }
+            
+            .dashboard {
+                padding: 10px;
+            }
+            
+            .overview-cards {
+                margin-bottom: 15px;
+            }
+            
+            .overview-card {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .insight-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div class="title">Futures <span class="accent">PULSE</span></div>
+            </div>
+            <div class="date">Monday, January 22, 2024 • Week 4</div>
+        </div>
+    </div>
+    
+    <div class="dashboard">
+        <!-- Overview Cards -->
+        <div class="overview-cards">
+            <div class="overview-card good">
+                <div class="card-header">
+                    <div class="card-title">Overall Church Health</div>
+                </div>
+                <div class="card-value">87</div>
+                <div class="card-trend positive">↗️ +3% from last week</div>
+            </div>
+            
+            <div class="overview-card warning">
+                <div class="card-header">
+                    <div class="card-title">Members Needing Care</div>
+                </div>
+                <div class="card-value">12</div>
+                <div class="card-trend negative">🔴 3 urgent this week</div>
+            </div>
+            
+            <div class="overview-card good">
+                <div class="card-header">
+                    <div class="card-title">Growth Pipeline</div>
+                </div>
+                <div class="card-value">23</div>
+                <div class="card-trend positive">↗️ Ready for next stage</div>
+            </div>
+            
+            <div class="overview-card good">
+                <div class="card-header">
+                    <div class="card-title">Engagement Rate</div>
+                </div>
+                <div class="card-value">84%</div>
+                <div class="card-trend positive">↗️ +5% this month</div>
+            </div>
+        </div>
+        
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Priority Alerts -->
+            <div class="card">
+                <h3><span class="emoji">🚨</span> Priority Alerts</h3>
+                <ul class="alerts-list">
+                    <li class="alert-item critical">
+                        <div class="alert-icon critical">!</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Sarah Johnson - Health Score: 34</div>
+                            <div class="alert-description">No engagement in 3 weeks, missed small group</div>
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn primary">Call Today</button>
+                        </div>
+                    </li>
+                    <li class="alert-item critical">
+                        <div class="alert-icon critical">!</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Mike Chen - Declining Engagement</div>
+                            <div class="alert-description">87% churn risk, job stress mentioned</div>
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn primary">Schedule Coffee</button>
+                        </div>
+                    </li>
+                    <li class="alert-item warning">
+                        <div class="alert-icon warning">⚠</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Children's Ministry - Volunteer Burnout</div>
+                            <div class="alert-description">3 volunteers showing stress indicators</div>
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn secondary">Review Team</button>
+                        </div>
+                    </li>
+                    <li class="alert-item opportunity">
+                        <div class="alert-icon opportunity">🎯</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Leadership Pipeline Ready</div>
+                            <div class="alert-description">7 members showing leadership potential</div>
+                        </div>
+                        <div class="alert-action">
+                            <button class="btn primary">Review Candidates</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Discipleship Pipeline -->
+            <div class="card">
+                <h3><span class="emoji">📊</span> Discipleship Pipeline</h3>
+                <div class="pipeline-visual">
+                    <div class="pipeline-stage">
+                        <span class="stage-number">23</span>
+                        <div class="stage-label">Foundation</div>
+                        <div class="stage-change positive">+5 this month</div>
+                    </div>
+                    <div class="pipeline-stage">
+                        <span class="stage-number">147</span>
+                        <div class="stage-label">Growing</div>
+                        <div class="stage-change positive">+12</div>
+                    </div>
+                    <div class="pipeline-stage">
+                        <span class="stage-number">89</span>
+                        <div class="stage-label">Serving</div>
+                        <div class="stage-change positive">+8</div>
+                    </div>
+                    <div class="pipeline-stage">
+                        <span class="stage-number">34</span>
+                        <div class="stage-label">Leading</div>
+                        <div class="stage-change positive">+3</div>
+                    </div>
+                    <div class="pipeline-stage">
+                        <span class="stage-number">12</span>
+                        <div class="stage-label">Multiplying</div>
+                        <div class="stage-change positive">+2</div>
+                    </div>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" onclick="showTab('urgent')">Urgent (3)</button>
+                        <button class="tab-btn" onclick="showTab('opportunities')">Opportunities (7)</button>
+                        <button class="tab-btn" onclick="showTab('stalled')">Stalled (8)</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="urgent">
+                        <div class="members-list">
+                            <div class="member-item">
+                                <div class="member-avatar">SC</div>
+                                <div class="member-info">
+                                    <div class="member-name">Sarah Johnson</div>
+                                    <div class="member-status">Growing stage • 90 days stalled</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score critical">34</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                            <div class="member-item">
+                                <div class="member-avatar">MC</div>
+                                <div class="member-info">
+                                    <div class="member-name">Mike Chen</div>
+                                    <div class="member-status">Serving stage • Leadership training incomplete</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score critical">41</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                            <div class="member-item">
+                                <div class="member-avatar">TW</div>
+                                <div class="member-info">
+                                    <div class="member-name">Tom Wilson</div>
+                                    <div class="member-status">Serving stage • Volunteer burnout signs</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score critical">38</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="opportunities">
+                        <div class="members-list">
+                            <div class="member-item opportunity">
+                                <div class="member-avatar">AS</div>
+                                <div class="member-info">
+                                    <div class="member-name">Amy Stevens</div>
+                                    <div class="member-status">Ready for small group leadership</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score good">92</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                            <div class="member-item opportunity">
+                                <div class="member-avatar">DK</div>
+                                <div class="member-info">
+                                    <div class="member-name">David Kim</div>
+                                    <div class="member-status">Bible plan 95% complete</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score good">88</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                            <div class="member-item opportunity">
+                                <div class="member-avatar">LP</div>
+                                <div class="member-info">
+                                    <div class="member-name">Lisa Park</div>
+                                    <div class="member-status">Showing leadership gifts</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score good">85</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="stalled">
+                        <div class="members-list">
+                            <div class="member-item warning">
+                                <div class="member-avatar">RJ</div>
+                                <div class="member-info">
+                                    <div class="member-name">Robert Johnson</div>
+                                    <div class="member-status">Growing stage • 45 days no progress</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score warning">67</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                            <div class="member-item warning">
+                                <div class="member-avatar">MR</div>
+                                <div class="member-info">
+                                    <div class="member-name">Maria Rodriguez</div>
+                                    <div class="member-status">Foundation stage • Baptism pending</div>
+                                </div>
+                                <div class="member-score">
+                                    <div class="health-score warning">63</div>
+                                    <div class="score-label">Health</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights Grid -->
+        <div class="insights-grid">
+            <!-- Weekly Wins -->
+            <div class="insight-card">
+                <h3><span class="emoji">🎉</span> This Week's Celebrations</h3>
+                <div class="celebration-item">
+                    <div class="celebration-icon">🎓</div>
+                    <div class="celebration-text">
+                        <div class="celebration-title">5 Members Completed Faith Foundations</div>
+                        <div class="celebration-date">Course completion rate: 94%</div>
+                    </div>
+                </div>
+                <div class="celebration-item">
+                    <div class="celebration-icon">🤝</div>
+                    <div class="celebration-text">
+                        <div class="celebration-title">3 New Small Group Leaders Equipped</div>
+                        <div class="celebration-date">Leadership pipeline growing</div>
+                    </div>
+                </div>
+                <div class="celebration-item">
+                    <div class="celebration-icon">💒</div>
+                    <div class="celebration-text">
+                        <div class="celebration-title">8 Baptism Candidates Ready</div>
+                        <div class="celebration-date">Schedule for next ceremony</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Growth Insights -->
+            <div class="insight-card">
+                <h3><span class="emoji">📈</span> Growth Insights</h3>
+                <div style="margin-bottom: 15px;">
+                    <strong>Visitor Conversion Rate:</strong> 34% (↗️ +8%)
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Member Retention:</strong> 94% (↗️ +2%)
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Volunteer Engagement:</strong> 78% (↗️ +5%)
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Small Group Participation:</strong> 67% (→ stable)
+                </div>
+                <div style="padding: 15px; background: #eafaf1; border-radius: 8px; margin-top: 15px;">
+                    <strong>Prediction:</strong> Based on current trends, expect 15% growth in active membership by Q2.
+                </div>
+            </div>
+            
+            <!-- Recommended Actions -->
+            <div class="insight-card">
+                <h3><span class="emoji">🎯</span> Recommended Actions</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                        <strong>This Week:</strong> Schedule coffee with 3 high-churn-risk members
+                    </li>
+                    <li style="margin-bottom: 12px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                        <strong>Next Month:</strong> Launch new leadership training cohort (7 candidates ready)
+                    </li>
+                    <li style="margin-bottom: 12px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                        <strong>Strategic:</strong> Address children's ministry volunteer capacity
+                    </li>
+                    <li style="margin-bottom: 12px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                        <strong>Opportunity:</strong> Small group multiplication (2 groups ready)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <div class="nav-item" title="Home" onclick="window.location.href='/'">🏠</div>
+      <div class="nav-item" title="Heart" onclick="window.location.href='/heartbeat'">❤️</div>
+      <div class="nav-item" title="Journey" onclick="window.location.href='/journey'">👤</div>
+      <div class="nav-item" title="Settings">⚙️</div>
+    </div>
+</body>
+</html> 
