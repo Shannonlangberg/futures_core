@@ -216,12 +216,31 @@ print("[DEBUG] Finished memory storage setup")
 
 def parse_any_date(date_str):
     """Parse date from various formats commonly found in Google Sheets"""
-    for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%d', '%m/%d/%Y', '%-m/%-d/%Y'):
+    # Handle empty or None values
+    if not date_str or date_str == '':
+        return datetime.now()
+    
+    # Try different date formats
+    formats = [
+        '%Y-%m-%d %H:%M:%S',  # 2025-07-31 12:49:11
+        '%Y-%m-%d',           # 2025-07-31
+        '%m/%d/%Y',           # 4/15/2025
+        '%m/%d/%y',           # 4/15/25
+        '%d/%m/%Y',           # 15/4/2025
+        '%d/%m/%y',           # 15/4/25
+        '%Y-%m-%dT%H:%M:%S',  # 2025-07-31T12:49:11
+        '%Y-%m-%dT%H:%M:%SZ', # 2025-07-31T12:49:11Z
+    ]
+    
+    for fmt in formats:
         try:
-            return datetime.strptime(date_str, fmt)
-        except Exception:
+            return datetime.strptime(str(date_str).strip(), fmt)
+        except ValueError:
             continue
-    raise ValueError(f"Unrecognized date format: {date_str}")
+    
+    # If all formats fail, log the error and return current time
+    logger.warning(f"Could not parse timestamp for row: {date_str}")
+    return datetime.now()
 
 def safe_int(val: Any) -> int:
     """Safely convert a value to int, returning 0 on failure."""
