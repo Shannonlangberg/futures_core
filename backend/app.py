@@ -4738,7 +4738,22 @@ def campus_delete(campus_id):
 @app.route('/')
 def serve_index():
     """Main application page - serve the React app"""
-    return send_from_directory(app.static_folder, 'index.html')
+    try:
+        if not app.static_folder:
+            return jsonify({"error": "Static folder not configured"}), 500
+        
+        # Check if index.html exists
+        index_path = os.path.join(app.static_folder, 'index.html')
+        if not os.path.exists(index_path):
+            return jsonify({
+                "error": "React app not built",
+                "static_folder": app.static_folder,
+                "files": os.listdir(app.static_folder) if os.path.exists(app.static_folder) else []
+            }), 404
+        
+        return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+        return jsonify({"error": f"Error serving index: {str(e)}"}), 500
 
 @app.route('/<path:filename>')
 def serve_static(filename):
@@ -4793,6 +4808,25 @@ def simple_health():
         "message": "Church Voice Assistant is running",
         "timestamp": datetime.now(timezone.utc).isoformat()
     })
+
+@app.route('/debug/static')
+def debug_static():
+    """Debug route to check static folder contents"""
+    try:
+        if not app.static_folder:
+            return jsonify({"error": "Static folder not configured"}), 500
+        
+        if not os.path.exists(app.static_folder):
+            return jsonify({"error": "Static folder does not exist"}), 500
+        
+        files = os.listdir(app.static_folder)
+        return jsonify({
+            "static_folder": app.static_folder,
+            "files": files,
+            "index_exists": os.path.exists(os.path.join(app.static_folder, 'index.html'))
+        })
+    except Exception as e:
+        return jsonify({"error": f"Debug error: {str(e)}"}), 500
 
 @app.route('/api/session')
 def session_info():
