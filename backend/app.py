@@ -4732,19 +4732,19 @@ def debug_users():
     except Exception as e:
         return jsonify({"error": f"Error checking users database: {str(e)}"}), 500
 
-@app.route('/<path:path>')
-def catch_all(path):
-    """Catch-all route for React Router - serve index.html for all non-API routes"""
-    if path.startswith('api/'):
-        return jsonify({"error": "API endpoint not found"}), 404
-    return send_from_directory(app.static_folder, 'index.html')
-
 @app.route('/temp_audio/<path:filename>')
 def serve_audio(filename):
     """Serve generated audio files"""
     # Use absolute path to temp_audio directory in backend folder
     temp_audio_dir = os.path.join(os.path.dirname(__file__), "temp_audio")
     return send_from_directory(temp_audio_dir, filename)
+
+@app.route('/<path:path>')
+def catch_all(path):
+    """Catch-all route for React Router - serve index.html for all non-API routes"""
+    if path.startswith('api/'):
+        return jsonify({"error": "API endpoint not found"}), 404
+    return send_from_directory(app.static_folder, 'index.html')
 
 # @app.route('/query')
 # @login_required
