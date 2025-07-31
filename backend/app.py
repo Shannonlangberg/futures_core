@@ -4830,6 +4830,29 @@ def debug_static():
     except Exception as e:
         return jsonify({"error": f"Debug error: {str(e)}"}), 500
 
+@app.route('/debug/users')
+def debug_users():
+    """Debug endpoint to check users database"""
+    try:
+        users_db = load_users_database()
+        users_list = []
+        for user_id, user_data in users_db.get('users', {}).items():
+            users_list.append({
+                'id': user_id,
+                'username': user_data.get('username'),
+                'active': user_data.get('active'),
+                'role': user_data.get('role')
+            })
+        
+        return jsonify({
+            "users_file_path": os.path.join(os.path.dirname(__file__), 'users.json'),
+            "users_file_exists": os.path.exists(os.path.join(os.path.dirname(__file__), 'users.json')),
+            "users_count": len(users_list),
+            "users": users_list
+        })
+    except Exception as e:
+        return jsonify({"error": f"Error checking users database: {str(e)}"}), 500
+
 @app.route('/api/session')
 def session_info():
     if current_user.is_authenticated:
