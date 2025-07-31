@@ -3,7 +3,7 @@
     "admin": {
       "id": "admin",
       "username": "admin",
-      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "password_hash": "placeholder",
       "email": "admin@futures.church",
       "full_name": "Shannon Langberg",
       "role": "admin",
@@ -15,7 +15,7 @@
     "ps_ashley": {
       "id": "ps_ashley",
       "username": "Ashley Evans ",
-      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "password_hash": "placeholder",
       "email": "ashley@futures.church",
       "full_name": "Ashley Evans ",
       "role": "senior_leader",
@@ -27,7 +27,7 @@
     "ps_josh": {
       "id": "ps_josh",
       "username": "Josh Greenwood",
-      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "password_hash": "placeholder",
       "email": "josh@futures.church",
       "full_name": "Josh greenwood",
       "role": "senior_leader",
@@ -39,7 +39,7 @@
     "pastor_demo": {
       "id": "pastor_demo",
       "username": "pastor",
-      "password_hash": "scrypt:32768:8:1$7iEvgPKGgNlcIqWF$46f7c8baba8de2b4b3b5a8b3b6b3d1a3b6b4b2b9b7b4b6b2b7b5b9b3b7b8b4b3b6b9b7b2b6b8b4b5b9b3b7b2b6b4b9b5b3b7b6b8b2b4b9b7b3b6b5b8b2b4b7b9b3b6b5b8b4b2b7b9b3b6b5b8b2b4",
+      "password_hash": "placeholder",
       "email": "pastor@futures.church",
       "full_name": "Demo Pastor",
       "role": "pastor",
@@ -65,7 +65,7 @@
       "username": "Shannon Langberg",
       "email": "shannon.langberg@futures.church",
       "full_name": "Shannon Langberg",
-      "password_hash": "scrypt:32768:8:1$dXGzzX69ochpZDSf$98ba94cf101cec1bd41acd9a644f4ff10059da34dbd94710b7d85bdde8c490c8fe2e6db62b90d77db9f5f4bf4066b1d3321fa62e30149057c95fe6ede5af1276",
+      "password_hash": "placeholder",
       "role": "admin",
       "campus": "all_campuses",
       "active": true,
