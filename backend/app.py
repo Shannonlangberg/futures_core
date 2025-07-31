@@ -232,7 +232,9 @@ def save_conversation_memory(memory: Dict[str, Any]):
 print("[DEBUG] Creating Flask app instance")
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.secret_key = os.environ.get('SECRET_KEY', 'futures-church-secret-key-2025')
-CORS(app, supports_credentials=True, origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:3002"], allow_headers=["Content-Type", "Authorization"])
+# Get CORS origins from environment variable or use defaults
+cors_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:3000,http://localhost:3001,http://localhost:3002').split(',')
+CORS(app, supports_credentials=True, origins=cors_origins, allow_headers=["Content-Type", "Authorization"])
 print("[DEBUG] Flask app instance created and CORS enabled")
 
 # Configure Flask-Login
