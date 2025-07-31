@@ -4738,13 +4738,20 @@ def campus_delete(campus_id):
 @app.route('/')
 def serve_index():
     """Main application page - serve the React app"""
-    return render_template('index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
     if app.static_folder:
         return send_from_directory(app.static_folder, filename)
     return jsonify({"error": "Static folder not configured"}), 404
+
+@app.route('/<path:path>')
+def catch_all(path):
+    """Catch-all route for React Router - serve index.html for all non-API routes"""
+    if path.startswith('api/'):
+        return jsonify({"error": "API endpoint not found"}), 404
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/temp_audio/<path:filename>')
 def serve_audio(filename):
