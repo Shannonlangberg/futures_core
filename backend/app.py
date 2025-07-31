@@ -4711,11 +4711,18 @@ def serve_assets_index():
 @app.route('/assets/<path:filename>')
 def serve_static(filename):
     """Serve static assets from the assets directory"""
+    print(f"[DEBUG] Static file request: {filename}")
     if app.static_folder:
         assets_dir = os.path.join(app.static_folder, 'assets')
-        if os.path.exists(os.path.join(assets_dir, filename)):
+        file_path = os.path.join(assets_dir, filename)
+        print(f"[DEBUG] Looking for file: {file_path}")
+        print(f"[DEBUG] Assets dir exists: {os.path.exists(assets_dir)}")
+        print(f"[DEBUG] File exists: {os.path.exists(file_path)}")
+        if os.path.exists(file_path):
+            print(f"[DEBUG] Serving file: {filename}")
             return send_from_directory(assets_dir, filename)
         else:
+            print(f"[DEBUG] File not found: {filename}")
             return jsonify({"error": f"File {filename} not found in assets"}), 404
     return jsonify({"error": "Static folder not configured"}), 404
 
