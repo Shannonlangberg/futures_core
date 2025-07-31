@@ -137,9 +137,22 @@ try:
     from anthropic import Client
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if api_key:
-        claude = Client(api_key=api_key)
-        logger.info("Claude initialized successfully (Client)")
-        print("[DEBUG] Claude initialized successfully (Client)")
+        # Clear any proxy-related environment variables that might interfere
+        original_proxy_vars = {}
+        for var in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']:
+            if var in os.environ:
+                original_proxy_vars[var] = os.environ[var]
+                del os.environ[var]
+        
+        try:
+            # Initialize without any additional parameters to avoid compatibility issues
+            claude = Client(api_key=api_key)
+            logger.info("Claude initialized successfully (Client)")
+            print("[DEBUG] Claude initialized successfully (Client)")
+        finally:
+            # Restore original proxy variables
+            for var, value in original_proxy_vars.items():
+                os.environ[var] = value
     else:
         logger.warning("ANTHROPIC_API_KEY not found in environment variables")
         print("[WARNING] ANTHROPIC_API_KEY not found in environment variables")
