@@ -4371,83 +4371,21 @@ def get_weekly_campus_comparison_data():
         logger.error(f"Error getting campus comparison data: {e}")
         return []
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    """Dashboard with analytics and statistics"""
-    try:
-        # Check if user has dashboard access
-        if not current_user.has_permission('dashboard_access'):
-            flash('Access denied. Dashboard access not available for your role.', 'error')
-            return redirect(url_for('serve_index'))
-        
-        # Finance users should be redirected to their finance dashboard
-        if current_user.role == 'finance':
-            return redirect(url_for('finance_dashboard'))
-        
-        # Get dashboard data
-        campus = request.args.get('campus', 'all_campuses')
-        date_filter = request.args.get('date_filter', 'last_7_days')
-        
-        # For campus pastors, restrict to their assigned campus
-        if current_user.role == 'campus_pastor' and campus != current_user.campus:
-            campus = current_user.campus
-        
-        dashboard_data = get_dashboard_data(campus, date_filter)
-        
-        # Ensure we have all detailed breakdown stats
-        if 'stats' not in dashboard_data:
-            dashboard_data['stats'] = {}
-        
-        # Add missing breakdown stats if not present
-        breakdown_stats = [
-            'first_time_visitors', 'visitors', 'first_time_christians', 'rededications',
-            'youth_attendance', 'youth_new_people', 'youth_salvations',
-            'kids_attendance', 'new_kids', 'kids_leaders', 'new_kids_salvations'
-        ]
-        
-        for stat in breakdown_stats:
-            if stat not in dashboard_data['stats']:
-                dashboard_data['stats'][stat] = 0
-        
-        return render_template('dashboard.html', 
-                             dashboard_data=dashboard_data,
-                             current_user=current_user)
-    except Exception as e:
-        logger.error(f"Dashboard error: {e}")
-        flash('Dashboard temporarily unavailable', 'error')
-        return redirect(url_for('serve_index'))
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     """Dashboard with analytics and statistics - DISABLED for React frontend"""
+#     # This route is disabled because we're using React frontend
+#     # The dashboard is now handled by the React app
+#     pass
 
-@app.route('/finance')
-@login_required
-def finance_dashboard():
-    """Finance team tithe logging interface"""
-    try:
-        # Only users with finance access can access this
-        if not current_user.has_permission('finance_access'):
-            flash('Access denied. Finance access required.', 'error')
-            return redirect(url_for('serve_index'))
-        
-        # Get all campuses for the finance team
-        campuses_data = get_campuses_for_user()
-        campuses = campuses_data.get('campuses', [])
-        
-        # Get selected date (default to today)
-        selected_date = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
-        
-        # Get existing tithe data for the selected date if any
-        existing_data = get_existing_tithe_data(selected_date)
-        
-        return render_template('finance.html', 
-                             campuses=campuses,
-                             selected_date=selected_date,
-                             existing_data=existing_data,
-                             user=current_user)
-                             
-    except Exception as e:
-        logger.error(f"Error in finance dashboard: {str(e)}")
-        flash('An error occurred while loading the finance dashboard.', 'error')
-        return redirect(url_for('login'))
+# @app.route('/finance')
+# @login_required
+# def finance_dashboard():
+#     """Finance team tithe logging interface - DISABLED for React frontend"""
+#     # This route is disabled because we're using React frontend
+#     # The finance dashboard is now handled by the React app
+#     pass
 
 def get_existing_tithe_data(selected_date):
     """Get existing tithe data for the selected date"""
@@ -4800,21 +4738,13 @@ def serve_audio(filename):
     temp_audio_dir = os.path.join(os.path.dirname(__file__), "temp_audio")
     return send_from_directory(temp_audio_dir, filename)
 
-@app.route('/query')
-@login_required
-def serve_query():
-    """Query page with voice interface"""
-    try:
-        # Check if user has query access
-        if not current_user.has_permission('query_access'):
-            flash('Access denied. Query access not available for your role.', 'error')
-            return redirect(url_for('serve_index'))
-        
-        return render_template('query.html')
-    except Exception as e:
-        logger.error(f"Query page error: {e}")
-        flash('Query page temporarily unavailable', 'error')
-        return redirect(url_for('serve_index'))
+# @app.route('/query')
+# @login_required
+# def serve_query():
+#     """Query page with voice interface - DISABLED for React frontend"""
+#     # This route is disabled because we're using React frontend
+#     # The query page is now handled by the React app
+#     pass
 
 @app.route('/api/health')
 def health_check():
