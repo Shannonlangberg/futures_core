@@ -3875,7 +3875,7 @@ def get_dashboard_data(campus, date_filter='last_30_days', custom_start_date='',
 
 @app.route('/api/login', methods=['POST'])
 def api_login():
-    """API login endpoint for React frontend"""
+    """API login endpoint for React frontend - Updated for Railway"""
     try:
         data = request.get_json()
         username = data.get('username', '').strip()
